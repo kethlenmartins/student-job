@@ -1,0 +1,8 @@
+venv/
+**/venv/
+chrome-profile-*/
+chrome-profile/
+**/chrome-profile-*/
+__pycache__/
+*.pyc
+data/

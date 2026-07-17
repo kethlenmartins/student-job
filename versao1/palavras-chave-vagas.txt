@@ -1,0 +1,22 @@
+[
+  ' ai ', ' agile ', ' analista de dados ', ' analista de sistemas ', ' android ', ' angular ', ' aplicacoes ', ' application ', ' artificial ', ' auditoria de ti ',
+  ' aws ', ' back ', ' back-end ', ' backend ', ' banco ', ' base ', ' big data ', ' bi ', ' blockchain ', ' chatbot ', ' c# ', ' cientista de dados ', ' cibernetica ',
+  ' cio ', ' ciso ', ' cloud ', ' cloud engineer ', ' coisas ', ' commerce ', ' comercio ', ' confiabiliadade ', ' crescimento ', ' css ', ' CTO ', ' dados ',
+  ' database ', ' data ', ' data analyst ', ' data analysis ', ' data lake ', ' data scientist ', ' data warehouse ', ' delivery ', ' desenvolvimento ',
+  ' desenvolvedora ', ' desenvolvedor ', ' developer ', ' dev ', ' devops ', ' devsecops ', ' digital ', ' diretor de tecnologia ', ' dba ', ' deep learning ',
+  ' docker ', ' dotnet ', ' elixir ', ' end ', ' engineer ', ' engenharia ', ' engenharia de bi ', ' engenharia de dados ', ' engenharia de software ',
+  ' engenheiro de automação ', ' engenheiro de bi ', ' engenheiro de confiabilidade ', ' engenheiro de dados ', ' engenheiro de infraestrutura ',
+  ' engenheiro de machine learning ', ' engenheiro de nuvem ', ' engenheiro de plataformas ', ' engenheiro de segurança ', ' engenheiro de software ',
+  ' experiencia do usuario ', ' experience ', ' field application ', ' fintech ', ' flutter ', ' front ', ' front-end ', ' frontend ', ' full ', ' full-stack ',
+  ' fullstack ', ' gamedev ', ' game design ', ' game developer ', ' games ', ' go ', ' graphql ', ' growth ', ' help ', ' helpdesk ', ' html ', ' ia ',
+  ' informacao ', ' informatica ', ' information ', ' infrastructure ', ' infraestrutura ', ' infraestrutura de ti ', ' inteligencia ', ' intelligence ',
+  ' internet ', ' ios ', ' it ', ' IOT ', ' javascript ', ' java ', ' jogos ', ' js ', ' kotlin ', ' kubernetes ', ' líder técnico ', ' linux ', ' llm ',
+  ' low-code ', ' machine learning ', ' marketing ', ' microsoft ', ' mlops ', ' mobile ', ' modelagem ', ' modelo generativo ', ' modelos preditivos ',
+  ' monitoring ', ' native ', ' net ', ' network ', ' no-code ', ' node ', ' node.js ', ' nuvem ', ' oracle ', ' pentester ', ' php ', ' plataforma ',
+  ' platform ', ' principal engineer ', ' process ', ' produto ', ' product ', ' product manager ', ' programacao ', ' programador ', ' programmer ',
+  ' projetos ', ' protheus ', ' proteção ', ' prototipação ', ' python ', ' qa ', ' react ', ' realidade aumentada ', ' realidade virtual ', ' redes ',
+  ' reliability ', ' renderização ', ' robotic ', ' rpa ', ' ruby ', ' rust ', ' sap ', ' science ', ' scrum ', ' security ', ' segurança da informação ', ' site ', ' software ',
+  ' staff engineer ', ' stack ', ' suporte ', ' suport ', ' sysadmin ', ' system ', ' sistemas ', ' swift ', ' tecnologia ', ' tech ', ' tech lead ',
+  ' teste ', ' tester ', ' testador ', ' testadora ', ' test automation ', ' testes ', ' things ', ' ti ', ' tiposcript ', ' typescript ', ' ui ',
+  ' unity ', ' unreal ', ' user ', ' ux ', ' ux research ', ' ux writing ', ' web ', ' web3 ', ' wordpress '
+]
