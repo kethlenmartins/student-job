@@ -48,7 +48,7 @@ VAGAS_POR_PAGINA = 30
 LOCALIZACOES_PRIORITARIAS = ["SP", "RJ", "PR", "SC", "RS", "MG"]
 LOCALIZACOES_RESTANTES = [
     "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS",
-    "PA", "PB", "PE", "PI", "RN", "RO", "RR", "SE", "TO", "Brasil",
+    "PA", "PB", "PE", "PI", "RN", "RO", "RR", "SE", "TO",
 ]
 
 NOMES_ESTADOS = {
@@ -59,7 +59,7 @@ NOMES_ESTADOS = {
     "PE": "Pernambuco", "PI": "Piauí", "RJ": "Rio de Janeiro",
     "RN": "Rio Grande do Norte", "RS": "Rio Grande do Sul", "RO": "Rondônia",
     "RR": "Roraima", "SC": "Santa Catarina", "SE": "Sergipe",
-    "SP": "São Paulo", "TO": "Tocantins", "Brasil": "Brasil",
+    "SP": "São Paulo", "TO": "Tocantins",
 }
 
 

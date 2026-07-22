@@ -1,8 +1,54 @@
-venv/
-**/venv/
-chrome-profile-*/
-chrome-profile/
-**/chrome-profile-*/
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# --- Python ---
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Ambientes virtuais ---
+venv/
+.venv/
+env/
+
+# --- Segredos e config local ---
+.env
+.env.*
+!.env.example
+
+# --- Claude / agentes locais ---
+.claude/
+
+# --- Scraping: perfis do Chrome (pesados + sessão) ---
+.chrome-debug/
+chrome-profile/
+chrome-profile-*/
+
+# --- Scraping: dados coletados (CSV/bronze/etc.) ---
 data/
+
+# --- Site (GitHub Pages) ---
+# Fontes brutas do Drive (já há cópia útil em site/fonts/)
+site/drive-download-*/
+
+# Duplicatas com espaço no nome (usar as versões com hífen)
+site/distribuição tecnica.png
+site/grafico insight 6.png
+
+# Assets não referenciados pelo HTML publicado
+site/grafico-insight-6.png
+site/logos/
+site/fonts/azurio/
+
+# Manrope: o HTML usa só a variável
+site/fonts/manrope/*
+!site/fonts/manrope/Manrope-VariableFont_wght.ttf

@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudo de Carreiras em Tech — Inteli 2025</title>
+<style>
+/* ── FONTES LOCAIS ── */
+@font-face{
+  font-family:'Platypi';
+  src:url('fonts/platypi/Platypi-Variable.woff2') format('woff2');
+  font-weight:300 800;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:'Platypi';
+  src:url('fonts/platypi/Platypi-Italic-Variable.woff2') format('woff2');
+  font-weight:300 800;font-style:italic;font-display:swap;
+}
+@font-face{
+  font-family:'Manrope';
+  src:url('fonts/manrope/Manrope-VariableFont_wght.ttf') format('truetype');
+  font-weight:200 800;font-style:normal;font-display:swap;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:#1E1B32;color:rgba(255,255,255,.88);line-height:1.6;overflow-x:hidden}
+:root{
+  --bg-page:#1E1B32;
+  --bg-box-metrics:#252244;
+  --panel-light:#E8EAED;
+  --panel-dark:#1E1B32;
+  --text-dark:#1E1B32;
+  --text-body:#4A4568;
+  --text-muted:#8B879E;
+  --coral:#E85D4A;
+  --teal:#2D6A6A;
+  --periwinkle:#7B8CDE;
+  --font-title:'Platypi',Georgia,serif;
+  --font-body:'Manrope',system-ui,sans-serif;
+  --nav-h:56px;
+}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);background:rgba(30,27,50,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.ni{max-width:100%;margin:0 auto;padding:0 clamp(20px,3vw,48px);height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nl{font-family:var(--font-title);font-size:12px;font-weight:800;color:#fff;letter-spacing:.04em;white-space:nowrap}
+.nl em{font-style:normal;color:var(--coral)}
+.nv{display:flex;gap:clamp(10px,1.2vw,20px);flex-wrap:wrap;justify-content:center}
+.nv a{font-size:10px;font-weight:500;color:rgba(255,255,255,.45);text-decoration:none;letter-spacing:.03em;transition:color .15s}
+.nv a:hover{color:#fff}
+.nc{font-family:var(--font-title);font-size:10px;font-weight:700;background:var(--coral);color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;letter-spacing:.04em;white-space:nowrap;flex-shrink:0}
+.nc:hover{opacity:.9}
+
+/* ── FULL SECTIONS · faixas claras/escuras alternadas ── */
+.section-full{min-height:100vh}
+.section-band-dark{
+  background:var(--bg-page);
+  color:rgba(255,255,255,.88);
+}
+.section-band-light{
+  background:var(--panel-light);
+  color:var(--text-dark);
+}
+.section-hero{padding-top:var(--nav-h)}
+
+/* ── CAPÍTULOS: caixa quase full-viewport ── */
+.section-chapter{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:calc(var(--nav-h) + 20px) clamp(16px,2.5vw,40px) clamp(20px,2.5vw,40px);
+  box-sizing:border-box;
+}
+.chapter-shell{
+  width:100%;
+  max-width:1360px;
+  height:calc(100vh - var(--nav-h) - 44px);
+  min-height:520px;
+  max-height:880px;
+}
+.chapter-box{
+  width:100%;
+  height:100%;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 28px 64px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.2);
+  background:var(--panel-light);
+}
+
+.section-band-light.section-chapter .chapter-box{
+  background:#fff;
+  border:1px solid rgba(30,27,50,.08);
+  box-shadow:0 12px 40px rgba(30,27,50,.12),0 0 0 1px rgba(30,27,50,.06);
+}
+
+/* ── INSIGHT SLIDE: 55 / 35 (dentro da caixa) ── */
+.insight-slide{
+  display:grid;
+  grid-template-columns:55fr 35fr;
+  height:100%;
+  width:100%;
+}
+@media(max-width:960px){
+  .chapter-shell{height:auto;min-height:calc(100vh - var(--nav-h) - 44px);max-height:none}
+  .insight-slide{grid-template-columns:1fr;height:auto;min-height:680px}
+  .panel-metrics{min-height:380px}
+  .section-chapter:has(.insight-slide) .chapter-shell{
+    height:auto;
+    min-height:min(88vh,680px);
+    max-height:none;
+  }
+  .section-chapter:has(.insight-slide) .chapter-box,
+  .section-chapter:has(.insight-slide) .insight-slide{min-height:min(88vh,680px);height:auto}
+  .section-chapter:has(.insight-slide) .insight-stack{flex:1 1 auto;height:auto;min-height:200px;max-height:none}
+  .section-chapter:has(.insight-slide) .metrics-body{min-height:460px}
+  .section-chapter:has(.insight-slide) .insight-stack .ib,
+  .section-chapter:has(.insight-slide) .metrics-body .ip{overflow-y:auto;padding-right:4px}
+}
+
+.panel-text{
+  background:var(--panel-light);
+  padding:clamp(28px,3.5vw,48px) clamp(24px,3.5vw,52px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  overflow-y:auto;
+  min-height:0;
+}
+.section-chapter:has(.insight-slide) .chapter-shell{
+  /* mín. medido (Cap. 1+2): texto 332px + cabeçalho ~195px | painel 449px + chrome ~191px + top 40px ≈ 680px */
+  height:min(78vh,720px);
+  min-height:680px;
+  max-height:720px;
+  flex-shrink:0;
+}
+.section-chapter:has(.insight-slide) .chapter-box,
+.section-chapter:has(.insight-slide) .insight-slide{height:100%;min-height:680px}
+.section-chapter:has(.insight-slide) .panel-text{
+  justify-content:flex-start;
+  overflow:hidden;
+  min-height:0;
+}
+.section-chapter:has(.insight-slide) .panel-text > .ch-lbl{margin-top:48px}
+.section-chapter:has(.insight-slide) .sw{margin-bottom:0}
+.section-chapter:has(.insight-slide) .insight-stack{
+  position:relative;
+  flex:1 1 auto;
+  height:auto;
+  min-height:0;
+  max-height:none;
+  width:100%;
+  margin-top:40px;
+}
+.section-chapter:has(.insight-slide) .insight-stack .ib{
+  display:none;
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  padding-right:0;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+.section-chapter:has(.insight-slide) .insight-stack .ib.on{display:flex}
+.section-chapter:has(.insight-slide) .metrics-body{
+  position:relative;
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  padding-top:0;
+  display:flex;
+  align-items:center;
+}
+.section-chapter:has(.insight-slide) .metrics-body .ip{
+  position:absolute;
+  left:0;right:0;
+  top:40px;
+  bottom:0;
+  overflow:hidden;
+  display:none;
+  padding-right:0;
+  justify-content:center;
+}
+.section-chapter:has(.insight-slide) .metrics-body .ip.on{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  width:100%;
+}
+.section-chapter:has(.insight-slide) .metrics-body .ip#mkt-p6.on{display:flex!important}
+.ch-lbl{font-family:var(--font-title);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+.sl-h{font-family:var(--font-title);font-size:clamp(26px,3.2vw,42px);font-weight:900;line-height:1.05;color:var(--text-dark);margin-bottom:24px;text-transform:uppercase}
+.sl-h em{font-style:normal}
+
+.sw{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:20px;align-items:baseline}
+.sb{
+  font-family:var(--font-title);
+  font-size:clamp(28px,3.5vw,40px);
+  font-weight:900;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:#C5C2D0;
+  padding:0;
+  line-height:1;
+  transition:color .18s;
+}
+.sb.on{color:var(--coral)}
+.sb:hover:not(.on){color:var(--text-dark)}
+
+.ib{display:none}
+.ib.on{display:block}
+.ih{font-family:var(--font-title);font-size:13px;font-weight:800;color:var(--coral);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;line-height:1.35}
+.it{font-size:14px;color:var(--text-body);line-height:1.85}
+.it p{margin-bottom:14px}
+.it p:last-child{margin-bottom:0}
+.it em{font-style:italic}
+
+.viz-img{width:100%;height:auto;display:block;border-radius:6px;background:#fff}
+.panel-extra .viz-img{box-shadow:0 2px 12px rgba(0,0,0,.15)}
+
+.mkt-p4-scroll{overflow-y:auto;max-height:100%;padding-right:4px}
+.trilhas-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.trilha-mini{background:#fff;border-radius:6px;padding:12px;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.trilha-mini .tl{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:6px;background:rgba(232,93,74,.15);
+  font-family:var(--font-title);font-size:14px;font-weight:900;color:var(--coral);margin-bottom:8px;
+}
+.trilha-mini strong{display:block;font-family:var(--font-title);font-size:10px;font-weight:800;color:var(--text-dark);margin-bottom:4px;line-height:1.3}
+.trilha-mini p{font-size:9px;color:var(--text-body);line-height:1.45;margin:0}
+.trilha-mini:nth-child(2) .tl{background:rgba(123,140,222,.2);color:#5b5480}
+.trilha-mini:nth-child(3) .tl{background:rgba(45,106,106,.15);color:var(--teal)}
+.trilha-mini:nth-child(4) .tl{background:rgba(30,27,50,.08);color:var(--text-dark)}
+.mkt-p4-stack{display:flex;flex-direction:column;gap:12px;overflow-y:auto;max-height:100%;padding-right:4px}
+.mkt-p4-stack .quote-panel .qt{font-size:11px;line-height:1.55}
+.mkt-p4-stack .quote-panel .qa{font-size:10px}
+
+/* ── METRICS PANEL (dark) ── */
+.panel-metrics{
+  background:var(--bg-box-metrics);
+  padding:clamp(24px,3vw,40px) clamp(20px,2.5vw,36px);
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  min-height:0;
+  overflow:hidden;
+}
+.metrics-logo{
+  position:absolute;
+  top:clamp(20px,2.5vw,32px);
+  right:clamp(20px,2.5vw,32px);
+  font-family:var(--font-title);
+  font-size:22px;
+  font-weight:900;
+  color:#fff;
+  letter-spacing:-.02em;
+}
+.metrics-logo span{color:var(--coral)}
+.metrics-body{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding-top:48px;min-height:0;overflow-y:auto}
+.metrics-body>.ip.on{flex:1 1 auto;align-self:stretch}
+.metrics-src{margin-top:auto;padding-top:24px;font-size:10px;color:rgba(255,255,255,.45);line-height:1.5}
+
+.ip{display:none;animation:fadeIn .3s ease}
+.ip.on{display:flex;flex-direction:column;gap:14px;width:100%;min-height:0;flex:1}
+#mkt-p6.on{display:block!important;width:100%}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── BIG NUMBER CARDS (slide style) ── */
+.bn-list{display:flex;flex-direction:column;gap:12px;width:100%}
+.bn-card{
+  background:#fff;
+  border-radius:6px;
+  padding:20px 22px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  min-height:88px;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+.bn-val{
+  font-family:var(--font-title);
+  font-size:clamp(42px,5vw,56px);
+  font-weight:900;
+  line-height:1;
+  flex-shrink:0;
+  min-width:120px;
+}
+.bn-val.coral{color:var(--coral)}
+.bn-val.teal{color:var(--teal)}
+.bn-val.blue{color:var(--periwinkle)}
+.bn-val.dark{color:var(--text-dark)}
+.bn-label{
+  font-family:var(--font-title);
+  font-size:13px;
+  font-weight:700;
+  line-height:1.4;
+}
+.bn-label.coral{color:var(--coral)}
+.bn-label.teal{color:var(--teal)}
+.bn-label.blue{color:var(--periwinkle)}
+.bn-label.dark{color:var(--text-body)}
+
+.note-card,.quote-panel{background:#fff;border-radius:6px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.note-card p,.quote-panel .qt{font-size:12px;color:var(--text-body);line-height:1.65}
+.note-card p{font-weight:700}
+.quote-panel .qt{font-style:italic;margin-bottom:14px}
+.quote-panel .qa{font-family:var(--font-title);font-size:11px;font-weight:800;color:var(--coral);text-transform:uppercase;letter-spacing:.06em}
+
+.traj4{display:flex;flex-direction:column;gap:10px}
+.traj4 .bn-card{align-items:flex-start;padding:16px 18px;min-height:auto}
+.traj4 .bn-val{min-width:72px;font-size:clamp(36px,4vw,48px)}
+.traj4 .bn-label{font-size:12px}
+
+.sector-list{display:flex;flex-direction:column;gap:10px}
+.sector-item{background:#fff;border-radius:6px;padding:12px 14px 12px 18px;border-left:4px solid var(--periwinkle);box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.sector-item strong{display:block;font-family:var(--font-title);font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:4px}
+.sector-item span{font-size:11px;color:var(--text-body);line-height:1.45}
+
+.dist-vchart{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;height:200px;padding:8px 4px 0}
+.dist-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.dist-bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.dist-bar{width:100%;max-width:48px;border-radius:4px 4px 0 0;background:var(--coral);min-height:4px}
+.dist-pct{font-family:var(--font-title);font-size:13px;font-weight:900;color:var(--coral);line-height:1}
+.dist-lbl{font-size:8px;color:rgba(255,255,255,.75);text-align:center;line-height:1.25;max-width:72px}
+
+.stack-block{margin-bottom:14px}
+.stack-block:last-child{margin-bottom:0}
+.stack-ttl{font-family:var(--font-title);font-size:9px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px}
+.stack-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.stack-cell{background:rgba(255,255,255,.12);border-radius:4px;padding:6px 4px;text-align:center}
+.stack-cell b{display:block;font-size:9px;font-weight:700;color:#fff;line-height:1.2}
+.stack-cell i{display:block;font-size:8px;color:rgba(255,255,255,.55);margin-top:2px;font-style:normal}
+
+.soft-rank .br .bl{width:118px;text-align:left;font-size:9px}
+.soft-rank .bt{height:22px}
+.soft-rank .bv{width:32px;text-align:right}
+
+.seniority-wrap{
+  background:#e4e4ea;border-radius:6px;padding:16px 12px 12px;width:100%;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);display:flex;flex-direction:column;
+  min-height:340px;box-sizing:border-box;
+}
+#mkt-p6 .seniority-wrap{width:100%;min-height:min(420px,calc(100vh - 280px))}
+.seniority-title{
+  font-family:var(--font-title);font-size:11px;font-weight:800;color:var(--text-dark);
+  margin-bottom:10px;line-height:1.25;
+}
+.seniority-leg{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:12px;font-size:9px;color:var(--text-body);font-weight:600}
+.seniority-leg span{display:inline-flex;align-items:center;gap:5px}
+.seniority-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.seniority-leg .leg-lid{background:var(--coral)}
+.seniority-leg .leg-pl{background:#5b5480}
+.seniority-leg .leg-jr{background:var(--teal)}
+.seniority-vchart{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:4px;
+  height:220px;flex-shrink:0;padding-top:2px;
+}
+.sen-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0;max-width:72px}
+.sen-lid-top{font-family:var(--font-title);font-size:9px;font-weight:800;color:var(--text-dark);line-height:1;min-height:14px;flex-shrink:0}
+.sen-stack{
+  width:100%;max-width:54px;height:190px;display:flex;flex-direction:column;justify-content:flex-end;
+  border-radius:3px 3px 0 0;overflow:hidden;flex-shrink:0;
+}
+.sen-seg{
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-title);font-size:8px;font-weight:800;color:#fff;line-height:1.1;
+  text-align:center;padding:2px 1px;min-height:14px;
+}
+.sen-seg.sen-jr{background:var(--teal)}
+.sen-seg.sen-pl{background:#5b5480}
+.sen-seg.sen-lid{background:var(--coral);font-size:7px;min-height:10px}
+.sen-lbl{font-size:7px;color:var(--text-dark);text-align:center;line-height:1.25;font-weight:600;max-width:64px}
+
+
+/* charts / extras on dark panel */
+.panel-extra{width:100%}
+.bc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:16px 18px}
+.bc-ttl{font-family:var(--font-title);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}
+.br{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bl{font-size:10px;color:rgba(255,255,255,.7);width:140px;flex-shrink:0;text-align:right}
+.bt{flex:1;height:18px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.bf{height:100%;border-radius:3px;width:0;transition:width 1s cubic-bezier(.4,0,.2,1)}
+.bv{font-size:10px;font-weight:600;color:#fff;width:36px;font-family:var(--font-title)}
+
+.stat2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.s2c{background:#fff;border-radius:6px;padding:18px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.12)}
+.s2n{font-family:var(--font-title);font-size:40px;font-weight:900;color:var(--coral);line-height:1}
+.s2l{font-size:11px;color:var(--text-body);margin-top:8px;line-height:1.45}
+.s2lb{font-family:var(--font-title);font-size:10px;font-weight:700;color:var(--coral);margin-top:6px;text-transform:uppercase}
+
+.tc3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tc{background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.tc-top{padding:12px 14px;border-bottom:1px solid #eee}
+.tbg{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:999px;display:inline-block;font-family:var(--font-title);margin-bottom:6px}
+.bg-r{background:rgba(232,93,74,.12);color:var(--coral)}
+.bg-b{background:rgba(123,140,222,.15);color:var(--periwinkle)}
+.bg-g{background:rgba(45,106,106,.12);color:var(--teal)}
+.tc-name{font-family:var(--font-title);font-size:11px;font-weight:800;color:var(--text-dark)}
+.tc-body{padding:12px 14px}
+.tc-num{font-family:var(--font-title);font-size:36px;font-weight:900;line-height:1}
+.tc-desc{font-size:10px;color:var(--text-body);margin-top:6px;line-height:1.45}
+
+.sps{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.sp{font-size:10px;padding:6px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);background:transparent;cursor:pointer;font-family:var(--font-body);transition:all .14s}
+.sp.on,.sp:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
+.ol{display:flex;flex-direction:column;gap:6px;max-height:min(320px,50vh);overflow-y:auto;padding-right:4px}
+.oi{background:#fff;border-radius:6px;padding:10px 12px;display:flex;align-items:center;gap:10px;border-left:3px solid var(--coral);box-shadow:0 1px 8px rgba(0,0,0,.08)}
+.ok{font-family:var(--font-title);font-size:12px;font-weight:900;color:var(--coral);width:20px}
+.ot{font-size:11px;font-weight:600;color:var(--text-dark)}
+.os{font-size:9px;color:var(--text-muted);margin-top:2px}
+.ov{font-size:9px;font-weight:700;font-family:var(--font-title);margin-left:auto;padding:2px 8px;border-radius:999px;background:rgba(232,93,74,.12);color:var(--coral)}
+
+.ab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ab{background:#fff;border-radius:6px;padding:10px;cursor:pointer;border:2px solid transparent;transition:border-color .15s;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.ab.on{border-color:var(--coral)}
+.ab-pct{font-family:var(--font-title);font-size:18px;font-weight:900;color:var(--text-dark)}
+.ab-badge{font-size:7px;font-weight:700;text-transform:uppercase;padding:2px 6px;border-radius:999px;margin:4px 0;display:inline-block;font-family:var(--font-title)}
+.alta{background:rgba(232,93,74,.12);color:var(--coral)}
+.porta{background:rgba(45,106,106,.12);color:var(--teal)}
+.ab-name{font-family:var(--font-title);font-size:9px;font-weight:700;color:var(--text-dark)}
+.ab-bar{display:flex;height:3px;border-radius:2px;overflow:hidden;margin-top:6px}
+.ab-jr{background:var(--coral)}.ab-pl{background:var(--teal)}.ab-lid{background:var(--periwinkle)}
+.ab-btn{margin-top:6px;font-size:8px;font-weight:700;font-family:var(--font-title);color:var(--coral);background:none;border:none;cursor:pointer;text-transform:uppercase}
+.ab-drawer{display:none;grid-column:1/-1;background:#fff;border-radius:6px;padding:14px;gap:12px;grid-template-columns:1fr 1fr 1fr;font-size:10px}
+.ab-drawer.on{display:grid}
+.sk{display:inline-block;font-size:8px;padding:2px 6px;border-radius:3px;margin:0 2px 3px 0;border:1px solid #e0e0e0}
+.sk.h{background:rgba(232,93,74,.1);color:var(--coral);border-color:rgba(232,93,74,.3)}
+
+.qst{background:rgba(255,255,255,.08);border-left:3px solid var(--coral);border-radius:6px;padding:14px;margin-top:10px}
+.qt{font-size:12px;font-style:italic;color:rgba(255,255,255,.75);line-height:1.6}
+.qa{font-size:10px;font-weight:700;font-family:var(--font-title);color:var(--coral);margin-top:8px;text-transform:uppercase}
+
+/* ── CAP. 5 · Projeções ── */
+#projecoes .projecoes-title{
+  font-family:var(--font-title);
+  font-size:clamp(20px,2.4vw,32px);
+  font-weight:900;
+  line-height:1.2;
+  color:var(--text-dark);
+  margin-bottom:16px;
+  text-transform:none;
+}
+#projecoes .projecoes-body p{
+  font-size:13px;
+  line-height:1.8;
+  color:var(--text-body);
+  margin-bottom:12px;
+}
+#projecoes .projecoes-body p:last-child{margin-bottom:0}
+#projecoes .projecoes-kicker{font-weight:700;color:var(--text-dark)}
+#projecoes .projecoes-inteli{font-weight:600;color:var(--text-dark)}
+#projecoes .projecoes-cta{margin-top:16px;align-self:flex-start;font-size:11px;padding:11px 20px}
+#projecoes .metrics-body{
+  position:relative;
+  padding-top:48px;
+  justify-content:flex-start;
+  overflow:hidden;
+}
+#projecoes .ia-roles-stack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  width:100%;
+  height:100%;
+  justify-content:center;
+}
+.ia-role-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  background:#fff;
+  border-radius:6px;
+  padding:14px 16px;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);
+}
+.ia-role-icon{
+  width:68px;
+  height:68px;
+  flex-shrink:0;
+  border-radius:50%;
+  background:var(--text-dark);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+.ia-role-icon svg{width:52px;height:52px;display:block}
+.ia-role-copy strong{
+  font-family:var(--font-title);
+  font-size:13px;
+  font-weight:800;
+  color:var(--text-dark);
+  display:block;
+  margin-bottom:4px;
+  line-height:1.2;
+}
+.ia-role-copy p{
+  font-size:11px;
+  line-height:1.45;
+  color:var(--text-body);
+  margin:0;
+}
+
+/* ── HERO ── */
+.section-hero{
+  display:flex;align-items:center;position:relative;overflow:hidden;
+  isolation:isolate;
+}
+.section-hero::before{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:url('_R2V4959.jpg') 78% center/cover no-repeat;
+  opacity:.34;
+}
+.section-hero::after{
+  content:'';position:absolute;inset:0;z-index:0;
+  background:linear-gradient(
+    to right,
+    var(--bg-page) 0%,
+    var(--bg-page) 20%,
+    rgba(30,27,50,.88) 52%,
+    rgba(30,27,50,.5) 72%,
+    rgba(30,27,50,.2) 100%
+  );
+}
+.hero-inner{
+  max-width:1280px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(24px,4vw,48px);
+  position:relative;z-index:1;width:100%;
+}
+.hh{font-family:var(--font-title);font-size:clamp(32px,5vw,60px);font-weight:900;line-height:1.05;margin-bottom:16px}
+.hh em{font-style:italic;color:var(--coral)}
+.hs{font-size:15px;color:rgba(255,255,255,.7);max-width:520px;margin-bottom:28px}
+.hctas{display:flex;gap:10px;flex-wrap:wrap}
+.btn-r,.btn-o{font-family:var(--font-title);font-size:12px;font-weight:700;padding:12px 22px;border-radius:8px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-r{background:var(--coral);color:#fff}
+.btn-o{border:1px solid rgba(255,255,255,.2);color:#fff}
+.hstats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:48px;border:1px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden}
+.hs-c{background:rgba(255,255,255,.04);padding:24px 20px}
+.hs-v{font-family:var(--font-title);font-size:28px;font-weight:900}
+.hs-l{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-top:4px}
+
+/* ── ANALISADOR (seção inteira, sem caixa) ── */
+.section-analisador{
+  padding:calc(var(--nav-h) + clamp(32px,4vw,56px)) clamp(20px,3vw,48px) clamp(48px,6vw,80px);
+  min-height:100vh;box-sizing:border-box;
+}
+.analisador-inner{width:100%;max-width:1200px;margin:0 auto}
+.analisador-head{margin-bottom:clamp(28px,4vw,48px)}
+.section-band-dark.section-analisador .analisador-head .ch-lbl{color:rgba(255,255,255,.45)}
+.section-band-dark.section-analisador .analisador-head .sl-h{margin-bottom:0;color:#fff}
+
+/* ── VISÃO POR ÁREA ── */
+.section-areas{
+  padding:calc(var(--nav-h) + clamp(32px,4vw,56px)) clamp(20px,3vw,48px) clamp(48px,6vw,80px);
+  min-height:100vh;box-sizing:border-box;
+}
+.section-band-light.section-areas .ch-lbl{color:var(--text-muted)}
+.areas-inner{width:100%;max-width:1280px;margin:0 auto}
+.areas-lead{font-size:14px;color:var(--text-body);line-height:1.75;max-width:720px;margin-top:12px}
+.areas-fonte{font-size:11px;color:var(--text-muted);margin-top:8px}
+
+/* ── STACK TECNOLÓGICA (pós Cap. 3) ── */
+.section-stack{
+  padding:calc(var(--nav-h) + clamp(32px,4vw,56px)) clamp(20px,3vw,48px) clamp(48px,6vw,80px);
+  min-height:auto;box-sizing:border-box;
+}
+.stack-inner{width:100%;max-width:1280px;margin:0 auto}
+.section-band-dark.section-stack .stack-inner .ch-lbl{color:rgba(255,255,255,.45)}
+.section-band-dark.section-stack .stack-inner>.sl-h{color:#fff}
+.section-band-dark.section-stack .stack-intro{color:rgba(255,255,255,.65)}
+.section-band-light.section-stack .stack-inner .ch-lbl{color:var(--text-muted)}
+.stack-inner>.sl-h{margin-bottom:12px}
+.stack-intro{font-size:14px;color:var(--text-body);line-height:1.75;max-width:820px;margin-bottom:32px}
+.stack-split{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.stack-pane{
+  border-radius:16px;border:1px solid #d8dbe3;background:#fff;
+  padding:28px 26px;display:flex;flex-direction:column;min-height:520px;
+  box-shadow:0 4px 20px rgba(30,27,50,.06);
+}
+.stack-pane-h{font-family:var(--font-title);font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--coral);margin-bottom:6px}
+.stack-pane-title{font-family:var(--font-title);font-size:clamp(18px,2.2vw,24px);font-weight:900;line-height:1.15;margin-bottom:10px;color:var(--text-dark)}
+.stack-pane-lead{font-size:12px;line-height:1.65;color:var(--text-body);margin-bottom:20px;flex-shrink:0}
+.stack-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.stack-tab{
+  padding:8px 14px;border-radius:12px;font-size:11px;font-weight:600;
+  background:var(--panel-light);color:var(--text-body);border:1.5px solid #caced6;
+  cursor:pointer;font-family:var(--font-body);transition:all .15s;
+}
+.stack-tab:hover{border-color:var(--text-dark);color:var(--text-dark)}
+.stack-tab.active{background:var(--text-dark);color:#fff;border-color:var(--text-dark)}
+.stack-viewport{flex:1;display:flex;min-height:280px}
+.stack-hard-panel{
+  display:none;flex-direction:column;width:100%;
+  background:var(--panel-light);border-radius:14px;padding:22px 20px;
+  border:1px solid #e0e0e8;
+}
+.stack-hard-panel.on{display:flex}
+.stack-hard-blabel{
+  font-family:var(--font-title);font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.1em;color:var(--coral);margin-bottom:8px;
+}
+.stack-hard-title{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:14px}
+.stack-hard-items{display:flex;flex-direction:column;gap:8px;flex:1}
+.stack-hard-item{
+  font-size:12px;font-weight:600;padding:10px 14px;border-radius:12px;
+  background:#fff;color:var(--text-dark);border:1px solid #e8eaed;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+}
+.stack-hard-item span{color:var(--text-muted);font-size:11px;font-weight:500;white-space:nowrap}
+.stack-pane-fonte{font-size:10px;color:var(--text-muted);margin-top:16px}
+.stack-soft-rank{flex:1;display:flex;flex-direction:column;gap:10px}
+.stack-soft-row{display:flex;align-items:center;gap:10px}
+.stack-soft-rank-n{
+  font-family:var(--font-title);font-size:10px;font-weight:800;color:var(--coral);
+  width:22px;flex-shrink:0;
+}
+.stack-soft-name{font-size:12px;font-weight:600;width:min(140px,34%);flex-shrink:0;line-height:1.25;color:var(--text-dark)}
+.stack-soft-bar-wrap{flex:1;height:10px;background:#e8eaed;border-radius:8px;overflow:hidden}
+.stack-soft-bar{height:100%;border-radius:8px;background:var(--coral);min-width:2px}
+.stack-soft-pct{font-family:var(--font-title);font-size:11px;font-weight:800;width:42px;text-align:right;flex-shrink:0;color:var(--text-dark)}
+.stack-soft-quote{
+  margin-top:14px;padding:14px 16px;border-radius:12px;
+  border-left:3px solid var(--teal);background:var(--panel-light);
+  font-size:11px;line-height:1.6;color:var(--text-body);
+}
+.stack-soft-quote strong{color:var(--text-dark);display:block;margin-bottom:4px;font-size:12px}
+@media(max-width:960px){
+  .stack-split{grid-template-columns:1fr}
+  .stack-pane{min-height:auto}
+}
+.areas-filters{display:flex;gap:8px;flex-wrap:wrap;margin:28px 0 24px}
+.areas-filters .filter-btn{
+  padding:8px 16px;border-radius:999px;font-size:11px;font-weight:600;
+  background:#fff;color:var(--text-body);border:1.5px solid #caced6;
+  cursor:pointer;font-family:var(--font-body);transition:all .15s;
+}
+.areas-filters .filter-btn:hover{border-color:var(--text-dark);color:var(--text-dark)}
+.areas-filters .filter-btn.active{background:var(--text-dark);color:#fff;border-color:var(--text-dark)}
+.areas-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:14px;
+  background:transparent;
+  border:none;
+}
+.area-card{
+  background:#fff;padding:22px 24px;cursor:pointer;
+  border:2px solid #e8eaed;border-radius:14px;position:relative;
+  transition:border-color .15s,box-shadow .15s,transform .15s;
+  box-shadow:0 2px 10px rgba(30,27,50,.06);
+}
+.area-card:hover{border-color:#caced6;box-shadow:0 8px 24px rgba(30,27,50,.1);transform:translateY(-2px);z-index:2}
+.area-card.open{border-color:var(--coral);box-shadow:0 8px 24px rgba(30,27,50,.12);z-index:3}
+.area-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.area-pct{font-family:var(--font-title);font-size:2.2rem;font-weight:900;color:var(--text-dark);line-height:1;letter-spacing:-.03em}
+.area-badge{font-family:var(--font-title);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px 10px;border-radius:10px}
+.badge-entrada{background:#e8faf0;color:#1a7040}
+.badge-esp{background:#fff0e8;color:#8a4500}
+.area-name{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:6px;line-height:1.3}
+.area-desc-short{font-size:12px;color:var(--text-body);line-height:1.6;margin-bottom:14px}
+.area-card .seniority-bar{display:flex;height:6px;border-radius:8px;overflow:hidden;gap:2px;margin-bottom:6px}
+.area-card .s-jr{background:var(--teal)}
+.area-card .s-pl{background:#5b5480}
+.area-card .s-lid{background:var(--coral)}
+.area-card .seniority-legend{display:flex;flex-wrap:wrap;gap:10px;font-size:10px;color:var(--text-muted)}
+.area-card .seniority-legend span{display:flex;align-items:center;gap:4px}
+.area-card .seniority-legend .dot{width:7px;height:7px;border-radius:50%}
+.area-toggle{
+  width:26px;height:26px;border-radius:50%;background:var(--panel-light);color:var(--text-dark);
+  display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;
+  margin-top:12px;pointer-events:none;transition:background .15s,color .15s;
+}
+.area-card.open .area-toggle{background:var(--coral);color:#fff}
+.area-detail{
+  display:none;grid-column:1/-1;background:#fff;border:2px solid var(--coral);
+  padding:28px 32px;animation:fadeIn .25s ease;border-radius:16px;
+  box-shadow:0 8px 28px rgba(30,27,50,.1);
+}
+.area-detail.show{display:grid;grid-template-columns:1fr 1fr;gap:24px 28px}
+.detail-salary{grid-column:1/-1}
+.salary-chart{
+  background:var(--panel-light);border-radius:14px;padding:18px 20px;
+}
+.salary-chart-h{
+  font-family:var(--font-title);font-size:11px;font-weight:800;color:var(--text-dark);
+  margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;
+}
+.salary-chart-sub{font-size:11px;color:var(--text-muted);margin-bottom:14px;line-height:1.45}
+.salary-leg{display:flex;flex-wrap:wrap;gap:12px 18px;margin-bottom:16px;font-size:10px;font-weight:600;color:var(--text-body)}
+.salary-leg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:middle}
+.salary-leg .leg-jr{background:#3d9a6f}
+.salary-leg .leg-pl{background:#4a7fd4}
+.salary-leg .leg-sr{background:var(--coral)}
+.salary-grid{
+  display:grid;
+  grid-template-columns:minmax(140px,32%) 1fr;
+  column-gap:16px;row-gap:14px;align-items:center;
+}
+.salary-row{display:contents}
+.salary-role{font-size:11px;font-weight:600;color:var(--text-dark);line-height:1.35}
+.salary-track{
+  position:relative;height:28px;background:#fff;border-radius:10px;
+  border:1px solid #e0e0e8;
+}
+.salary-track::before{
+  content:'';position:absolute;left:8px;right:8px;top:50%;height:1px;
+  background:#d0d0dc;transform:translateY(-50%);
+}
+.salary-dot{
+  position:absolute;top:50%;transform:translate(-50%,-50%);
+  width:12px;height:12px;border-radius:50%;border:2px solid #fff;
+  box-shadow:0 1px 4px rgba(0,0,0,.2);z-index:1;
+}
+.salary-dot.jr{background:#3d9a6f}
+.salary-dot.pl{background:#4a7fd4}
+.salary-dot.sr{background:var(--coral)}
+.salary-dot-lbl{
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+  font-family:var(--font-title);font-size:9px;font-weight:800;white-space:nowrap;
+}
+.salary-dot.jr .salary-dot-lbl{color:#2d6a6a}
+.salary-dot.pl .salary-dot-lbl{color:#4a7fd4}
+.salary-dot.sr .salary-dot-lbl{color:var(--coral)}
+.salary-axis{
+  grid-column:2;display:flex;justify-content:space-between;margin-top:2px;
+  padding:0 8px;font-size:8px;color:var(--text-muted);font-weight:600;
+}
+.area-detail .detail-col-title{
+  font-family:var(--font-title);font-size:9px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--coral);margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid #e0e0e8;
+}
+.area-detail .chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.area-detail .chip{
+  display:inline-flex;align-items:center;padding:5px 12px;border-radius:12px;
+  font-size:11px;font-weight:600;background:var(--panel-light);color:var(--text-dark);border:1px solid #e0e0e8;
+}
+.area-detail .chip.hard{background:#e8eeff;color:#2a4db5;border-color:#b8c8f8}
+.area-detail .chip.soft{background:#f0e8ff;color:#5a2d82;border-color:#d0b8f8}
+.area-detail .chip.lang{background:#e6f5ed;color:#1a6b3a;border-color:#a8d8b8}
+.area-detail .chip.tool{background:#fff5e6;color:#8a5200;border-color:#f0d8a0}
+.area-detail .level-block{margin-bottom:14px}
+.area-detail .level-label{font-size:12px;font-weight:700;color:var(--text-dark);margin-bottom:6px}
+.area-detail .level-chips{display:flex;flex-wrap:wrap;gap:5px}
+.area-detail .diferencial-box{
+  background:var(--panel-light);border-left:3px solid var(--teal);
+  padding:10px 14px;border-radius:0 8px 8px 0;font-size:12px;color:var(--text-body);line-height:1.55;margin-top:8px;
+}
+.area-detail .detail-source{
+  grid-column:1/-1;font-size:10px;color:var(--text-muted);
+  border-top:1px solid #e0e0e8;padding-top:12px;margin-top:4px;
+}
+@media(max-width:900px){
+  .area-detail.show{grid-template-columns:1fr}
+  .areas-grid{grid-template-columns:1fr}
+  .salary-grid{grid-template-columns:1fr}
+  .salary-axis{grid-column:1}
+}
+
+/* ── SOBRE / FORM ── */
+.plain-inner{max-width:1280px;margin:0 auto;padding:clamp(40px,5vw,72px) clamp(24px,4vw,48px);width:100%}
+.content-box{
+  max-width:1360px;
+  margin:0 auto;
+  padding:clamp(36px,4vw,56px);
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);
+  box-shadow:0 28px 64px rgba(0,0,0,.35);
+}
+.section-band-dark .content-box .ch-lbl{color:rgba(255,255,255,.4)}
+.section-band-dark .content-box .hh{color:#fff}
+.section-band-dark .content-box .hs{color:rgba(255,255,255,.7)}
+.section-band-light .content-box{
+  background:#fff;
+  border:1px solid rgba(30,27,50,.08);
+  box-shadow:0 12px 40px rgba(30,27,50,.1);
+}
+.section-band-light .content-box .ch-lbl{color:var(--text-muted)!important}
+.section-band-light .content-box .hh{color:var(--text-dark)}
+.section-band-light .content-box .hs{color:var(--text-body)}
+.section-band-light .method-card{
+  background:var(--panel-light);border:1px solid #d8dbe3;
+}
+.section-band-light .method-card:hover{box-shadow:0 8px 24px rgba(30,27,50,.1)}
+.section-band-light .method-card .m-num{color:var(--text-muted)}
+.section-band-light .method-card .m-big,
+.section-band-light .method-card .m-title{color:var(--text-dark)}
+.section-band-light .method-card .m-desc{color:var(--text-body)}
+.section-band-light .method-card.featured{background:var(--bg-box-metrics);border-color:rgba(30,27,50,.12)}
+.section-band-light .method-card.featured .m-num{color:rgba(255,255,255,.45)}
+.section-band-light .method-card.featured .m-big,
+.section-band-light .method-card.featured .m-title{color:#fff}
+.section-band-light .method-card.featured .m-desc{color:rgba(255,255,255,.55)}
+.section-band-light .method-foot{color:var(--text-muted);border-top-color:#d8dbe3}
+.method-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px;
+}
+.method-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:28px 24px;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.method-card:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.28)}
+.method-card.featured{background:var(--bg-box-metrics);border-color:rgba(255,255,255,.14)}
+.method-card .m-num{
+  font-family:var(--font-title);font-size:9px;font-weight:700;color:rgba(255,255,255,.45);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;
+}
+.method-card .m-big{
+  font-family:var(--font-title);font-size:clamp(26px,3.5vw,40px);font-weight:900;
+  color:#fff;line-height:1;margin-bottom:4px;letter-spacing:-.03em;
+}
+.method-card .m-label{
+  font-family:var(--font-title);font-size:9px;font-weight:700;color:var(--coral);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;
+}
+.method-card .m-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
+.method-card .m-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.65}
+.method-foot{
+  margin-top:28px;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);
+  font-size:11px;color:rgba(255,255,255,.45);line-height:1.75;
+}
+#sobre .content-box{border-radius:18px}
+@media(max-width:1100px){.method-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.method-grid{grid-template-columns:1fr}}
+
+/* ── FORMULÁRIO LEADS (estilo meuhtml) ── */
+.section-form{
+  padding:calc(var(--nav-h) + clamp(32px,4vw,56px)) clamp(20px,3vw,48px) clamp(48px,6vw,80px);
+  box-sizing:border-box;
+}
+.leads-inner{width:100%;max-width:1280px;margin:0 auto}
+.fw{
+  display:grid;grid-template-columns:1fr 400px;
+  border:1px solid rgba(255,255,255,.08);border-radius:16px;
+  overflow:hidden;background:var(--bg-box-metrics);
+  box-shadow:0 20px 48px rgba(0,0,0,.35);
+}
+.fl2{
+  padding:44px;
+  background:linear-gradient(135deg,#3A3660,var(--bg-box-metrics));
+}
+.fe{
+  font-family:var(--font-title);font-size:9px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--coral);margin-bottom:14px;display:block;
+}
+.ft{font-family:var(--font-title);font-size:clamp(20px,2.5vw,24px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px}
+.fd{font-size:13px;color:rgba(200,196,224,.9);line-height:1.7;margin-bottom:22px}
+.finc{display:flex;flex-direction:column;gap:8px}
+.fi{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(200,196,224,.85);line-height:1.45}
+.fck{
+  width:16px;height:16px;border-radius:50%;background:rgba(232,93,74,.12);
+  border:1px solid rgba(232,93,74,.25);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-size:9px;color:var(--coral);font-weight:700;margin-top:1px;
+}
+.fr{
+  padding:38px 32px;display:flex;flex-direction:column;gap:12px;justify-content:center;
+  background:#252244;
+}
+.ff{display:flex;flex-direction:column;gap:5px}
+.ffl{
+  font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);font-family:var(--font-title);
+}
+.ffi,.ffs{
+  background:#3A3660;border:1px solid rgba(255,255,255,.08);border-radius:10px;
+  padding:9px 13px;font-size:12px;color:#fff;font-family:var(--font-body);
+  outline:none;width:100%;transition:border-color .18s;-webkit-appearance:none;
+}
+.ffi:focus,.ffs:focus{border-color:var(--coral)}
+.ffi::placeholder{color:rgba(255,255,255,.35)}
+.ffs option{background:#252244;color:#fff}
+.f2c{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.fsb{
+  background:var(--coral);color:#fff;border:none;border-radius:10px;
+  font-family:var(--font-title);font-size:13px;font-weight:700;padding:12px;cursor:pointer;
+  width:100%;transition:opacity .18s;display:flex;align-items:center;justify-content:center;
+  gap:7px;letter-spacing:.03em;margin-top:4px;
+}
+.fsb:hover{opacity:.88}
+.fpv{font-size:10px;color:rgba(255,255,255,.4);text-align:center;line-height:1.55}
+.form-head{font-family:var(--font-title);font-size:14px;font-weight:800;color:#fff;margin-bottom:4px}
+.form-sub{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:16px}
+.ss{display:none;text-align:center;padding:20px}
+.ss-ico{font-size:36px;color:var(--coral);margin-bottom:10px}
+.ss-t{font-family:var(--font-title);font-size:18px;font-weight:900;color:#fff;margin-bottom:5px}
+.ss-s{font-size:12px;color:rgba(200,196,224,.85);margin-bottom:18px}
+.dlb{
+  display:inline-flex;align-items:center;gap:6px;background:var(--coral);color:#fff;
+  font-family:var(--font-title);font-size:12px;font-weight:700;padding:10px 20px;border-radius:10px;
+  text-decoration:none;letter-spacing:.03em;
+}
+@media(max-width:900px){
+  .fw{grid-template-columns:1fr}
+  .fl2{padding:28px 24px}
+  .fr{padding:28px 24px}
+  .f2c{grid-template-columns:1fr}
+}
+
+footer{
+  background:var(--bg-page);border-top:1px solid rgba(255,255,255,.08);
+  padding:16px 48px;font-size:10px;color:rgba(255,255,255,.4);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="ni">
+    <div class="nl">Inteli<em> · </em>Estudo de Carreiras 2025</div>
+    <div class="nv">
+      <a href="#panorama-trajetorias">Panorama e Trajetórias</a>
+      <a href="#analisador">Analisador de transição de carreira</a>
+      <a href="#oportunidades">Áreas e posicionamento</a>
+      <a href="#stack-tecnica">Stack tecnológica</a>
+      <a href="#visao-area">Visão por Área</a>
+      <a href="#projecoes">Projeções</a>
+      <a href="#sobre">Sobre essa pesquisa</a>
+      <a href="#leads">Baixe o relatório</a>
+    </div>
+    <a href="#leads" class="nc">Baixar relatório</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="section-full section-hero section-band-dark" id="hero">
+  <div class="hero-inner">
+    <h1 class="hh">Para onde ir:<br>habilidades, remuneração<br>e <em>trajetórias</em> em tech</h1>
+    <p class="hs">A maior análise de vagas do mercado brasileiro de tecnologia.</p>
+    <div class="hctas">
+      <a href="#leads" class="btn-r">Baixar o estudo completo</a>
+      <a href="#panorama-trajetorias" class="btn-o">Explorar os dados →</a>
+    </div>
+    <div class="hstats">
+      <div class="hs-c"><div class="hs-v">19.655</div><div class="hs-l">Vagas analisadas</div></div>
+      <div class="hs-c"><div class="hs-v">110</div><div class="hs-l">Profissionais pesquisados</div></div>
+      <div class="hs-c"><div class="hs-v">10</div><div class="hs-l">Especialistas</div></div>
+      <div class="hs-c"><div class="hs-v">Abr–Jun/25</div><div class="hs-l">Coleta</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPÍTULOS 1 + 2 · Panorama e Trajetórias -->
+<section class="section-full section-chapter section-band-light" id="panorama-trajetorias">
+  <div class="chapter-shell">
+    <div class="chapter-box">
+      <div class="insight-slide">
+        <div class="panel-text">
+          <div class="ch-lbl" id="mkt-ch-lbl">Capítulo 1 · Panorama do Mercado</div>
+          <h2 class="sl-h">Panorama e Trajetórias</h2>
+          <div class="sw">
+            <button class="sb on" type="button" onclick="sw('mkt',1,this)">01</button>
+            <button class="sb" type="button" onclick="sw('mkt',2,this)">02</button>
+            <button class="sb" type="button" onclick="sw('mkt',3,this)">03</button>
+            <button class="sb" type="button" onclick="sw('mkt',4,this)">04</button>
+            <button class="sb" type="button" onclick="sw('mkt',5,this)">05</button>
+            <button class="sb" type="button" onclick="sw('mkt',6,this)">06</button>
+          </div>
+          <div class="insight-stack">
+          <div class="ib on" id="mkt-1">
+            <div class="ih">O mercado aquecido tem mais portas do que parece</div>
+            <div class="it">
+              <p>O mercado de tecnologia continua operando com um déficit estrutural de talentos. Entre 2019 e 2024, a demanda acumulada chegou a 665 mil profissionais, enquanto a oferta ficou em cerca de 464 mil, gerando um descasamento de 30,2% (Brasscom, 2025).</p>
+              <p>Ao mesmo tempo, a tecnologia se consolidou como infraestrutura da economia. O macrossetor de TIC já representa 6,5% do PIB brasileiro, impulsionando a demanda por profissionais em áreas como saúde, agronegócio, finanças e indústria.</p>
+              <p>O resultado é um mercado com mais portas de entrada do que aparenta. As oportunidades estão distribuídas por diferentes setores e organizações, muito além das empresas tradicionalmente associadas à tecnologia.</p>
+            </div>
+          </div>
+          <div class="ib" id="mkt-2">
+            <div class="ih">Código já não é suficiente</div>
+            <div class="it">
+              <p>O Brasil perde cerca de R$ 1 trilhão por ano em produtividade devido a lacunas de habilidades e trajetórias profissionais mal direcionadas (Pearson, 2024). Em tecnologia, parte desse desafio está na dificuldade de conectar conhecimento técnico às necessidades do negócio.</p>
+              <p>Com a tecnologia presente em praticamente todos os setores, empregabilidade passou a exigir ambidestria: excelência técnica combinada à capacidade de compreender clientes, produtos e resultados.</p>
+              <p>Hoje, destacar-se depende da capacidade de transformar conhecimento técnico em impacto, conectando tecnologia, pessoas e resultados de negócio.</p>
+            </div>
+          </div>
+          <div class="ib" id="mkt-3">
+            <div class="ih">A oportunidade é grande, mas a volatilidade também</div>
+            <div class="it">
+              <p>O mercado brasileiro de tecnologia combina crescimento acelerado e alta instabilidade. Com mais de 13 mil startups ativas e movimentação de US$ 73,9 bilhões em 2022, o setor se consolidou como peça central da economia digital.</p>
+              <p>Ao mesmo tempo, a mobilidade profissional segue elevada. Segundo a ManpowerGroup Brasil (2026), 47% dos profissionais de tecnologia pretendem mudar de emprego em um futuro próximo.</p>
+              <p>O paradoxo é evidente: empresas continuam contratando, mas encontrar profissionais qualificados permanece um desafio. Em tecnologia, a oportunidade é abundante, mas construir relevância em um mercado que muda rapidamente tornou-se essencial.</p>
+            </div>
+          </div>
+          <div class="ib" id="mkt-4">
+            <div class="ih">Carreiras em tecnologia são fluidas e não lineares</div>
+            <div class="it">
+              <p>A ideia de uma trajetória única em tecnologia está cada vez mais ultrapassada. À medida que o setor se expande, também se multiplicam os caminhos de crescimento profissional.</p>
+              <p>A carreira pode evoluir por diferentes direções, como liderança, especialização técnica, empreendedorismo ou educação e pesquisa. Mais do que escolher uma trilha definitiva, profissionais costumam transitar entre diferentes papéis ao longo da jornada.</p>
+              <p>Como resume Arthur Massa:</p>
+              <p><em>“A nossa estrutura precisa acomodar esses perfis diversos. Não existe só um caminho certo.”</em></p>
+            </div>
+          </div>
+          <div class="ib" id="mkt-5">
+            <div class="ih">Inglês e IA alavancam a carreira</div>
+            <div class="it">
+              <p>Entre as competências que mais ampliam oportunidades em tecnologia, duas se destacam de forma consistente: inglês e inteligência artificial.</p>
+              <p>Nas vagas com faixa salarial divulgada, profissionais com inglês aparecem com maior frequência em posições entre R$ 5 mil e R$ 10 mil. Já as vagas que exigem conhecimentos em IA concentram o dobro de oportunidades acima de R$ 10 mil quando comparadas às demais.</p>
+              <p>O impacto, porém, vai além da remuneração. Essas competências ampliam o mercado acessível ao profissional, abrindo portas para empresas globais, projetos internacionais e funções de maior complexidade.</p>
+              <p>Em um setor cada vez mais conectado e impulsionado por IA, dominar essas habilidades deixou de ser um diferencial para se tornar um importante acelerador de carreira.</p>
+            </div>
+          </div>
+          <div class="ib" id="mkt-6">
+            <div class="ih">A experiência se tornou a moeda do mercado</div>
+            <div class="it">
+              <p>Entrar em tecnologia é apenas o começo. O avanço na carreira depende cada vez mais da capacidade de acumular repertório técnico, contexto de negócio e experiência prática.</p>
+              <p>Quase 60% das vagas mapeadas concentram-se nos níveis Pleno e Sênior, evidenciando que a maior parte da demanda está em profissionais capazes de atuar com autonomia e assumir responsabilidades mais complexas.</p>
+              <p>O recado do mercado é claro: a entrada pode acontecer por diferentes caminhos, mas a progressão continua fortemente associada à construção consistente de experiência.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="panel-metrics">
+          <div class="metrics-logo">inteli<span>.</span></div>
+          <div class="metrics-body">
+            <div class="ip on" id="mkt-p1">
+              <div class="bn-list">
+                <div class="bn-card"><div class="bn-val coral">665k</div><div class="bn-label coral">Demanda acumulada de profissionais entre 2019 e 2024</div></div>
+                <div class="bn-card"><div class="bn-val teal">464k</div><div class="bn-label teal">Oferta acumulada de profissionais entre 2019 e 2024</div></div>
+                <div class="bn-card"><div class="bn-val blue">+30%</div><div class="bn-label blue">Gap estrutural de 30,2%</div></div>
+              </div>
+            </div>
+            <div class="ip" id="mkt-p2">
+              <div class="bn-list">
+                <div class="bn-card" style="flex-direction:column;align-items:flex-start;gap:10px">
+                  <div class="bn-val coral" style="min-width:0">R$1tri</div>
+                  <div class="bn-label coral" style="max-width:none">são perdidos por ano em produtividade no Brasil por movimentações de carreira mal geridas e gaps de habilidades.</div>
+                </div>
+                <div class="note-card"><p>Boa parte desse custo está ligado à dificuldade de profissionais técnicos em traduzir seu trabalho em valor de negócio.</p></div>
+              </div>
+            </div>
+            <div class="ip" id="mkt-p3">
+              <div class="bn-list">
+                <div class="bn-card"><div class="bn-val coral">47%</div><div class="bn-label coral">dos profissionais de tech pretendem mudar de emprego em um futuro próximo</div></div>
+                <div class="bn-card"><div class="bn-val teal">1 em 4</div><div class="bn-label teal">trocaria de empresa por um aumento salarial de 35%</div></div>
+                <div class="bn-card"><div class="bn-val blue">82%</div><div class="bn-label blue">das empresas planejam contratar</div></div>
+                <div class="bn-card"><div class="bn-val dark">10,9%</div><div class="bn-label dark">conseguem encontrar profissionais sem dificuldade</div></div>
+              </div>
+            </div>
+            <div class="ip" id="mkt-p4">
+              <div class="mkt-p4-stack">
+                <div class="traj4">
+                  <div class="bn-card"><div class="bn-val coral">39%</div><div class="bn-label coral"><strong>Estágio em tech</strong><br>Porta principal, mais relevante para perfis jovens e universitários.</div></div>
+                  <div class="bn-card"><div class="bn-val teal">21%</div><div class="bn-label teal"><strong>Transição de carreira</strong><br>Profissionais de outras áreas que se requalificaram para tecnologia.</div></div>
+                  <div class="bn-card"><div class="bn-val blue">15%</div><div class="bn-label blue"><strong>Bootcamp</strong><br>Formação técnica intensiva, já reconhecida como rota de entrada.</div></div>
+                  <div class="bn-card"><div class="bn-val dark">25%</div><div class="bn-label dark"><strong>Outros caminhos</strong><br>trainee / jovens talentos (9%), CLT direto (8%), indicação e redes pessoais (5%), outros (3%).</div></div>
+                </div>
+                <div class="quote-panel">
+                  <p class="qt">"A nossa estrutura precisa acomodar esses perfis diversos. Não existe só um caminho certo."</p>
+                  <p class="qa">Arthur Massa</p>
+                </div>
+              </div>
+            </div>
+            <div class="ip" id="mkt-p5">
+              <div class="panel-extra" style="margin-bottom:14px">
+                <div class="bc-ttl">IA como acelerador salarial</div>
+                <div class="bc" style="margin-bottom:6px"><div class="br"><span class="bl">Até R$2K — sem IA</span><div class="bt"><div class="bf" style="width:1.9%;background:rgba(255,255,255,.35)"></div></div><span class="bv">1,9%</span></div>
+                <div class="br"><span class="bl">Até R$2K — com IA</span><div class="bt"><div class="bf" style="width:0.3%;background:var(--coral)"></div></div><span class="bv">0,3%</span></div>
+                <div class="br"><span class="bl">R$2K–5K — sem IA</span><div class="bt"><div class="bf" style="width:67.6%;background:rgba(255,255,255,.35)"></div></div><span class="bv">67,6%</span></div>
+                <div class="br"><span class="bl">R$2K–5K — com IA</span><div class="bt"><div class="bf" style="width:50.8%;background:var(--coral)"></div></div><span class="bv">50,8%</span></div>
+                <div class="br"><span class="bl">R$5K–10K — sem IA</span><div class="bt"><div class="bf" style="width:22.5%;background:rgba(255,255,255,.35)"></div></div><span class="bv">22,5%</span></div>
+                <div class="br"><span class="bl">R$5K–10K — com IA</span><div class="bt"><div class="bf" style="width:32.7%;background:var(--coral)"></div></div><span class="bv">32,7%</span></div>
+                <div class="br"><span class="bl">R$10K–30K — sem IA</span><div class="bt"><div class="bf" style="width:6%;background:rgba(255,255,255,.35)"></div></div><span class="bv">6%</span></div>
+                <div class="br"><span class="bl">R$10K–30K — com IA</span><div class="bt"><div class="bf" style="width:12.8%;background:var(--coral)"></div></div><span class="bv">12,8%</span></div>
+                <div class="br"><span class="bl">Acima R$30K — sem IA</span><div class="bt"><div class="bf" style="width:2.1%;background:rgba(255,255,255,.35)"></div></div><span class="bv">2,1%</span></div>
+                <div class="br"><span class="bl">Acima R$30K — com IA</span><div class="bt"><div class="bf" style="width:3.4%;background:var(--coral)"></div></div><span class="bv">3,4%</span></div>
+              </div>
+              <div class="panel-extra">
+                <div class="bc-ttl">Exigência de inglês por senioridade</div>
+                <div class="bc"><div class="br"><span class="bl">Pleno/Sênior</span><div class="bt"><div class="bf" style="width:8.7%;background:#5b5480"></div></div><span class="bv">8,7%</span></div>
+                <div class="br"><span class="bl">Liderança</span><div class="bt"><div class="bf" style="width:7.7%;background:var(--coral)"></div></div><span class="bv">7,7%</span></div>
+                <div class="br"><span class="bl">Júnior</span><div class="bt"><div class="bf" style="width:6.6%;background:var(--teal)"></div></div><span class="bv">6,6%</span></div>
+                <div class="br"><span class="bl">Networking / comunidades</span><div class="bt"><div class="bf" style="width:5.2%;background:rgba(255,255,255,.4)"></div></div><span class="bv">5,2%</span></div></div>
+              </div>
+            </div>
+            <div class="ip" id="mkt-p6">
+              <div class="seniority-wrap" role="img" aria-label="Distribuição de senioridade por área">
+                <div class="seniority-title">Distribuição de senioridade por área</div>
+                <div class="seniority-leg">
+                  <span><i class="leg-lid"></i>Liderança</span>
+                  <span><i class="leg-pl"></i>Pleno / Sênior</span>
+                  <span><i class="leg-jr"></i>Júnior</span>
+                </div>
+                <div class="seniority-vchart">
+                  <div class="sen-col">
+                    <div class="sen-lid-top">8%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:43%">43%</div>
+                      <div class="sen-seg sen-pl" style="height:50%">50%</div>
+                      <div class="sen-seg sen-lid" style="height:8%">8%</div>
+                    </div>
+                    <div class="sen-lbl">Infraestrutura e Suporte</div>
+                  </div>
+                  <div class="sen-col">
+                    <div class="sen-lid-top">6%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:40%">40%</div>
+                      <div class="sen-seg sen-pl" style="height:53%">53%</div>
+                      <div class="sen-seg sen-lid" style="height:6%">6%</div>
+                    </div>
+                    <div class="sen-lbl">Automação de Processos</div>
+                  </div>
+                  <div class="sen-col">
+                    <div class="sen-lid-top">5%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:26%">26%</div>
+                      <div class="sen-seg sen-pl" style="height:69%">69%</div>
+                      <div class="sen-seg sen-lid" style="height:5%">5%</div>
+                    </div>
+                    <div class="sen-lbl">Testes e Qualidade</div>
+                  </div>
+                  <div class="sen-col">
+                    <div class="sen-lid-top">21%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:24%">24%</div>
+                      <div class="sen-seg sen-pl" style="height:54%">54%</div>
+                      <div class="sen-seg sen-lid" style="height:21%">21%</div>
+                    </div>
+                    <div class="sen-lbl">Projetos e Gerenciamento</div>
+                  </div>
+                  <div class="sen-col">
+                    <div class="sen-lid-top">5%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:22%">22%</div>
+                      <div class="sen-seg sen-pl" style="height:73%">73%</div>
+                      <div class="sen-seg sen-lid" style="height:5%">5%</div>
+                    </div>
+                    <div class="sen-lbl">Desenvolvimento de Software</div>
+                  </div>
+                  <div class="sen-col">
+                    <div class="sen-lid-top">6%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:18%">18%</div>
+                      <div class="sen-seg sen-pl" style="height:76%">76%</div>
+                      <div class="sen-seg sen-lid" style="height:6%">6%</div>
+                    </div>
+                    <div class="sen-lbl">Dados e Inteligência Artificial</div>
+                  </div>
+                  <div class="sen-col">
+                    <div class="sen-lid-top">9%</div>
+                    <div class="sen-stack">
+                      <div class="sen-seg sen-jr" style="height:17%">17%</div>
+                      <div class="sen-seg sen-pl" style="height:75%">75%</div>
+                      <div class="sen-seg sen-lid" style="height:9%">9%</div>
+                    </div>
+                    <div class="sen-lbl">Segurança da Informação</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="metrics-src" id="mkt-src">Fonte: Brasscom, Perspectivas do Mercado de Trabalho do Macrossetor TIC, 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALISADOR -->
+<section class="section-full section-analisador section-band-dark" id="analisador">
+  <div class="analisador-inner">
+    <header class="analisador-head">
+      <p class="ch-lbl">Ferramenta interativa</p>
+      <h2 class="sl-h">Analisador de transição de carreira</h2>
+    </header>
+<!-- ANALISADOR EMBED START -->
+<style id="analisador-styles">
+
+#analisador-app{
+  --roxo:#2e2640;--coral:#E85D4A;--bg:transparent;--card:#ffffff;--corpo:#4A4568;
+  --sec:#8B879E;--border:#caced6;--vd:#2D6A6A;--shadow:0 2px 12px rgba(30,27,50,.08);
+  --shE:0 6px 24px rgba(0,0,0,.12);--r:12px;
+  --fg:rgba(255,255,255,.9);--fg-muted:rgba(255,255,255,.55);--fg-sub:rgba(255,255,255,.7);
+}
+#analisador-app,#analisador-app *{box-sizing:border-box}
+#analisador-app{font-family:var(--font-body),Arial,sans-serif;background:transparent;color:var(--fg);line-height:1.6}
+#analisador-app .wrap{max-width:none;margin:0;padding:0}
+#analisador-app .section-title{font-family:var(--font-title);font-size:1.35rem;font-weight:800;color:#fff;margin-bottom:.25rem}
+#analisador-app .section-sub{font-size:.88rem;color:var(--fg-sub);margin-bottom:1.25rem;max-width:640px}
+#analisador-app .intro-text{font-size:.85rem;color:var(--fg);margin-bottom:.75rem}
+#analisador-app .intro-text strong{color:#fff}
+#analisador-app .field-label{font-size:.7rem;font-weight:600;color:var(--fg-muted);display:block;margin-bottom:.25rem}
+#analisador-app .subsection-title{font-family:var(--font-title);font-size:1.05rem;font-weight:700;color:#fff;margin:2rem 0 .75rem}
+#analisador-app .card,#analisador-app .crossroad-card{color:var(--corpo)}
+#analisador-app .accent-bar{width:50px;height:3px;background:var(--coral);border-radius:2px;margin-bottom:1.25rem}
+#analisador-app .card{background:var(--card);border-radius:var(--r);padding:1.5rem;box-shadow:var(--shadow)}
+#analisador-app .label{font-family:var(--font-title);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--coral)}
+#analisador-app .skill-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.75rem}
+#analisador-app .skill-tag{padding:.25rem .6rem;border-radius:16px;font-size:.68rem;font-weight:600;background:#f0f1f3;color:var(--corpo)}
+#analisador-app .skill-tag.lang{background:#e6f5ed;color:#1a6b3a}
+#analisador-app .skill-tag.tool{background:#fff5e6;color:#b57a2a;opacity:.85}
+#analisador-app .skill-tag.hot{background:#ffeaea;color:var(--coral);border:1px solid var(--coral)}
+#analisador-app .transition-box{background:var(--roxo);color:#fff;border-radius:var(--r);padding:1.25rem 1.5rem;margin:1.25rem 0}
+#analisador-app .transition-box h5{font-size:.82rem;font-weight:700;color:var(--coral);margin-bottom:.4rem}
+#analisador-app .transition-box p{font-size:.8rem;line-height:1.55;color:#d0d0d8}
+#analisador-app .crossroad-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+@media(max-width:768px){#analisador-app .crossroad-grid{grid-template-columns:1fr}}
+#analisador-app .crossroad-card{background:var(--card);border-radius:var(--r);padding:1.25rem;box-shadow:var(--shadow);border-left:4px solid var(--vd)}
+#analisador-app .crossroad-card h5{font-size:.85rem;font-weight:700;color:var(--roxo);margin-bottom:.35rem}
+#analisador-app .crossroad-card .from-to{font-size:.72rem;color:var(--coral);font-weight:700;margin-bottom:.5rem}
+#analisador-app .crossroad-card p{font-size:.78rem;line-height:1.5;color:var(--corpo)}
+#analisador-app #transBtn{cursor:pointer;transition:opacity .2s}
+#analisador-app #transBtn:hover{opacity:.9}
+@media(max-width:768px){#analisador-app #trColumns{grid-template-columns:1fr!important}}
+
+</style>
+<div id="analisador-app">
+<div class="wrap">
+<div class="transicoes-panel" id="transicoes">
+
+<div class="section-title">Transi&ccedil;&otilde;es entre &Aacute;reas</div>
+<div class="section-sub">Quais compet&ecirc;ncias um profissional precisa desenvolver ao migrar de uma &aacute;rea para outra? An&aacute;lise cruzada dos stacks exigidos.</div>
+<div class="accent-bar"></div>
+
+<p class="intro-text">Selecione a <strong>origem</strong> e o <strong>destino</strong> da transi&ccedil;&atilde;o:</p>
+
+<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:end">
+  <div>
+    <label class="field-label">DE:</label>
+    <select id="transFrom" style="font-family:inherit;padding:.5rem .75rem;border-radius:8px;border:1.5px solid var(--border);font-size:.82rem;background:var(--card);color:var(--corpo);min-width:200px">
+      <option value="dev">Desenvolvimento de Software</option>
+      <option value="dados">Dados e IA</option>
+      <option value="infra">Infraestrutura e Suporte</option>
+      <option value="projetos">Projetos e Gerenciamento</option>
+      <option value="testes">Testes e QA</option>
+      <option value="seg">Seguran&ccedil;a da Informa&ccedil;&atilde;o</option>
+      <option value="auto">Automa&ccedil;&atilde;o de Processos</option>
+    </select>
+  </div>
+  <div style="font-size:1.5rem;color:var(--coral);font-weight:800;padding-bottom:.35rem">&rarr;</div>
+  <div>
+    <label class="field-label">PARA:</label>
+    <select id="transTo" style="font-family:inherit;padding:.5rem .75rem;border-radius:8px;border:1.5px solid var(--border);font-size:.82rem;background:var(--card);color:var(--corpo);min-width:200px">
+      <option value="dados">Dados e IA</option>
+      <option value="dev">Desenvolvimento de Software</option>
+      <option value="infra">Infraestrutura e Suporte</option>
+      <option value="projetos">Projetos e Gerenciamento</option>
+      <option value="testes">Testes e QA</option>
+      <option value="seg">Seguran&ccedil;a da Informa&ccedil;&atilde;o</option>
+      <option value="auto">Automa&ccedil;&atilde;o de Processos</option>
+    </select>
+  </div>
+  <button id="transBtn" style="font-family:inherit;padding:.5rem 1.25rem;border-radius:8px;border:none;background:var(--coral);color:#fff;font-size:.82rem;font-weight:600;cursor:pointer;transition:opacity .2s">Analisar</button>
+</div>
+
+<div id="transResult" style="display:none">
+  <div class="card" style="border-left:4px solid var(--coral);margin-bottom:1rem">
+    <div class="label" id="trLabel"></div>
+    <h4 style="font-size:1rem;font-weight:700;color:var(--roxo);margin:.35rem 0 .75rem" id="trTitle"></h4>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem" id="trColumns">
+      <div>
+        <h5 style="font-size:.75rem;font-weight:700;color:var(--vd);margin-bottom:.4rem">&#9989; Voc&ecirc; j&aacute; tem</h5>
+        <div class="skill-tags" id="trShared"></div>
+      </div>
+      <div>
+        <h5 style="font-size:.75rem;font-weight:700;color:var(--coral);margin-bottom:.4rem">&#128640; Precisa desenvolver</h5>
+        <div class="skill-tags" id="trNeeded"></div>
+      </div>
+      <div>
+        <h5 style="font-size:.75rem;font-weight:700;color:var(--sec);margin-bottom:.4rem">&#128161; Pode soltar</h5>
+        <div class="skill-tags" id="trDrop"></div>
+      </div>
+    </div>
+
+    <div class="transition-box" style="margin:0">
+      <h5>Dica estrat&eacute;gica</h5>
+      <p id="trTip"></p>
+    </div>
+  </div>
+</div>
+
+<h3 class="subsection-title">Transi&ccedil;&otilde;es Mais Comuns (com base nos dados)</h3>
+<div class="crossroad-grid">
+  <div class="crossroad-card"><div class="from-to">Dev Software &rarr; Dados e IA</div><h5>O caminho mais natural</h5><p>Python (14.2% &rarr; 50.7%) e SQL (22.5% &rarr; 50.1%) j&aacute; est&atilde;o no stack de Dev. Falta: ML (28.3%), Power BI (31%), Spark (14.3%), Snowflake (11.8%). Pensamento anal&iacute;tico sobe de irrelevante para 30.9%.</p></div>
+  <div class="crossroad-card"><div class="from-to">Dev Software &rarr; Projetos e Ger.</div><h5>Do c&oacute;digo &agrave; gest&atilde;o</h5><p>&Aacute;geis (25.4% &rarr; 24.1%) e Scrum j&aacute; est&atilde;o presentes. Ganho: Lideran&ccedil;a sobe de 12% para 19.9%, Comunica&ccedil;&atilde;o de 33.6% para 42.5%. Precisa: Product Mgmt (6.3%), Excel/Power BI, SAP (8.9%).</p></div>
+  <div class="crossroad-card"><div class="from-to">Infra &rarr; Seguran&ccedil;a</div><h5>Especializa&ccedil;&atilde;o vertical</h5><p>Linux (22.3% &rarr; 26.9%) e Cloud (22.1% &rarr; 34.4%) s&atilde;o base compartilhada. Falta: Splunk (28.4%), OWASP (13.8%), Pentest (8.6%), Data Privacy (23.8%), Burp Suite (5.6%). Barreira alta &mdash; 79% das vagas s&atilde;o Pl/Sr.</p></div>
+  <div class="crossroad-card"><div class="from-to">Testes &rarr; Dev Software</div><h5>Do QA ao desenvolvimento</h5><p>CI/CD (22.8% &rarr; 19.7%) e API (18.5% &rarr; 28.6%) s&atilde;o pontes. Falta: React (19.3%), Angular (12.8%), TypeScript (11.2%), Docker (13.2%). JavaScript sobe de 10.9% para 28.1%.</p></div>
+  <div class="crossroad-card"><div class="from-to">Dados e IA &rarr; Seguran&ccedil;a</div><h5>Do dado &agrave; prote&ccedil;&atilde;o</h5><p>Python (50.7% &rarr; 15.9%), Cloud (23.6% &rarr; 34.4%) e Data Privacy (4.8% &rarr; 23.8%) conectam. Falta: Splunk (28.4%), OWASP (13.8%), Linux (26.9%), Pentest (8.6%). Perfil raro e muito valorizado.</p></div>
+  <div class="crossroad-card"><div class="from-to">Qualquer &Aacute;rea &rarr; Lideran&ccedil;a</div><h5>A transi&ccedil;&atilde;o universal</h5><p>Comunica&ccedil;&atilde;o (31&ndash;42%) &eacute; #1 em quase todas as &aacute;reas. Lideran&ccedil;a sobe de 10&ndash;12% para 17&ndash;20% na transi&ccedil;&atilde;o. P&oacute;s-grad exigida em 9.3% das vagas de lideran&ccedil;a vs 3.6% Pleno. O gap real: vis&atilde;o de neg&oacute;cio.</p></div>
+</div>
+
+</div><!-- /transicoes -->
+</div>
+</div>
+<script id="analisador-script">
+(function(){
+// ── AREA DATA ──
+const AREAS={
+  dev:{name:'Desenvolvimento de Software',jr:22,pl:73,sr:5,lid:0,
+    concepts:['API (28.6%)','Ágeis (25.4%)','CI/CD (19.7%)','Cloud (19.5%)','Scrum (17.1%)'],
+    langs:['JavaScript (28.1%)','SQL (22.5%)','Java (17.2%)','Python (14.2%)','TypeScript (11.2%)'],
+    tools:['Git (25.2%)','Docker (13.2%)','Office 365 (5.7%)','Excel (5.7%)','Figma (5.3%)'],
+    systems:['React (19.3%)','AWS (16.2%)','Angular (12.8%)','PostgreSQL (10.5%)','Azure (10%)'],
+    jrPl:['Microservices','Kubernetes','NoSQL','GraphQL','Serverless','TypeScript avançado','Inglês'],
+    plLid:['System Design','Visão de Negócio','Liderança de equipe','Product Mgmt','Mentoria'],
+    softTop:'Comunicação (33.6%), Criatividade (31.3%), Organização (23.9%)'
+  },
+  dados:{name:'Dados e IA',jr:18,pl:76,sr:6,lid:0,
+    concepts:['ML (28.3%)','Cloud (23.6%)','Ágeis (14.8%)','API (8.8%)','CI/CD (8.7%)'],
+    langs:['Python (50.7%)','SQL (50.1%)','R (25.7%)','JavaScript (6%)','Go (4.4%)'],
+    tools:['Power BI (31%)','Excel (20.8%)','Tableau (12.1%)','Git (10.3%)','Airflow (8.1%)'],
+    systems:['AWS (19.1%)','Azure (16.8%)','Spark (14.3%)','GCP (12%)','Snowflake (11.8%)'],
+    jrPl:['Redes Neurais','Snowflake','Airflow','LangChain','Data Privacy','Serverless'],
+    plLid:['Arquitetura de dados','Visão de Negócio','Comunicação executiva','IA estratégica','Mentoria'],
+    softTop:'Comunicação (39.8%), Criatividade (37.8%), Pens. Analítico (30.9%)'
+  },
+  infra:{name:'Infraestrutura e Suporte',jr:43,pl:50,sr:6,lid:1,
+    concepts:['Cloud (22.1%)','Ágeis (13.1%)','CI/CD (9.6%)','Scrum (4%)','API (3.2%)'],
+    langs:['R (21.5%)','Python (9%)','SQL (7.7%)','Go (3.8%)','Java (2.6%)'],
+    tools:['Office 365 (16.7%)','Grafana (9.9%)','Terraform (9.4%)','Docker (6.8%)','Excel (6.6%)'],
+    systems:['Windows (28.8%)','Linux (22.3%)','AWS (16.6%)','Azure (13.7%)','Kubernetes (8.7%)'],
+    jrPl:['Kubernetes avançado','Terraform avançado','Ansible','GCP','Resolução de problemas'],
+    plLid:['Arquitetura cloud','Gestão de incidentes','Liderança','Budget de infra','Comunicação com stakeholders'],
+    softTop:'Comunicação (37.5%), Organização (26%), Criatividade (25.4%)'
+  },
+  projetos:{name:'Projetos e Gerenciamento',jr:24,pl:54,sr:1,lid:21,
+    concepts:['Ágeis (24.1%)','Scrum (16.9%)','Cloud (12.5%)','Kanban (10.2%)','PM (6.3%)'],
+    langs:['R (19.6%)','SQL (11.5%)','Python (6%)','Go (3.9%)','C++ (3.9%)'],
+    tools:['Excel (13.1%)','Office 365 (11.2%)','Power BI (7.7%)','Jira (7.7%)','Figma (3%)'],
+    systems:['SAP (8.9%)','AWS (6.1%)','Azure (5.9%)','Windows (4.2%)','Oracle (3.3%)'],
+    jrPl:['Product Mgmt','Lean','ML básico','Visão de Negócio','Criatividade'],
+    plLid:['Gestão de P&L','Comunicação executiva','Influência organizacional','Estratégia de produto','OKRs'],
+    softTop:'Comunicação (42.5%), Organização (34.6%), Criatividade (33.2%)'
+  },
+  testes:{name:'Testes e Qualidade',jr:26,pl:65,sr:6,lid:3,
+    concepts:['Ágeis (26.4%)','CI/CD (22.8%)','Scrum (22.2%)','API (18.5%)','Kanban (14.1%)'],
+    langs:['R (18.3%)','Python (13.8%)','Java (13.3%)','SQL (13.1%)','JavaScript (10.9%)'],
+    tools:['Selenium (19.6%)','Cypress (18%)','Jira (14.2%)','Postman (13.6%)','Git (11.5%)'],
+    systems:['AWS (10.6%)','Azure (9.4%)','Kubernetes (8.1%)','GitLab (6.7%)','Linux (5.7%)'],
+    jrPl:['Playwright','Kubernetes','Microservices','Go','ML básico'],
+    plLid:['Liderança de QA','Estratégia de testes','Comunicação com POs','Métricas de qualidade','Mentoria'],
+    softTop:'Criatividade (33.4%), Comunicação (31.7%), Organização (23.9%)'
+  },
+  seg:{name:'Segurança da Informação',jr:17,pl:79,sr:4,lid:0,
+    concepts:['Cloud (34.4%)','Data Privacy (23.8%)','OWASP (13.8%)','Ágeis (10.6%)','Pentest (8.6%)'],
+    langs:['Python (15.9%)','R (11.9%)','Go (5.8%)','SQL (4%)','C++ (3.1%)'],
+    tools:['Office 365 (6.1%)','Burp Suite (5.6%)','Terraform (5.2%)','Grafana (5%)','Docker (4.6%)'],
+    systems:['Splunk (28.4%)','Linux (26.9%)','Windows (24.2%)','AWS (24%)','Azure (22.3%)'],
+    jrPl:['Pentest avançado','Kubernetes','CI/CD','API Security','Docker avançado'],
+    plLid:['Gestão de risco','Compliance (LGPD)','Comunicação de incidentes','Liderança de SOC','Visão regulatória'],
+    softTop:'Comunicação (41.6%), Criatividade (38.3%), Organização (30.8%)'
+  },
+  auto:{name:'Automação de Processos',jr:40,pl:53,sr:6,lid:1,
+    concepts:['API (16.4%)','Ágeis (9.9%)','CI/CD (9.5%)','Scrum (7.6%)','Cloud (6.9%)'],
+    langs:['R (21.6%)','Python (20.1%)','SQL (12.5%)','JavaScript (9%)','Java (7.1%)'],
+    tools:['Office 365 (10.4%)','Excel (10.1%)','Selenium (8.6%)','Jira (8.2%)','Git (7.8%)'],
+    systems:['SAP (6.7%)','Linux (5.8%)','AWS (3.9%)','GitHub (3.7%)','Azure (3.2%)'],
+    jrPl:['Edge Computing','Kafka','Docker avançado','Pensamento analítico','Liderança'],
+    plLid:['Visão de Negócio','Gestão de processos','Comunicação executiva','Lean avançado','Transformação digital'],
+    softTop:'Comunicação (37.7%), Organização (22.1%), Criatividade (18.8%)'
+  }
+};
+
+// ── TRANSITIONS ENGINE ──
+document.getElementById('transBtn').addEventListener('click',analyzeTransition);
+
+function analyzeTransition(){
+  const fromKey=document.getElementById('transFrom').value;
+  const toKey=document.getElementById('transTo').value;
+  if(fromKey===toKey){alert('Selecione áreas diferentes.');return;}
+  const from=AREAS[fromKey],to=AREAS[toKey];
+
+  const fromSet=new Set([...from.concepts,...from.langs,...from.tools,...from.systems].map(s=>s.replace(/\s*\([\d.]+%\)/,'')));
+  const toAll=[...to.concepts,...to.langs,...to.tools,...to.systems];
+  const toSet=new Set(toAll.map(s=>s.replace(/\s*\([\d.]+%\)/,'')));
+
+  const shared=[],needed=[],drop=[];
+  toAll.forEach(s=>{const name=s.replace(/\s*\([\d.]+%\)/,'');if(fromSet.has(name))shared.push(s);else needed.push(s);});
+  [...from.concepts,...from.langs,...from.tools,...from.systems].forEach(s=>{const name=s.replace(/\s*\([\d.]+%\)/,'');if(!toSet.has(name))drop.push(s);});
+
+  document.getElementById('transResult').style.display='block';
+  document.getElementById('trLabel').textContent='Análise de Transição';
+  document.getElementById('trTitle').textContent=`${from.name} → ${to.name}`;
+  document.getElementById('trShared').innerHTML=shared.slice(0,8).map(s=>`<span class="skill-tag lang">${s}</span>`).join('')||'<span style="font-size:.78rem;color:var(--sec)">Poucas sobreposições diretas</span>';
+  document.getElementById('trNeeded').innerHTML=needed.slice(0,8).map(s=>`<span class="skill-tag hot">${s}</span>`).join('');
+  document.getElementById('trDrop').innerHTML=drop.slice(0,6).map(s=>`<span class="skill-tag tool" style="opacity:.6">${s}</span>`).join('');
+
+  const tips={
+    'dev-dados':'Python e SQL já estão no seu stack. Foque em ML, Power BI e Spark. Pensamento analítico vira skill #3.',
+    'dev-projetos':'Ágeis e Scrum já são sua base. Desenvolva Product Mgmt, Excel avançado e Comunicação (sobe de 33.6% para 42.5%).',
+    'dev-seg':'Cloud é ponte (19.5% → 34.4%). Precisa de Splunk, OWASP, Pentest e Linux aprofundado. Barreira alta: 79% Pl/Sr.',
+    'dados-dev':'Python e SQL são universais. Falta: JavaScript (6% → 28.1%), React (19.3%), Git (10.3% → 25.2%). Mais prático e menos analítico.',
+    'dados-seg':'Data Privacy (4.8% → 23.8%) e Cloud (23.6% → 34.4%) são pontes. Falta Splunk, OWASP e Pentest. Perfil raro.',
+    'infra-seg':'Linux e Cloud são base forte. Adicione Splunk (28.4%), OWASP (13.8%), Pentest (8.6%). Transição mais natural do mercado.',
+    'infra-dev':'Cloud é compartilhado. Precisa de JavaScript, React, Git/Docker workflow, API design. Grande salto técnico.',
+    'testes-dev':'CI/CD e API são pontes fortes. Falta React/Angular, TypeScript e Docker. JavaScript sobe de 10.9% para 28.1%.',
+    'projetos-dados':'Scrum e Ágeis já dominados. Precisa profundidade técnica: Python (6% → 50.7%), SQL (11.5% → 50.1%), ML, Power BI.',
+    'seg-dados':'Python compartilhado. Falta SQL profundo, ML (28.3%), Power BI (31%), Spark. Mindset muda de defesa para análise.',
+  };
+  const tipKey=fromKey+'-'+toKey;
+  const tipText=tips[tipKey]||`Analise as competências em vermelho — são as que o destino exige e a origem não desenvolve. Comunicação é universal e transferível.`;
+  document.getElementById('trTip').textContent=tipText;
+}
+
+
+})();
+</script>
+<!-- ANALISADOR EMBED END -->
+
+  </div>
+</section>
+
+<!-- CAPÍTULO 3 · Oportunidades de Empregabilidade -->
+<section class="section-full section-chapter section-band-light" id="oportunidades">
+  <div class="chapter-shell">
+    <div class="chapter-box">
+      <div class="insight-slide">
+        <div class="panel-text">
+          <div class="ch-lbl" id="emp-ch-lbl">Capítulo 3 · Áreas e Posicionamento</div>
+          <h2 class="sl-h">Áreas e posicionamento</h2>
+          <div class="sw">
+            <button class="sb on" type="button" onclick="sw('emp',1,this)">01</button>
+            <button class="sb" type="button" onclick="sw('emp',2,this)">02</button>
+          </div>
+          <div class="insight-stack">
+          <div class="ib on" id="emp-1">
+            <div class="ih">O mercado é grande, mas não é onde parece</div>
+            <div class="it">
+              <p>Há mais demanda do que oferta em tecnologia, mas as oportunidades não estão distribuídas onde o discurso aponta. Enquanto a Inteligência Artificial concentra atenção e percepção de valor, a maior parte das vagas segue ancorada em desenvolvimento e infraestrutura.</p>
+              <p>O mercado fala sobre o futuro, mas contrata para sustentar o presente. Quem entra pelo hype encontra barreiras. Quem entende onde o volume real está, encontra espaço.</p>
+            </div>
+          </div>
+          <div class="ib" id="emp-2">
+            <div class="ih">Além de escolher tecnologia, é possível escolher o setor</div>
+            <div class="it">
+              <p>A tecnologia deixou de ser um setor isolado e passou a operar como base de praticamente todos os negócios. Finanças, varejo, saúde, indústria, agronegócio e educação disputam os mesmos profissionais, em diferentes estágios de maturidade digital.</p>
+              <p>Isso muda a lógica de carreira. Escolher tecnologia não define mais o caminho. O profissional ainda decide em que setor atuar, que tipo de problema quer resolver e em qual contexto quer operar.</p>
+              <p>No painel ao lado, selecione um setor para ver as principais competências e tecnologias demandadas.</p>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="panel-metrics">
+          <div class="metrics-logo">inteli<span>.</span></div>
+          <div class="metrics-body">
+            <div class="ip on" id="emp-p1">
+              <div class="panel-extra">
+                <img class="viz-img" src="distribuicao-tecnica.png" alt="Distribuição técnica das vagas mapeadas — Índice de Vagas (Inteli, 2025)">
+              </div>
+            </div>
+            <div class="ip" id="emp-p2">
+              <div class="sps" id="sec-pills">
+                <button class="sp on" type="button" onclick="setSec(this,'financas')">Finanças</button>
+                <button class="sp" type="button" onclick="setSec(this,'varejo')">Varejo</button>
+                <button class="sp" type="button" onclick="setSec(this,'saude')">Saúde</button>
+                <button class="sp" type="button" onclick="setSec(this,'industria')">Indústria</button>
+                <button class="sp" type="button" onclick="setSec(this,'logistica')">Logística</button>
+                <button class="sp" type="button" onclick="setSec(this,'agro')">Agro</button>
+                <button class="sp" type="button" onclick="setSec(this,'educacao')">Educação</button>
+                <button class="sp" type="button" onclick="setSec(this,'publico')">Setor público</button>
+              </div>
+              <div class="ol" id="sec-list"></div>
+            </div>
+          </div>
+          <p class="metrics-src" id="emp-src">Fonte: Sonda Tech e Índice de Vagas (Inteli, 2025)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK TECNOLÓGICA (pós Cap. 3) -->
+<section class="section-full section-stack section-band-dark" id="stack-tecnica">
+  <div class="stack-inner">
+    <p class="ch-lbl">Complemento · Capítulo 3</p>
+    <h2 class="sl-h">Stack tecnológica</h2>
+    <p class="stack-intro">O mercado não busca linguagens isoladas, mas um sistema integrado de competências. A técnica define o que se constrói — as soft skills definem se isso gera valor dentro da organização.</p>
+
+    <div class="stack-split">
+      <div class="stack-pane stack-pane-hard">
+        <div class="stack-pane-h">Hard skills</div>
+        <h3 class="stack-pane-title">O ecossistema técnico<br>do mercado</h3>
+        <p class="stack-pane-lead">Sistemas, linguagens, ferramentas e conceitos operacionais se conectam na prática. Selecione uma camada para ver o que mais aparece nas vagas.</p>
+        <div class="stack-tabs" role="tablist" aria-label="Camadas do stack técnico">
+          <button type="button" class="stack-tab active" role="tab" aria-selected="true" data-stack="conceitos" onclick="setStackTab(this,'conceitos')">Conceitos</button>
+          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="sistemas" onclick="setStackTab(this,'sistemas')">Sistemas</button>
+          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="linguagens" onclick="setStackTab(this,'linguagens')">Linguagens</button>
+          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="ferramentas" onclick="setStackTab(this,'ferramentas')">Ferramentas</button>
+        </div>
+        <div class="stack-viewport" id="stackViewport">
+          <div class="stack-hard-panel on" id="stack-conceitos" role="tabpanel">
+            <div class="stack-hard-blabel">Conceitos · 16,9%</div>
+            <div class="stack-hard-title">Como o trabalho se organiza</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">Metodologias Ágeis <span>4.800 menções</span></div>
+              <div class="stack-hard-item">CI/CD <span>4.000 menções</span></div>
+              <div class="stack-hard-item">Cloud <span>3.700 menções</span></div>
+              <div class="stack-hard-item">API <span>3.200 menções</span></div>
+              <div class="stack-hard-item">Machine Learning <span>2.200 menções</span></div>
+            </div>
+          </div>
+          <div class="stack-hard-panel" id="stack-sistemas" role="tabpanel" hidden>
+            <div class="stack-hard-blabel">Sistemas · onde a tech opera</div>
+            <div class="stack-hard-title">Plataformas e ambientes</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">AWS <span>5.380 menções</span></div>
+              <div class="stack-hard-item">Azure <span>4.370 menções</span></div>
+              <div class="stack-hard-item">Linux <span>3.980 menções</span></div>
+              <div class="stack-hard-item">Windows <span>2.090 menções</span></div>
+              <div class="stack-hard-item">GCP <span>2.080 menções</span></div>
+            </div>
+          </div>
+          <div class="stack-hard-panel" id="stack-linguagens" role="tabpanel" hidden>
+            <div class="stack-hard-blabel">Linguagens · desenvolvimento</div>
+            <div class="stack-hard-title">Como os sistemas são construídos</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">Python <span>4.800 menções</span></div>
+              <div class="stack-hard-item">SQL <span>4.300 menções</span></div>
+              <div class="stack-hard-item">JavaScript <span>3.500 menções</span></div>
+              <div class="stack-hard-item">Java <span>2.600 menções</span></div>
+              <div class="stack-hard-item">Go <span>1.300 menções</span></div>
+            </div>
+          </div>
+          <div class="stack-hard-panel" id="stack-ferramentas" role="tabpanel" hidden>
+            <div class="stack-hard-blabel">Ferramentas · operação diária</div>
+            <div class="stack-hard-title">Como o trabalho acontece</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">Git <span>2.482 menções</span></div>
+              <div class="stack-hard-item">Office 365 <span>1.789 menções</span></div>
+              <div class="stack-hard-item">Excel <span>1.300+ menções</span></div>
+              <div class="stack-hard-item">Power BI <span>presente no índice</span></div>
+              <div class="stack-hard-item">Docker <span>presente no índice</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="stack-pane-fonte">Fonte: Inteli — Índice de Vagas (Web Scraping, 2025) · ~19.655 vagas</p>
+      </div>
+
+      <div class="stack-pane">
+        <div class="stack-pane-h">Soft skills</div>
+        <h3 class="stack-pane-title">O que define quem<br>gera impacto</h3>
+        <p class="stack-pane-lead">Comunicação lidera nas vagas (21% das menções). A técnica abre portas — as competências comportamentais sustentam progressão e impacto na organização.</p>
+        <div class="stack-soft-rank" id="stackSoftRank"></div>
+        <div class="stack-soft-quote">
+          <strong>Aprendizado contínuo</strong>
+          "Tem uma coisa que não vai mudar nunca: você ter que estudar." — Maurício Garcia, Inteli. O ritmo de obsolescência tornou o estudo permanente uma condição básica, não um diferencial.
+        </div>
+        <p class="stack-pane-fonte">Fonte: Inteli — Índice de Vagas (Web Scraping, 2025)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPÍTULO 4 · Visão por Área -->
+<section class="section-full section-areas section-band-light" id="visao-area">
+  <div class="areas-inner">
+    <p class="ch-lbl">Capítulo 4 · Visão por Área</p>
+    <h2 class="sl-h">Explore as 7 áreas de atuação em tech</h2>
+    <p class="areas-lead">Distribuição de 19.655 vagas mapeadas entre abril e junho de 2025. Clique em qualquer área para ver soft skills, hard skills e faixas salariais por cargo.</p>
+    <p class="areas-fonte">Fonte: Inteli — Índice de Vagas (Web Scraping, 2025) · Salários: Guia Salarial (Robert Half, 2026)</p>
+
+    <div class="areas-filters" role="group" aria-label="Filtros de área">
+      <button type="button" class="filter-btn active" data-filter="all">Todas as áreas</button>
+      <button type="button" class="filter-btn" data-filter="entrada">Melhor entrada júnior (&gt;30%)</button>
+      <button type="button" class="filter-btn" data-filter="esp">Alta especialização</button>
+    </div>
+
+    <div class="areas-grid" id="areasGrid"></div>
+  </div>
+</section>
+
+<!-- PROJEÇÕES IA -->
+<section class="section-full section-chapter section-band-dark" id="projecoes">
+  <div class="chapter-shell">
+    <div class="chapter-box">
+      <div class="insight-slide">
+        <div class="panel-text">
+          <div class="ch-lbl">Capítulo 5 · Projeções para o setor com IA</div>
+          <h2 class="projecoes-title">A IA está ampliando oportunidades ou mudando as regras do jogo?</h2>
+          <div class="projecoes-body it">
+            <p class="projecoes-kicker">Ainda não sabemos ao certo.</p>
+            <p>A inteligência artificial avança mais rápido do que empresas, mercados e regulamentações conseguem acompanhar. Novas oportunidades surgem, funções se transformam e as competências mais valorizadas continuam em movimento.</p>
+            <p>Nesse cenário, dominar ferramentas não basta. O diferencial está em combinar fundamentos técnicos, pensamento crítico e capacidade de trabalhar com tecnologias que evoluem constantemente.</p>
+            <p>As regras ainda estão sendo escritas. E o profissional que prosperará nesse futuro será aquele capaz de aprender, se adaptar e construir junto com a transformação.</p>
+            <p class="projecoes-inteli">No Inteli, estamos formando esse profissional.</p>
+          </div>
+          <a href="#leads" class="btn-r projecoes-cta">Construa o futuro com a gente.</a>
+        </div>
+        <div class="panel-metrics">
+          <div class="metrics-logo">inteli<span>.</span></div>
+          <div class="metrics-body">
+            <div class="ia-roles-stack" role="img" aria-label="Três perfis profissionais diante da IA: Displaced, Augmented e Builders">
+              <article class="ia-role-card">
+                <div class="ia-role-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 36 L38 28 L52 34 L28 42 Z" fill="#4A4568"/>
+                    <path d="M16 34 L36 27 L50 33 L30 40 Z" fill="#6B6588"/>
+                    <path d="M26 30 L40 26 L40 33 L26 37 Z" fill="#B8C0D0"/>
+                    <path d="M27 28 L39 24.5 L39 31 L27 34.5 Z" fill="#E2E8F0"/>
+                    <path d="M30 31 L37 29 L37 30.5 L30 32.5 Z" fill="#7B8CDE"/>
+                    <circle cx="18" cy="22" r="3" fill="#8EC8E8"/>
+                    <rect x="16" y="25" width="4" height="7" rx="1" fill="#8EC8E8" opacity=".85"/>
+                    <rect x="11" y="20" width="2" height="2" fill="#8EC8E8" opacity=".45"/>
+                    <rect x="9" y="24" width="1.5" height="1.5" fill="#8EC8E8" opacity=".35"/>
+                    <rect x="13" y="17" width="1.5" height="1.5" fill="#8EC8E8" opacity=".5"/>
+                    <rect x="8" y="27" width="2" height="2" fill="#8EC8E8" opacity=".3"/>
+                    <rect x="15" y="15" width="1" height="1" fill="#8EC8E8" opacity=".4"/>
+                    <path d="M44 22 L48 20 L48 26 L44 28 Z" fill="#E85D4A" opacity=".75"/>
+                    <path d="M46 18 L50 16 L50 20 L46 22 Z" fill="#7B8CDE" opacity=".8"/>
+                  </svg>
+                </div>
+                <div class="ia-role-copy">
+                  <strong>Displaced</strong>
+                  <p>Funções substituídas ou reduzidas pela automação.</p>
+                </div>
+              </article>
+              <article class="ia-role-card">
+                <div class="ia-role-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 38 L40 30 L54 36 L30 44 Z" fill="#4A4568"/>
+                    <path d="M18 36 L38 29 L52 35 L32 42 Z" fill="#6B6588"/>
+                    <ellipse cx="34" cy="24" rx="5" ry="6" fill="#8EC8E8"/>
+                    <path d="M30 30 L38 30 L36 38 L32 38 Z" fill="#5A9BB8"/>
+                    <path d="M28 32 L40 28 L40 34 L28 38 Z" fill="#B8C0D0"/>
+                    <path d="M29 30 L39 26.5 L39 32 L29 35.5 Z" fill="#E2E8F0"/>
+                    <rect x="42" y="16" width="10" height="8" rx="1" fill="#fff" opacity=".9"/>
+                    <rect x="44" y="19" width="2" height="4" fill="#E85D4A"/>
+                    <rect x="47" y="17" width="2" height="6" fill="#7B8CDE"/>
+                    <rect x="50" y="20" width="2" height="3" fill="#2D6A6A"/>
+                    <path d="M46 12 L54 10 L54 14 L46 16 Z" fill="#fff" opacity=".85"/>
+                    <path d="M48 11 L52 10 L52 12 L48 13 Z" fill="#7B8CDE"/>
+                    <circle cx="14" cy="18" r="4" fill="#fff" opacity=".2"/>
+                    <path d="M12 17 L16 17 L16 20 L13 21 Z" fill="#E85D4A" opacity=".7"/>
+                  </svg>
+                </div>
+                <div class="ia-role-copy">
+                  <strong>Augmented</strong>
+                  <p>IA como ferramenta, mantendo julgamento humano.</p>
+                </div>
+              </article>
+              <article class="ia-role-card">
+                <div class="ia-role-icon" aria-hidden="true">
+                  <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 40 L30 36 L30 48 L22 52 Z" fill="#4A4568"/>
+                    <path d="M30 36 L38 40 L38 52 L30 48 Z" fill="#6B6588"/>
+                    <path d="M38 40 L46 36 L46 48 L38 52 Z" fill="#5A5478"/>
+                    <rect x="24" y="30" width="16" height="8" rx="1" fill="#B8C0D0"/>
+                    <rect x="26" y="32" width="3" height="4" fill="#7B8CDE"/>
+                    <rect x="30" y="31" width="3" height="5" fill="#2D6A6A"/>
+                    <rect x="34" y="33" width="3" height="3" fill="#E85D4A"/>
+                    <circle cx="32" cy="18" r="6" fill="#F0E6A8"/>
+                    <path d="M32 12 L34 18 L32 20 L30 18 Z" fill="#E8D060"/>
+                    <path d="M32 20 L32 24" stroke="#E8D060" stroke-width="1.5"/>
+                    <circle cx="48" cy="22" r="3" fill="#8EC8E8" opacity=".8"/>
+                    <circle cx="16" cy="26" r="2.5" fill="#7B8CDE" opacity=".7"/>
+                    <path d="M32 24 L48 22" stroke="#8EC8E8" stroke-width=".8" opacity=".5"/>
+                    <path d="M32 24 L16 26" stroke="#7B8CDE" stroke-width=".8" opacity=".5"/>
+                    <rect x="40" y="44" width="14" height="6" rx="1" fill="#E2E8F0" opacity=".9"/>
+                    <path d="M42 46 L52 46" stroke="#7B8CDE" stroke-width=".8"/>
+                    <path d="M42 48 L50 48" stroke="#2D6A6A" stroke-width=".8"/>
+                  </svg>
+                </div>
+                <div class="ia-role-copy">
+                  <strong>Builders</strong>
+                  <p>Desenvolvem, arquitetam e governam as IA.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="section-full section-plain section-chapter section-band-light" id="sobre">
+  <div class="chapter-shell" style="max-height:none;height:auto">
+    <div class="content-box plain-inner" style="margin:0;width:100%">
+      <div class="ch-lbl">Sobre esse relatório</div>
+      <h2 class="hh" style="font-size:clamp(28px,4vw,42px)">Quatro camadas de<br><em>dados complementares</em></h2>
+      <p class="hs" style="max-width:720px;margin-bottom:0">Como este estudo foi construído: desk research, coleta massiva de vagas, entrevistas com lideranças e pesquisa quantitativa com profissionais de tecnologia.</p>
+      <div class="method-grid">
+        <div class="method-card featured">
+          <div class="m-num">01 · Desk Research</div>
+          <div class="m-big">10+</div>
+          <div class="m-label">Relatórios</div>
+          <div class="m-title">Revisão bibliográfica</div>
+          <div class="m-desc">Brasscom, Robert Half, PwC, MIT Sloan, Banco Mundial, IBGE, Sebrae, IDC/ABES, Gi Group, Pearson. Artigos, marcos legais e bases governamentais.</div>
+        </div>
+        <div class="method-card">
+          <div class="m-num">02 · Web Scraping</div>
+          <div class="m-big">72,7K</div>
+          <div class="m-label">Vagas coletadas</div>
+          <div class="m-title">Índice de vagas</div>
+          <div class="m-desc">Plataformas públicas de recrutamento, abril a junho de 2025. Extrato limpo com deduplicação: 19.655 vagas diretamente relacionadas ao setor de tecnologia.</div>
+        </div>
+        <div class="method-card">
+          <div class="m-num">03 · Entrevistas</div>
+          <div class="m-big">10</div>
+          <div class="m-label">Especialistas</div>
+          <div class="m-title">Vozes do mercado</div>
+          <div class="m-desc">Lideranças de RH, tecnologia, educação, empreendedorismo e regulação. Perfis: Atos, Ambev Tech, QI Tech, Printi, Accenture, SAP, Confea e Inteli.</div>
+        </div>
+        <div class="method-card">
+          <div class="m-num">04 · Survey</div>
+          <div class="m-big">110</div>
+          <div class="m-label">Respondentes</div>
+          <div class="m-title">Sonda Tech</div>
+          <div class="m-desc">Formulário com 40+ perguntas abertas e fechadas. Concentração no Sudeste (90,5%), faixa etária 25–34 anos (34,7%), nível Pleno/Sênior predominante (45%).</div>
+        </div>
+      </div>
+      <p class="method-foot">
+        Metodologia: Web Scraping · Pesquisa Quantitativa · Entrevistas em Profundidade · Desk Research<br>
+        Período de coleta de vagas: abril a junho de 2025 · Inteli — Estudo de Carreiras em Tecnologia 2025
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- LEADS -->
+<section class="section-full section-form section-band-dark" id="leads">
+  <div class="leads-inner">
+    <div class="fw">
+      <div class="fl2">
+        <span class="fe">Acesso gratuito</span>
+        <h3 class="ft">Baixe o estudo completo de carreiras tech 2025</h3>
+        <p class="fd">Análise profunda por área, faixas salariais reais, stack técnico por nível de senioridade e trajetórias mapeadas com dados de 19.655 vagas.</p>
+        <div class="finc">
+          <div class="fi"><div class="fck">✓</div>7 setores com análise individual e funções demandadas</div>
+          <div class="fi"><div class="fck">✓</div>Stack técnico por nível: júnior, pleno, sênior e liderança</div>
+          <div class="fi"><div class="fck">✓</div>Faixas salariais reais — Guia Salarial Robert Half 2026</div>
+          <div class="fi"><div class="fck">✓</div>Trajetórias de carreira com competências por transição</div>
+          <div class="fi"><div class="fck">✓</div>10 entrevistas em profundidade com lideranças</div>
+          <div class="fi"><div class="fck">✓</div>Base: 19.655 vagas · Abr–Jun 2025</div>
+        </div>
+      </div>
+      <div class="fr">
+        <div id="form-state">
+          <div class="form-head">Preencha para receber o PDF</div>
+          <div class="form-sub">Acesso imediato · Sem spam · Dados tratados conforme LGPD</div>
+          <div class="f2c">
+            <div class="ff"><div class="ffl">Nome</div><input class="ffi" type="text" placeholder="Seu nome" id="fn"></div>
+            <div class="ff"><div class="ffl">Sobrenome</div><input class="ffi" type="text" placeholder="Sobrenome" id="fs"></div>
+          </div>
+          <div class="ff"><div class="ffl">E-mail profissional</div><input class="ffi" type="email" placeholder="seu@email.com" id="fe"></div>
+          <div class="f2c">
+            <div class="ff"><div class="ffl">Empresa</div><input class="ffi" type="text" placeholder="Opcional" id="fco"></div>
+            <div class="ff"><div class="ffl">Área</div>
+              <select class="ffs" id="fa">
+                <option value="" disabled selected>Selecione</option>
+                <option>Dev de Software</option><option>Dados e IA</option>
+                <option>Infraestrutura e Cloud</option><option>Projetos e PM</option>
+                <option>Segurança da Informação</option><option>Testes e QA</option>
+                <option>Estudante / Início de carreira</option><option>Outra área</option>
+              </select>
+            </div>
+          </div>
+          <div class="ff"><div class="ffl">Senioridade</div>
+            <select class="ffs" id="fni">
+              <option value="" disabled selected>Selecione</option>
+              <option>Estágio ou trainee</option><option>Júnior</option>
+              <option>Pleno</option><option>Sênior</option>
+              <option>Tech lead ou gerência</option><option>Diretoria ou C-level</option>
+            </select>
+          </div>
+          <button class="fsb" type="button" onclick="subForm()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar o estudo completo
+          </button>
+          <div class="fpv">Sem spam. Seus dados estão seguros. Cancele quando quiser.</div>
+        </div>
+        <div class="ss" id="success-state">
+          <div class="ss-ico">✓</div>
+          <div class="ss-t">Tudo certo!</div>
+          <div class="ss-s">O link de download foi enviado para o seu e-mail. Verifique também o spam.</div>
+          <a href="#" class="dlb">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Baixar agora (PDF)
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Inteli · Estudo de Carreiras em Tecnologia · 2025</span>
+  <span>Layout slide 55/35 — protótipo visual</span>
+</footer>
+
+<script src="areas-section-init.js"></script>
+<script>
+var MERCADO_CH=['Capítulo 1 · Panorama do Mercado','Capítulo 1 · Panorama do Mercado','Capítulo 1 · Panorama do Mercado','Capítulo 2 · Trajetórias de Carreira','Capítulo 2 · Trajetórias de Carreira','Capítulo 2 · Trajetórias de Carreira'];
+var MERCADO_SRC=[
+  'Fonte: Brasscom, Perspectivas do Mercado de Trabalho do Macrossetor TIC, 2025',
+  'Fonte: Pearson, Mind the AI Learning Gap, 2024',
+  'Fonte: ManpowerGroup Brasil (2026)',
+  'Fonte: Sonda Tech (Inteli, 2025)',
+  'Fonte: Índice de Vagas (Inteli, 2025)',
+  'Fonte: Índice de Vagas (Inteli, 2025)'
+];
+var EMPREGO_CH=['Capítulo 3 · Áreas e Posicionamento','Capítulo 3 · Áreas e Posicionamento'];
+var EMPREGO_SRC=[
+  'Fonte: Índice de Vagas (Inteli, 2025)',
+  'Fonte: Índice de Vagas (Inteli, 2025)'
+];
+
+var SETORES={
+  financas:[{r:'01',t:'Engenharia e análise de dados',s:'Big data, analytics, pipelines',l:'Alta'},{r:'02',t:'Arquitetura de nuvem',s:'AWS, Azure, GCP — setor cloud-first',l:'Alta'},{r:'03',t:'Segurança da informação',s:'Prevenção a fraudes, compliance',l:'Alta'},{r:'04',t:'Desenvolvimento full-stack',s:'Produtos e plataformas digitais',l:'Alta'},{r:'05',t:'Gestão de produto com base tech',s:'PMs com forte base tecnológica',l:'Crescente'}],
+  varejo:[{r:'01',t:'Desenvolvimento de software',s:'Plataformas e-commerce, apps, PDV',l:'Alta'},{r:'02',t:'Engenharia e análise de dados',s:'CRM inteligente, personalização',l:'Alta'},{r:'03',t:'Automação de marketing',s:'Omnichannel, jornadas automáticas',l:'Média'},{r:'04',t:'Integração de sistemas',s:'ERP, marketplace, logística',l:'Alta'},{r:'05',t:'Infraestrutura e cloud',s:'Escalabilidade para sazonalidade',l:'Crescente'}],
+  saude:[{r:'01',t:'Engenharia e governança de dados',s:'Prontuário eletrônico, interoperabilidade',l:'Alta'},{r:'02',t:'Segurança da informação',s:'Dados clínicos sensíveis, LGPD',l:'Alta'},{r:'03',t:'Desenvolvimento de sistemas clínicos',s:'Telemedicina, apps de saúde',l:'Alta'},{r:'04',t:'Análise de dados clínicos',s:'IA em diagnóstico e gestão hospitalar',l:'Crescente'},{r:'05',t:'Arquitetura de nuvem',s:'Disponibilidade e escalabilidade',l:'Média'}],
+  industria:[{r:'01',t:'Engenharia de dados',s:'Sensores, IoT industrial, chão de fábrica',l:'Alta'},{r:'02',t:'Integração OT/IT',s:'Sistemas industriais e digitais',l:'Alta'},{r:'03',t:'Segurança em tecnologia operacional',s:'Ambientes críticos de produção',l:'Alta'},{r:'04',t:'Manufatura avançada',s:'Robótica, automação',l:'Crescente'},{r:'05',t:'IA aplicada à produção',s:'Manutenção preditiva, otimização',l:'Crescente'}],
+  logistica:[{r:'01',t:'Otimização de rotas e modelagem',s:'Last-mile, forecast de demanda',l:'Alta'},{r:'02',t:'Visão computacional',s:'Automação de centros de distribuição',l:'Alta'},{r:'03',t:'IoT veicular',s:'Rastreamento, telemetria de frota',l:'Média'},{r:'04',t:'Automação de CD',s:'WMS, robótica, picking automatizado',l:'Crescente'},{r:'05',t:'Engenharia de dados operacionais',s:'Grandes volumes em escala',l:'Alta'}],
+  agro:[{r:'01',t:'Ciência de dados e IA agrícola',s:'Predição climática, produtividade',l:'Alta'},{r:'02',t:'IoT e sensoriamento remoto',s:'Sensores, drones, satélites',l:'Alta'},{r:'03',t:'Automação de colheita',s:'Robótica, guiamento autônomo',l:'Crescente'},{r:'04',t:'Engenharia de dados de campo',s:'Pipelines em escala',l:'Alta'},{r:'05',t:'Perfis híbridos tech + campo',s:'Engenharia + agronomia',l:'Alta'}],
+  educacao:[{r:'01',t:'Desenvolvimento de plataformas digitais',s:'LMS, apps de ensino, UX do aluno',l:'Alta'},{r:'02',t:'Analytics educacional',s:'Learning analytics, personalização',l:'Alta'},{r:'03',t:'Arquitetura de nuvem',s:'Escalabilidade em picos de acesso',l:'Média'},{r:'04',t:'Segurança da informação',s:'Dados de menores, LGPD',l:'Alta'},{r:'05',t:'Gestão de produto digital',s:'UX focado em engajamento',l:'Crescente'}],
+  publico:[{r:'01',t:'Arquitetura e engenharia de sistemas',s:'Modernização de legados críticos',l:'Alta'},{r:'02',t:'Segurança da informação',s:'Infraestrutura crítica nacional',l:'Alta'},{r:'03',t:'Transformação digital de serviços',s:'Gov.br, serviços ao cidadão',l:'Alta'},{r:'04',t:'Análise de dados e transparência',s:'Dados abertos, indicadores',l:'Crescente'},{r:'05',t:'Gestão de projetos tech',s:'Contratos complexos, compliance',l:'Alta'}]
+};
+
+function sw(ns,n,btn){
+  var root=btn.closest('.insight-slide');
+  btn.closest('.sw').querySelectorAll('.sb').forEach(function(b){b.classList.remove('on')});
+  btn.classList.add('on');
+  if(root){
+    root.querySelectorAll('.ib').forEach(function(el){el.classList.remove('on')});
+    root.querySelectorAll('.ip').forEach(function(el){el.classList.remove('on')});
+  }
+  var b=document.getElementById(ns+'-'+n);if(b)b.classList.add('on');
+  var p=document.getElementById(ns+'-p'+n);if(p)p.classList.add('on');
+  if(ns==='mkt'){
+    if(MERCADO_CH[n-1])document.getElementById('mkt-ch-lbl').textContent=MERCADO_CH[n-1];
+    if(MERCADO_SRC[n-1])document.getElementById('mkt-src').textContent=MERCADO_SRC[n-1];
+  }
+  if(ns==='emp'){
+    if(EMPREGO_CH[n-1])document.getElementById('emp-ch-lbl').textContent=EMPREGO_CH[n-1];
+    if(EMPREGO_SRC[n-1])document.getElementById('emp-src').textContent=EMPREGO_SRC[n-1];
+  }
+  setTimeout(animBars,50);
+}
+
+function setSec(btn,key){
+  document.querySelectorAll('#sec-pills .sp').forEach(function(p){p.classList.remove('on')});
+  btn.classList.add('on');
+  document.getElementById('sec-list').innerHTML=(SETORES[key]||[]).map(function(it){
+    return '<div class="oi"><div class="ok">'+it.r+'</div><div><div class="ot">'+it.t+'</div><div class="os">'+it.s+'</div></div><div class="ov">'+it.l+'</div></div>';
+  }).join('');
+}
+
+var STACK_SOFT=[
+  {n:'Comunicação',p:21},{n:'Criatividade',p:17.8},{n:'Organização',p:15.1},
+  {n:'Trabalho em equipe',p:11.4},{n:'Liderança',p:7.6},{n:'Resolução de problemas',p:6.6},
+  {n:'Proatividade',p:6.1},{n:'Pensamento analítico',p:5.8},{n:'Autonomia',p:4.6},{n:'Adaptabilidade',p:3.9}
+];
+
+function setStackTab(btn,key){
+  document.querySelectorAll('.stack-tab').forEach(function(t){
+    t.classList.remove('active');
+    t.setAttribute('aria-selected','false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+  document.querySelectorAll('.stack-hard-panel').forEach(function(p){
+    p.classList.remove('on');
+    p.hidden=true;
+  });
+  var panel=document.getElementById('stack-'+key);
+  if(panel){
+    panel.classList.add('on');
+    panel.hidden=false;
+  }
+}
+
+function initStackSoftRank(){
+  var el=document.getElementById('stackSoftRank');
+  if(!el)return;
+  var max=STACK_SOFT[0].p;
+  el.innerHTML=STACK_SOFT.map(function(s,i){
+    var rank=String(i+1).padStart(2,'0');
+    var pct=String(s.p).replace('.',',')+'%';
+    return '<div class="stack-soft-row">'+
+      '<span class="stack-soft-rank-n">'+rank+'</span>'+
+      '<span class="stack-soft-name">'+s.n+'</span>'+
+      '<div class="stack-soft-bar-wrap"><div class="stack-soft-bar" style="width:'+(s.p/max*100).toFixed(1)+'%"></div></div>'+
+      '<span class="stack-soft-pct">'+pct+'</span></div>';
+  }).join('');
+}
+
+function animBars(){
+  document.querySelectorAll('.bf[data-w]').forEach(function(b){b.style.width=b.getAttribute('data-w')+'%'});
+}
+
+function subForm(){
+  var e=document.getElementById('fe');
+  var n=document.getElementById('fn');
+  if(!n||!e)return;
+  var email=e.value.trim();
+  var nome=n.value.trim();
+  if(!nome||!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    e.style.borderColor='var(--coral)';
+    setTimeout(function(){e.style.borderColor=''},2000);
+    return;
+  }
+  var formState=document.getElementById('form-state');
+  var successState=document.getElementById('success-state');
+  if(formState)formState.style.display='none';
+  if(successState)successState.style.display='block';
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var firstSec=document.querySelector('#sec-pills .sp');
+  if(firstSec)setSec(firstSec,'financas');
+  initStackSoftRank();
+  animBars();
+  var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)animBars()})},{threshold:.15});
+  document.querySelectorAll('.insight-slide').forEach(function(s){obs.observe(s)});
+});
+</script>
+</body>
+</html>

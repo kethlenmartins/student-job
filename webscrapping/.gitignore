@@ -1,0 +1,16 @@
+# Regras principais ficam no .gitignore da raiz do repo.
+# Este arquivo reforça ignores locais das pastas de scraping.
+
+venv/
+.venv/
+.env
+.env.*
+!.env.example
+.chrome-debug/
+chrome-profile/
+chrome-profile-*/
+__pycache__/
+*.py[cod]
+data/
+.claude/
+.DS_Store
