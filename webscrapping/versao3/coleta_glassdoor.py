@@ -204,6 +204,12 @@ class ColetorGlassdoor:
                 await popup.click()
                 await pausa_rapida()
                 break
+        # <dialog open> bloqueia cliques mesmo quando invisível ao usuário;
+        # Escape é a forma mais confiável de dispensar modais do Glassdoor
+        dialog = await self.page.query_selector("dialog[open]")
+        if dialog:
+            await self.page.keyboard.press("Escape")
+            await pausa_rapida()
 
     async def _limpar_campo(self, seletor: str) -> None:
         campo = await self.page.wait_for_selector(seletor, timeout=10_000)
@@ -433,6 +439,7 @@ class ColetorGlassdoor:
         return ok
 
     async def buscar_palavra_chave(self, palavra_chave: str, uf: str) -> bool:
+        await self._fechar_popup()
         await self._preencher_cargo(palavra_chave)
         await self._submeter_busca()
         await self._fechar_popup()
