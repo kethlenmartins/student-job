@@ -109,6 +109,82 @@ desative "Ativar Power Nap" e defina tela como Nunca.
 
 ---
 
+## Pré-requisitos — antes de tudo
+
+Antes de começar qualquer passo desta seção, você precisa ter **Git** e **Python**
+instalados na sua máquina. Se já tiver os dois, pule direto para
+[Clonar o repositório](#clonar-o-repositório).
+
+---
+
+### Instalar o Git
+
+O Git é o programa que permite baixar o código do projeto para a sua máquina.
+
+**macOS:**
+```bash
+# Opção 1 — via Homebrew (recomendado)
+brew install git
+
+# Opção 2 — via Xcode Command Line Tools
+xcode-select --install
+```
+> Se não tiver o Homebrew: cole no terminal → `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+
+**Linux (Ubuntu / Debian):**
+```bash
+sudo apt update && sudo apt install git -y
+```
+
+**Windows:**
+1. Acesse **https://git-scm.com/download/win** e baixe o instalador
+2. Execute o instalador e clique em **Next** em todas as telas (as opções padrão funcionam)
+3. Ao final, abra o **Git Bash** ou o **PowerShell** e confirme: `git --version`
+
+---
+
+### Instalar o Python
+
+O script de coleta roda em Python 3.10 ou superior.
+
+**macOS:**
+```bash
+brew install python
+```
+
+**Linux (Ubuntu / Debian):**
+```bash
+sudo apt update && sudo apt install python3 python3-pip python3-venv -y
+```
+
+**Windows:**
+1. Acesse **https://www.python.org/downloads/** e baixe a versão mais recente
+2. Execute o instalador; marque a opção **"Add Python to PATH"** antes de continuar
+3. Clique em **Install Now**
+4. Confirme no PowerShell: `python --version`
+
+---
+
+### Clonar o repositório
+
+Depois de instalar o Git, baixe o código do projeto para a sua máquina.
+Você só precisa fazer isso **uma vez**.
+
+**macOS / Linux:**
+```bash
+git clone https://github.com/kethlenmartins/student-job.git
+cd student-job
+```
+
+**Windows (PowerShell):**
+```powershell
+git clone https://github.com/kethlenmartins/student-job.git
+cd student-job
+```
+
+> **Onde fica o código?** Uma pasta chamada `2025-1A-T09-ES07-G02` será criada no
+> diretório em que você rodou o comando. Os passos seguintes partem desse diretório.
+
 ---
 
 ## Máquina 1 — Kethlen ⭐ (máquina central)
