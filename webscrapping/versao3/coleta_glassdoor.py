@@ -102,16 +102,12 @@ def nome_estado(uf: str) -> str:
 
 
 def _local_para_busca(uf: str) -> str:
-    if uf == "Brasil":
-        return "Brasil"
     return f"{NOMES_ESTADOS.get(uf, uf)}, Brasil"
 
 
 def _pontuar_opcao_uf(texto_norm: str, uf: str) -> int:
     if not texto_norm:
         return 0
-    if uf == "Brasil":
-        return 100 if texto_norm in ("brasil", "brasil, brasil") else 0
     uf_lower = uf.lower()
     nome = normalizar_texto(NOMES_ESTADOS.get(uf, ""))
     if re.match(rf"^{re.escape(uf_lower)},", texto_norm):

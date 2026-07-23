@@ -106,17 +106,30 @@ def main() -> None:
     df_unicas.to_csv(OUTPUT_FILE, index=False)
     print(f"\nSalvo em: {OUTPUT_FILE}")
 
-    # Mostra divisões sugeridas para enriquecer.py
+    # Mostra divisões sugeridas para enriquecer.py (16 terminais: 8 máquinas × 2)
     n = len(df_unicas)
-    q = n // 4
-    print(f"\n{'=' * 50}")
-    print(f"Use estes índices para dividir o enriquecimento:")
-    print(f"{'=' * 50}")
-    print(f"  Máquina 1, Terminal 1:  --inicio 0       --fim {q}")
-    print(f"  Máquina 1, Terminal 2:  --inicio {q}   --fim {q*2}")
-    print(f"  Máquina 2, Terminal 1:  --inicio {q*2}  --fim {q*3}")
-    print(f"  Máquina 2, Terminal 2:  --inicio {q*3}  --fim {n}")
-    print(f"{'=' * 50}")
+    q, resto = divmod(n, 16)
+    limites = []
+    start = 0
+    for i in range(16):
+        fim = start + q + (1 if i < resto else 0)
+        limites.append((start, fim))
+        start = fim
+
+    pessoas   = ["MacBook Kethlen", "MacBook Kethlen", "PC Inteli Kethlen", "PC Inteli Kethlen",
+                 "Luana", "Luana", "Tati", "Tati",
+                 "Lucas", "Lucas", "PC Inteli Marco", "PC Inteli Marco",
+                 "PC Inteli Scarpelin", "PC Inteli Scarpelin", "Leo", "Leo"]
+    maquinas  = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
+    terminais = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
+
+    print(f"\n{'=' * 75}")
+    print("Índices para enriquecer.py  (16 terminais — 8 máquinas × 2):")
+    print(f"{'=' * 75}")
+    for i, ((ini, fim), maq, term, pessoa) in enumerate(zip(limites, maquinas, terminais, pessoas)):
+        perf = f"e{i + 1}"
+        print(f"  M{maq} T{term}  {pessoa:<22}  --perfil chrome-profile-{perf:<4}  --inicio {ini:<7} --fim {fim}")
+    print(f"{'=' * 75}")
 
 
 if __name__ == "__main__":
