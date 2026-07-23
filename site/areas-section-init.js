@@ -252,10 +252,12 @@ function salaryPos(val,min,max){
 function renderSalaryChart(areaId){
   var s=SALARIOS[areaId];
   if(!s)return '';
+  var axisMin=parseFloat(s.axis[0]);
+  var axisMax=parseFloat(s.axis[s.axis.length-1]);
   var rows=s.roles.map(function(r){
-    var pj=salaryPos(r.jr,s.min,s.max);
-    var pp=salaryPos(r.pl,s.min,s.max);
-    var ps=salaryPos(r.sr,s.min,s.max);
+    var pj=salaryPos(r.jr,axisMin,axisMax);
+    var pp=salaryPos(r.pl,axisMin,axisMax);
+    var ps=salaryPos(r.sr,axisMin,axisMax);
     return '<div class="salary-row">'+
       '<div class="salary-role">'+r.role+'</div>'+
       '<div class="salary-track">'+
