@@ -394,24 +394,11 @@ class ColetorGlassdoor:
         await pausa_rapida()
 
     async def _submeter_busca(self) -> None:
-        await self.page.keyboard.press("Escape")
-        await asyncio.sleep(0.2)
-
-        clicou = await self.page.evaluate("""
-            () => {
-                const btn = document.querySelector('[data-test="search-bar-submit"]')
-                         || document.querySelector('button[type="submit"]')
-                         || Array.from(document.querySelectorAll('button')).find(b =>
-                               b.textContent.includes('Pesquisar') ||
-                               b.textContent.includes('Search') ||
-                               (b.getAttribute('aria-label') || '').includes('Pesquisar'));
-                if (btn) { btn.click(); return true; }
-                return false;
-            }
-        """)
-        if not clicou:
-            await self.page.keyboard.press("Enter")
-
+        # Enter no campo é a forma mais confiável: fecha o autocomplete e
+        # submete em um passo, sem risco de reverter o valor digitado (Escape)
+        await self.page.focus(self.SELETOR_CAMPO_CARGO)
+        await asyncio.sleep(0.15)
+        await self.page.keyboard.press("Enter")
         await pausa_humana(media=4.0, desvio=1.0)
 
     async def _aguardar_resultados(self, timeout: float = 20.0) -> bool:
