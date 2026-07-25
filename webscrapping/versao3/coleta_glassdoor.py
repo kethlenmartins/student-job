@@ -204,12 +204,14 @@ class ColetorGlassdoor:
                 await popup.click()
                 await pausa_rapida()
                 break
-        # <dialog open> bloqueia cliques mesmo quando invisível ao usuário;
-        # Escape é a forma mais confiável de dispensar modais do Glassdoor
+        # <dialog open> bloqueia cliques; fecha via Escape, mas só se o dialog
+        # não contém o campo de busca (evita fechar a barra de pesquisa do Glassdoor)
         dialog = await self.page.query_selector("dialog[open]")
         if dialog:
-            await self.page.keyboard.press("Escape")
-            await pausa_rapida()
+            campo_dentro = await dialog.query_selector(self.SELETOR_CAMPO_CARGO)
+            if not campo_dentro:
+                await self.page.keyboard.press("Escape")
+                await pausa_rapida()
 
     async def _limpar_campo(self, seletor: str) -> None:
         campo = await self.page.wait_for_selector(seletor, timeout=10_000)
@@ -428,6 +430,18 @@ class ColetorGlassdoor:
     async def buscar_palavra_chave(self, palavra_chave: str, uf: str) -> bool:
         await self._fechar_popup()
         await self._preencher_cargo(palavra_chave)
+
+        # Na página de resultados, interagir com o campo de cargo pode limpar o
+        # campo de localização. Verifica e repreenche antes de submeter.
+        try:
+            valor_local = await self.page.input_value(self.SELETOR_CAMPO_LOCAL)
+        except Exception:
+            valor_local = ""
+        if not valor_local.strip():
+            print(f"    Campo de local vazio — repreenchendo UF {uf}...")
+            await self._preencher_localizacao(uf)
+            await self._preencher_cargo(palavra_chave)
+
         await self._submeter_busca()
         await self._fechar_popup()
 
