@@ -45,18 +45,14 @@ aleatórios, scroll, fechamento de popups.
 
 ## Participantes e distribuição
 
-| Máquina | Pessoa | Keywords buscadas | CSVs esperados (Fase 1) |
-|---------|--------|-------------------|-------------------------|
-| M1 ⭐   | MacBook Kethlen *(central)* | 0–26 (26 kw) | 702 |
-| M2      | PC Inteli — Kethlen | 26–52 (26 kw) | 702 |
-| M3      | Luana | 52–78 (26 kw) | 702 |
-| M4      | Tati | 78–104 (26 kw) | 702 |
-| M5      | Lucas | 104–128 (24 kw) | 648 |
-| M6      | PC Inteli — Marco | 128–152 (24 kw) | 648 |
-| M7      | PC Inteli — Scarpelin | 152–176 (24 kw) | 648 |
-| M8      | Leo | 176–200 (24 kw) | 648 |
+| Máquina | Pessoa | OS | Terminais Fase 3 |
+|---------|--------|----|-----------------|
+| M1 ⭐   | MacBook Kethlen *(central)* | macOS | e1–e4 |
+| M2      | PC Inteli — Kethlen | Linux | e5–e8 |
+| M3      | PC Inteli — Marco | Linux | e9–e12 |
+| M4      | Leo | Windows | e13–e16 |
 
-**Total:** 200 keywords × 27 estados = 5.400 buscas
+**Fase 1 concluída.** Agora estamos na Fase 3 — enriquecimento das vagas únicas.
 
 ---
 
@@ -268,7 +264,7 @@ caffeinate -i python coleta_glassdoor.py \
 # Terminal 2
 tmux new -s t2
 source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
+caffeinate -dims python coleta_glassdoor.py \
   --kw-inicio 13 --kw-fim 26 \
   --perfil chrome-profile-t2 \
   --sem-enriquecer --assume-logged-in
@@ -306,7 +302,7 @@ O script imprime `Coleta finalizada.` ao terminar. Para confirmar pelo número d
 Quando cada pessoa terminar a Fase 1, ela vai te enviar os CSVs pelo Slack
 (numa pasta do Drive ou os arquivos direto). Salve todos em `data/bronze/`.
 
-> Só avance para o Passo 5 quando **todas as 8 máquinas** tiverem terminado.
+> Só avance para o Passo 5 quando **todas as 4 máquinas** tiverem terminado.
 
 #### Passo 5 — Deduplicação
 
@@ -325,14 +321,26 @@ python deduplicar.py
 O script vai imprimir os índices exatos para a Fase 3 de cada máquina:
 
 ```
-Vagas únicas: 87.432
+Vagas únicas: 123.737
 ...
-Índices para enriquecer.py  (16 terminais — 8 máquinas × 2):
+Índices para enriquecer.py  (16 terminais — 4 máquinas × 4):
 ===========================================================================
-  M1 T1  MacBook Kethlen        --perfil chrome-profile-e1    --inicio 0       --fim 5465
-  M1 T2  MacBook Kethlen        --perfil chrome-profile-e2    --inicio 5465    --fim 10930
-  M2 T1  PC Inteli Kethlen      --perfil chrome-profile-e3    --inicio 10930   --fim 16395
-  ...
+  M1 e1   MacBook Kethlen        --perfil chrome-profile-e1    --inicio 0       --fim 7734
+  M1 e2   MacBook Kethlen        --perfil chrome-profile-e2    --inicio 7734    --fim 15468
+  M1 e3   MacBook Kethlen        --perfil chrome-profile-e3    --inicio 15468   --fim 23202
+  M1 e4   MacBook Kethlen        --perfil chrome-profile-e4    --inicio 23202   --fim 30936
+  M2 e5   PC Inteli Kethlen      --perfil chrome-profile-e5    --inicio 30936   --fim 38670
+  M2 e6   PC Inteli Kethlen      --perfil chrome-profile-e6    --inicio 38670   --fim 46404
+  M2 e7   PC Inteli Kethlen      --perfil chrome-profile-e7    --inicio 46404   --fim 54138
+  M2 e8   PC Inteli Kethlen      --perfil chrome-profile-e8    --inicio 54138   --fim 61872
+  M3 e9   PC Inteli Marco        --perfil chrome-profile-e9    --inicio 61872   --fim 69606
+  M3 e10  PC Inteli Marco        --perfil chrome-profile-e10   --inicio 69606   --fim 77339
+  M3 e11  PC Inteli Marco        --perfil chrome-profile-e11   --inicio 77339   --fim 85072
+  M3 e12  PC Inteli Marco        --perfil chrome-profile-e12   --inicio 85072   --fim 92805
+  M4 e13  Leo                    --perfil chrome-profile-e13   --inicio 92805   --fim 100538
+  M4 e14  Leo                    --perfil chrome-profile-e14   --inicio 100538  --fim 108271
+  M4 e15  Leo                    --perfil chrome-profile-e15   --inicio 108271  --fim 116004
+  M4 e16  Leo                    --perfil chrome-profile-e16   --inicio 116004  --fim 123737
 ```
 
 #### Passo 6 — Distribuir para todas as máquinas
@@ -347,61 +355,61 @@ Envie no Slack para cada pessoa:
 
 #### Passo 7 — Configurar perfis de enriquecimento (fazer uma vez)
 
-> **⚠️ Sobre os valores entre colchetes:** `[SEU_INICIO_E1]`, `[SEU_FIM_E1]`,
-> etc. são os índices impressos pelo `deduplicar.py` que você acabou de rodar.
-> Procure as linhas "M1 T1" e "M1 T2" na saída e copie os valores de
-> `--inicio` e `--fim` de cada uma. **Exemplo:** se a saída mostrar
-> `--inicio 0 --fim 5465` para M1 T1, use esses números diretamente,
-> sem os colchetes.
+Rode cada comando abaixo em um terminal separado. Quando o Chrome abrir,
+confirme o login no Glassdoor e pressione Enter no terminal. Depois, encerre com Ctrl+C.
 
-**macOS / Linux:**
 ```bash
 source venv/bin/activate
-python enriquecer.py --inicio [SEU_INICIO_E1] --fim [SEU_FIM_E1] --perfil chrome-profile-e1
+python enriquecer.py --inicio 0 --fim 7734 --perfil chrome-profile-e1
 # (outro terminal)
-python enriquecer.py --inicio [SEU_INICIO_E2] --fim [SEU_FIM_E2] --perfil chrome-profile-e2
+python enriquecer.py --inicio 7734 --fim 15468 --perfil chrome-profile-e2
+# (outro terminal)
+python enriquecer.py --inicio 15468 --fim 23202 --perfil chrome-profile-e3
+# (outro terminal)
+python enriquecer.py --inicio 23202 --fim 30936 --perfil chrome-profile-e4
 ```
 
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [SEU_INICIO_E1] --fim [SEU_FIM_E1] --perfil chrome-profile-e1
-```
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [SEU_INICIO_E2] --fim [SEU_FIM_E2] --perfil chrome-profile-e2
-```
+#### Passo 8 — Rodar o enriquecimento (4 terminais tmux)
 
-#### Passo 8 — Rodar o enriquecimento
+Abra 4 terminais (ou 4 janelas tmux) e rode um bloco em cada:
 
-**macOS / Linux (com tmux):**
 ```bash
 tmux new -s e1
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [SEU_INICIO_E1] --fim [SEU_FIM_E1] \
+caffeinate -dims python3 enriquecer.py \
+  --inicio 0 --fim 7734 \
   --perfil chrome-profile-e1 --assume-logged-in
-# Ctrl+b d
+# Ctrl+b d para desacoplar
+```
 
+```bash
 tmux new -s e2
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [SEU_INICIO_E2] --fim [SEU_FIM_E2] \
+caffeinate -dims python3 enriquecer.py \
+  --inicio 7734 --fim 15468 \
   --perfil chrome-profile-e2 --assume-logged-in
-# Ctrl+b d
+# Ctrl+b d para desacoplar
 ```
 
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [SEU_INICIO_E1] --fim [SEU_FIM_E1] --perfil chrome-profile-e1 --assume-logged-in
+```bash
+tmux new -s e3
+source venv/bin/activate
+caffeinate -dims python3 enriquecer.py \
+  --inicio 15468 --fim 23202 \
+  --perfil chrome-profile-e3 --assume-logged-in
+# Ctrl+b d para desacoplar
 ```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [SEU_INICIO_E2] --fim [SEU_FIM_E2] --perfil chrome-profile-e2 --assume-logged-in
+
+```bash
+tmux new -s e4
+source venv/bin/activate
+caffeinate -dims python3 enriquecer.py \
+  --inicio 23202 --fim 30936 \
+  --perfil chrome-profile-e4 --assume-logged-in
+# Ctrl+b d para desacoplar
 ```
+
+Para acompanhar o progresso: `tmux attach -t e1` (ou e2, e3, e4). Para desacoplar: `Ctrl+b d`.
 
 #### Passo 9 — Aguardar todas as máquinas e fazer o merge final
 
@@ -539,81 +547,74 @@ diretamente. Avise quando tiver enviado.
 
 ### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
 
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
-
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_E3]` e `[FIM_E3]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 10930 --fim 16395`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 10930 --fim 16395 --perfil chrome-profile-e3 --assume-logged-in
-> ```
+A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` com as vagas
+únicas para enriquecer. Esta máquina roda 4 terminais (e5–e8).
 
 #### Passo 5 — Instalar o arquivo
 
 Coloque o `vagas_unicas.csv` dentro de `data/silver/`.
 
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:** copie o arquivo para `data\silver\` pelo explorador de arquivos ou:
-```powershell
-Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
+```bash
+cp ~/Downloads/vagas_unicas.csv data/silver/
 ```
 
 #### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
 
-**macOS / Linux:**
+Rode cada comando abaixo em um terminal separado. Quando o Chrome abrir,
+confirme o login no Glassdoor e pressione Enter. Depois, encerre com Ctrl+C.
+
 ```bash
 source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E3] --fim [FIM_E3] --perfil chrome-profile-e3
+python3 enriquecer.py --inicio 30936 --fim 38670 --perfil chrome-profile-e5
 # (outro terminal)
-python enriquecer.py --inicio [INICIO_E4] --fim [FIM_E4] --perfil chrome-profile-e4
+python3 enriquecer.py --inicio 38670 --fim 46404 --perfil chrome-profile-e6
+# (outro terminal)
+python3 enriquecer.py --inicio 46404 --fim 54138 --perfil chrome-profile-e7
+# (outro terminal)
+python3 enriquecer.py --inicio 54138 --fim 61872 --perfil chrome-profile-e8
 ```
 
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E3] --fim [FIM_E3] --perfil chrome-profile-e3
-```
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E4] --fim [FIM_E4] --perfil chrome-profile-e4
-```
+#### Passo 7 — Rodar o enriquecimento (4 terminais tmux)
 
-#### Passo 7 — Rodar o enriquecimento
+Abra 4 terminais (ou 4 janelas tmux) e rode um bloco em cada:
 
-**macOS / Linux (com tmux):**
 ```bash
-tmux new -s e3
+tmux new -s e5
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E3] --fim [FIM_E3] \
-  --perfil chrome-profile-e3 --assume-logged-in
-# Ctrl+b d
-
-tmux new -s e4
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E4] --fim [FIM_E4] \
-  --perfil chrome-profile-e4 --assume-logged-in
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 30936 --fim 38670 \
+  --perfil chrome-profile-e5 --assume-logged-in
 # Ctrl+b d
 ```
 
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E3] --fim [FIM_E3] --perfil chrome-profile-e3 --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E4] --fim [FIM_E4] --perfil chrome-profile-e4 --assume-logged-in
+```bash
+tmux new -s e6
+source venv/bin/activate
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 38670 --fim 46404 \
+  --perfil chrome-profile-e6 --assume-logged-in
+# Ctrl+b d
 ```
 
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
+```bash
+tmux new -s e7
+source venv/bin/activate
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 46404 --fim 54138 \
+  --perfil chrome-profile-e7 --assume-logged-in
+# Ctrl+b d
+```
+
+```bash
+tmux new -s e8
+source venv/bin/activate
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 54138 --fim 61872 \
+  --perfil chrome-profile-e8 --assume-logged-in
+# Ctrl+b d
+```
+
+Para acompanhar o progresso: `tmux attach -t e5` (ou e6, e7, e8). Para desacoplar: `Ctrl+b d`.
 
 #### Passo 8 — Enviar resultados para a Kethlen
 
@@ -624,11 +625,12 @@ Kethlen no Slack (Drive ou direto).
 
 ---
 
-## Máquina 3 — Luana
+## Máquina 3 — PC Inteli (Marco)
+
+Esta máquina roda a Fase 3 (enriquecimento) com 4 terminais (e9–e12) no Linux.
 
 ### Passo 0 — Setup (fazer uma vez)
 
-**macOS / Linux:**
 ```bash
 cd webscrapping-2026/webscrapping/versao3
 
@@ -638,770 +640,96 @@ source venv/bin/activate
 pip install -r requirements.txt
 playwright install chrome
 
-brew install tmux    # macOS; Linux: sudo apt install tmux
+sudo apt install tmux    # se ainda não tiver
 ```
-
-**Windows (PowerShell):**
-```powershell
-cd webscrapping-2026\webscrapping\versao3
-
-python -m venv venv
-venv\Scripts\Activate.ps1
-
-pip install -r requirements.txt
-playwright install chrome
-```
-
----
-
-### Fase 1 — Coleta
-
-#### Passo 1 — Configurar perfis no Chrome (fazer uma vez)
-
-Quando o Chrome abrir, faça login no Glassdoor pelo botão "Continuar com Google"
-e pressione Enter para confirmar. Depois, encerre com Ctrl+C.
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-
-# Terminal 1
-python coleta_glassdoor.py --kw-inicio 52 --kw-fim 65 --perfil chrome-profile-t5 --sem-enriquecer
-
-# Terminal 2 (outro terminal)
-python coleta_glassdoor.py --kw-inicio 65 --kw-fim 78 --perfil chrome-profile-t6 --sem-enriquecer
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 52 --kw-fim 65 --perfil chrome-profile-t5 --sem-enriquecer
-```
-```powershell
-# Terminal 2 (outra janela)
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 65 --kw-fim 78 --perfil chrome-profile-t6 --sem-enriquecer
-```
-
-#### Passo 2 — Rodar a coleta completa
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s t5
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 52 --kw-fim 65 \
-  --perfil chrome-profile-t5 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-
-tmux new -s t6
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 65 --kw-fim 78 \
-  --perfil chrome-profile-t6 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 52 --kw-fim 65 --perfil chrome-profile-t5 --sem-enriquecer --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 65 --kw-fim 78 --perfil chrome-profile-t6 --sem-enriquecer --assume-logged-in
-```
-
-#### Passo 3 — Verificar se terminou
-
-**macOS / Linux:** `ls data/bronze/*.csv | wc -l` → esperado: **702**
-
-**Windows:** `(Get-ChildItem data\bronze\*.csv).Count` → esperado: **702**
-
-#### Passo 4 — Enviar para a Kethlen
-
-Envie a pasta `data/bronze/` para a Kethlen no Slack (Drive ou CSVs direto).
-Avise quando tiver enviado.
 
 ---
 
 ### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
 
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
+A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv`. Esta máquina
+roda 4 terminais (e9–e12).
 
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_Exx]` e `[FIM_Exx]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 43716 --fim 49181`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 43716 --fim 49181 --perfil chrome-profile-eXX --assume-logged-in
-> ```
+#### Passo 1 — Instalar o arquivo
 
-#### Passo 5 — Instalar o arquivo
-
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:** copie para `data\silver\` ou:
-```powershell
-Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
+```bash
+cp ~/Downloads/vagas_unicas.csv data/silver/
 ```
 
-#### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
+#### Passo 2 — Configurar perfis de enriquecimento (fazer uma vez)
 
-**macOS / Linux:**
+Rode cada comando abaixo em um terminal separado. Quando o Chrome abrir,
+confirme o login no Glassdoor e pressione Enter. Depois, encerre com Ctrl+C.
+
 ```bash
 source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E5] --fim [FIM_E5] --perfil chrome-profile-e5
+python3 enriquecer.py --inicio 61872 --fim 69606 --perfil chrome-profile-e9
 # (outro terminal)
-python enriquecer.py --inicio [INICIO_E6] --fim [FIM_E6] --perfil chrome-profile-e6
-```
-
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E5] --fim [FIM_E5] --perfil chrome-profile-e5
-```
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E6] --fim [FIM_E6] --perfil chrome-profile-e6
-```
-
-#### Passo 7 — Rodar o enriquecimento
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s e5
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E5] --fim [FIM_E5] \
-  --perfil chrome-profile-e5 --assume-logged-in
-# Ctrl+b d
-
-tmux new -s e6
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E6] --fim [FIM_E6] \
-  --perfil chrome-profile-e6 --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E5] --fim [FIM_E5] --perfil chrome-profile-e5 --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E6] --fim [FIM_E6] --perfil chrome-profile-e6 --assume-logged-in
-```
-
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
-
-#### Passo 8 — Enviar resultados para a Kethlen
-
-Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
-
----
-
----
-
-## Máquina 4 — Tati
-
-### Passo 0 — Setup (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-cd webscrapping-2026/webscrapping/versao3
-
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-playwright install chrome
-
-brew install tmux    # macOS; Linux: sudo apt install tmux
-```
-
-**Windows (PowerShell):**
-```powershell
-cd webscrapping-2026\webscrapping\versao3
-
-python -m venv venv
-venv\Scripts\Activate.ps1
-
-pip install -r requirements.txt
-playwright install chrome
-```
-
----
-
-### Fase 1 — Coleta
-
-#### Passo 1 — Configurar perfis no Chrome (fazer uma vez)
-
-Quando o Chrome abrir, faça login no Glassdoor pelo botão "Continuar com Google"
-e pressione Enter para confirmar. Depois, encerre com Ctrl+C.
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-
-# Terminal 1
-python coleta_glassdoor.py --kw-inicio 78 --kw-fim 91 --perfil chrome-profile-t7 --sem-enriquecer
-
-# Terminal 2 (outro terminal)
-python coleta_glassdoor.py --kw-inicio 91 --kw-fim 104 --perfil chrome-profile-t8 --sem-enriquecer
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 78 --kw-fim 91 --perfil chrome-profile-t7 --sem-enriquecer
-```
-```powershell
-# Terminal 2 (outra janela)
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 91 --kw-fim 104 --perfil chrome-profile-t8 --sem-enriquecer
-```
-
-#### Passo 2 — Rodar a coleta completa
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s t7
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 78 --kw-fim 91 \
-  --perfil chrome-profile-t7 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-
-tmux new -s t8
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 91 --kw-fim 104 \
-  --perfil chrome-profile-t8 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 78 --kw-fim 91 --perfil chrome-profile-t7 --sem-enriquecer --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 91 --kw-fim 104 --perfil chrome-profile-t8 --sem-enriquecer --assume-logged-in
-```
-
-#### Passo 3 — Verificar se terminou
-
-**macOS / Linux:** `ls data/bronze/*.csv | wc -l` → esperado: **702**
-
-**Windows:** `(Get-ChildItem data\bronze\*.csv).Count` → esperado: **702**
-
-#### Passo 4 — Enviar para a Kethlen
-
-Envie a pasta `data/bronze/` para a Kethlen no Slack (Drive ou CSVs direto).
-Avise quando tiver enviado.
-
----
-
-### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
-
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
-
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_Exx]` e `[FIM_Exx]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 43716 --fim 49181`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 43716 --fim 49181 --perfil chrome-profile-eXX --assume-logged-in
-> ```
-
-#### Passo 5 — Instalar o arquivo
-
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:**
-```powershell
-Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
-```
-
-#### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E7] --fim [FIM_E7] --perfil chrome-profile-e7
+python3 enriquecer.py --inicio 69606 --fim 77339 --perfil chrome-profile-e10
 # (outro terminal)
-python enriquecer.py --inicio [INICIO_E8] --fim [FIM_E8] --perfil chrome-profile-e8
-```
-
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E7] --fim [FIM_E7] --perfil chrome-profile-e7
-```
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E8] --fim [FIM_E8] --perfil chrome-profile-e8
-```
-
-#### Passo 7 — Rodar o enriquecimento
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s e7
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E7] --fim [FIM_E7] \
-  --perfil chrome-profile-e7 --assume-logged-in
-# Ctrl+b d
-
-tmux new -s e8
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E8] --fim [FIM_E8] \
-  --perfil chrome-profile-e8 --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E7] --fim [FIM_E7] --perfil chrome-profile-e7 --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E8] --fim [FIM_E8] --perfil chrome-profile-e8 --assume-logged-in
-```
-
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
-
-#### Passo 8 — Enviar resultados para a Kethlen
-
-Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
-
----
-
----
-
-## Máquina 5 — Lucas
-
-### Passo 0 — Setup (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-cd webscrapping-2026/webscrapping/versao3
-
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-playwright install chrome
-
-brew install tmux    # macOS; Linux: sudo apt install tmux
-```
-
-**Windows (PowerShell):**
-```powershell
-cd webscrapping-2026\webscrapping\versao3
-
-python -m venv venv
-venv\Scripts\Activate.ps1
-
-pip install -r requirements.txt
-playwright install chrome
-```
-
----
-
-### Fase 1 — Coleta
-
-#### Passo 1 — Configurar perfis no Chrome (fazer uma vez)
-
-Quando o Chrome abrir, faça login no Glassdoor pelo botão "Continuar com Google"
-e pressione Enter para confirmar. Depois, encerre com Ctrl+C.
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-
-# Terminal 1
-python coleta_glassdoor.py --kw-inicio 104 --kw-fim 116 --perfil chrome-profile-t9 --sem-enriquecer
-
-# Terminal 2 (outro terminal)
-python coleta_glassdoor.py --kw-inicio 116 --kw-fim 128 --perfil chrome-profile-t10 --sem-enriquecer
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 104 --kw-fim 116 --perfil chrome-profile-t9 --sem-enriquecer
-```
-```powershell
-# Terminal 2 (outra janela)
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 116 --kw-fim 128 --perfil chrome-profile-t10 --sem-enriquecer
-```
-
-#### Passo 2 — Rodar a coleta completa
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s t9
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 104 --kw-fim 116 \
-  --perfil chrome-profile-t9 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-
-tmux new -s t10
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 116 --kw-fim 128 \
-  --perfil chrome-profile-t10 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 104 --kw-fim 116 --perfil chrome-profile-t9 --sem-enriquecer --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 116 --kw-fim 128 --perfil chrome-profile-t10 --sem-enriquecer --assume-logged-in
-```
-
-#### Passo 3 — Verificar se terminou
-
-**macOS / Linux:** `ls data/bronze/*.csv | wc -l` → esperado: **648**
-
-**Windows:** `(Get-ChildItem data\bronze\*.csv).Count` → esperado: **648**
-
-#### Passo 4 — Enviar para a Kethlen
-
-Envie a pasta `data/bronze/` para a Kethlen no Slack (Drive ou CSVs direto).
-Avise quando tiver enviado.
-
----
-
-### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
-
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
-
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_Exx]` e `[FIM_Exx]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 43716 --fim 49181`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 43716 --fim 49181 --perfil chrome-profile-eXX --assume-logged-in
-> ```
-
-#### Passo 5 — Instalar o arquivo
-
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:**
-```powershell
-Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
-```
-
-#### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E9] --fim [FIM_E9] --perfil chrome-profile-e9
+python3 enriquecer.py --inicio 77339 --fim 85072 --perfil chrome-profile-e11
 # (outro terminal)
-python enriquecer.py --inicio [INICIO_E10] --fim [FIM_E10] --perfil chrome-profile-e10
+python3 enriquecer.py --inicio 85072 --fim 92805 --perfil chrome-profile-e12
 ```
 
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E9] --fim [FIM_E9] --perfil chrome-profile-e9
-```
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E10] --fim [FIM_E10] --perfil chrome-profile-e10
-```
+#### Passo 3 — Rodar o enriquecimento (4 terminais tmux)
 
-#### Passo 7 — Rodar o enriquecimento
+Abra 4 terminais (ou 4 janelas tmux) e rode um bloco em cada:
 
-**macOS / Linux (com tmux):**
 ```bash
 tmux new -s e9
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E9] --fim [FIM_E9] \
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 61872 --fim 69606 \
   --perfil chrome-profile-e9 --assume-logged-in
 # Ctrl+b d
+```
 
+```bash
 tmux new -s e10
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E10] --fim [FIM_E10] \
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 69606 --fim 77339 \
   --perfil chrome-profile-e10 --assume-logged-in
 # Ctrl+b d
 ```
 
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E9] --fim [FIM_E9] --perfil chrome-profile-e9 --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E10] --fim [FIM_E10] --perfil chrome-profile-e10 --assume-logged-in
-```
-
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
-
-#### Passo 8 — Enviar resultados para a Kethlen
-
-Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
-
----
-
----
-
-## Máquina 6 — PC Inteli (Marco)
-
-### Passo 0 — Setup (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-cd webscrapping-2026/webscrapping/versao3
-
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-playwright install chrome
-
-brew install tmux    # macOS; Linux: sudo apt install tmux
-```
-
-**Windows (PowerShell):**
-```powershell
-cd webscrapping-2026\webscrapping\versao3
-
-python -m venv venv
-venv\Scripts\Activate.ps1
-
-pip install -r requirements.txt
-playwright install chrome
-```
-
----
-
-### Fase 1 — Coleta
-
-#### Passo 1 — Configurar perfis no Chrome (fazer uma vez)
-
-Quando o Chrome abrir, faça login no Glassdoor pelo botão "Continuar com Google"
-e pressione Enter para confirmar. Depois, encerre com Ctrl+C.
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-
-# Terminal 1
-python coleta_glassdoor.py --kw-inicio 128 --kw-fim 140 --perfil chrome-profile-t11 --sem-enriquecer
-
-# Terminal 2 (outro terminal)
-python coleta_glassdoor.py --kw-inicio 140 --kw-fim 152 --perfil chrome-profile-t12 --sem-enriquecer
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 128 --kw-fim 140 --perfil chrome-profile-t11 --sem-enriquecer
-```
-```powershell
-# Terminal 2 (outra janela)
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 140 --kw-fim 152 --perfil chrome-profile-t12 --sem-enriquecer
-```
-
-#### Passo 2 — Rodar a coleta completa
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s t11
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 128 --kw-fim 140 \
-  --perfil chrome-profile-t11 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-
-tmux new -s t12
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 140 --kw-fim 152 \
-  --perfil chrome-profile-t12 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 128 --kw-fim 140 --perfil chrome-profile-t11 --sem-enriquecer --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 140 --kw-fim 152 --perfil chrome-profile-t12 --sem-enriquecer --assume-logged-in
-```
-
-#### Passo 3 — Verificar se terminou
-
-**macOS / Linux:** `ls data/bronze/*.csv | wc -l` → esperado: **648**
-
-**Windows:** `(Get-ChildItem data\bronze\*.csv).Count` → esperado: **648**
-
-#### Passo 4 — Enviar para a Kethlen
-
-Envie a pasta `data/bronze/` para a Kethlen no Slack (Drive ou CSVs direto).
-Avise quando tiver enviado.
-
----
-
-### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
-
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
-
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_Exx]` e `[FIM_Exx]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 43716 --fim 49181`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 43716 --fim 49181 --perfil chrome-profile-eXX --assume-logged-in
-> ```
-
-#### Passo 5 — Instalar o arquivo
-
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:**
-```powershell
-Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
-```
-
-#### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E11] --fim [FIM_E11] --perfil chrome-profile-e11
-# (outro terminal)
-python enriquecer.py --inicio [INICIO_E12] --fim [FIM_E12] --perfil chrome-profile-e12
-```
-
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E11] --fim [FIM_E11] --perfil chrome-profile-e11
-```
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E12] --fim [FIM_E12] --perfil chrome-profile-e12
-```
-
-#### Passo 7 — Rodar o enriquecimento
-
-**macOS / Linux (com tmux):**
 ```bash
 tmux new -s e11
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E11] --fim [FIM_E11] \
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 77339 --fim 85072 \
   --perfil chrome-profile-e11 --assume-logged-in
 # Ctrl+b d
+```
 
+```bash
 tmux new -s e12
 source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E12] --fim [FIM_E12] \
+systemd-inhibit --what=sleep:idle python3 enriquecer.py \
+  --inicio 85072 --fim 92805 \
   --perfil chrome-profile-e12 --assume-logged-in
 # Ctrl+b d
 ```
 
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E11] --fim [FIM_E11] --perfil chrome-profile-e11 --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E12] --fim [FIM_E12] --perfil chrome-profile-e12 --assume-logged-in
-```
+Para acompanhar o progresso: `tmux attach -t e9` (ou e10, e11, e12). Para desacoplar: `Ctrl+b d`.
 
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
+#### Passo 4 — Enviar resultados para a Kethlen
 
-#### Passo 8 — Enviar resultados para a Kethlen
-
-Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
+Quando terminar, envie os arquivos `data/silver/enriquecido_*.csv` para a
+Kethlen no Slack (Drive ou direto).
 
 ---
 
 ---
 
-## Máquina 7 — PC Inteli (Scarpelin)
+## Máquina 4 — Leo
+
+Esta máquina roda a Fase 3 (enriquecimento) com 4 terminais (e13–e16) no Windows.
+Configure as Opções de Energia para nunca suspender antes de começar.
 
 ### Passo 0 — Setup (fazer uma vez)
 
-**macOS / Linux:**
-```bash
-cd webscrapping-2026/webscrapping/versao3
-
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-playwright install chrome
-
-brew install tmux    # macOS; Linux: sudo apt install tmux
-```
-
-**Windows (PowerShell):**
 ```powershell
 cd webscrapping-2026\webscrapping\versao3
 
@@ -1414,351 +742,72 @@ playwright install chrome
 
 ---
 
-### Fase 1 — Coleta
-
-#### Passo 1 — Configurar perfis no Chrome (fazer uma vez)
-
-Quando o Chrome abrir, faça login no Glassdoor pelo botão "Continuar com Google"
-e pressione Enter para confirmar. Depois, encerre com Ctrl+C.
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-
-# Terminal 1
-python coleta_glassdoor.py --kw-inicio 152 --kw-fim 164 --perfil chrome-profile-t13 --sem-enriquecer
-
-# Terminal 2 (outro terminal)
-python coleta_glassdoor.py --kw-inicio 164 --kw-fim 176 --perfil chrome-profile-t14 --sem-enriquecer
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 152 --kw-fim 164 --perfil chrome-profile-t13 --sem-enriquecer
-```
-```powershell
-# Terminal 2 (outra janela)
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 164 --kw-fim 176 --perfil chrome-profile-t14 --sem-enriquecer
-```
-
-#### Passo 2 — Rodar a coleta completa
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s t13
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 152 --kw-fim 164 \
-  --perfil chrome-profile-t13 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-
-tmux new -s t14
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 164 --kw-fim 176 \
-  --perfil chrome-profile-t14 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 152 --kw-fim 164 --perfil chrome-profile-t13 --sem-enriquecer --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 164 --kw-fim 176 --perfil chrome-profile-t14 --sem-enriquecer --assume-logged-in
-```
-
-#### Passo 3 — Verificar se terminou
-
-**macOS / Linux:** `ls data/bronze/*.csv | wc -l` → esperado: **648**
-
-**Windows:** `(Get-ChildItem data\bronze\*.csv).Count` → esperado: **648**
-
-#### Passo 4 — Enviar para a Kethlen
-
-Envie a pasta `data/bronze/` para a Kethlen no Slack (Drive ou CSVs direto).
-Avise quando tiver enviado.
-
----
-
 ### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
 
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
+A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv`. Esta máquina
+roda 4 terminais (e13–e16).
 
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_Exx]` e `[FIM_Exx]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 43716 --fim 49181`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 43716 --fim 49181 --perfil chrome-profile-eXX --assume-logged-in
-> ```
+#### Passo 1 — Instalar o arquivo
 
-#### Passo 5 — Instalar o arquivo
-
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:**
 ```powershell
 Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
 ```
 
-#### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
+#### Passo 2 — Configurar perfis de enriquecimento (fazer uma vez)
 
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E13] --fim [FIM_E13] --perfil chrome-profile-e13
-# (outro terminal)
-python enriquecer.py --inicio [INICIO_E14] --fim [FIM_E14] --perfil chrome-profile-e14
-```
+Abra 4 janelas do PowerShell e rode um comando em cada. Quando o Chrome abrir,
+confirme o login no Glassdoor e pressione Enter. Depois, encerre com Ctrl+C.
 
-**Windows:**
 ```powershell
 venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E13] --fim [FIM_E13] --perfil chrome-profile-e13
+python enriquecer.py --inicio 92805 --fim 100538 --perfil chrome-profile-e13
 ```
 ```powershell
 venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E14] --fim [FIM_E14] --perfil chrome-profile-e14
-```
-
-#### Passo 7 — Rodar o enriquecimento
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s e13
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E13] --fim [FIM_E13] \
-  --perfil chrome-profile-e13 --assume-logged-in
-# Ctrl+b d
-
-tmux new -s e14
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E14] --fim [FIM_E14] \
-  --perfil chrome-profile-e14 --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E13] --fim [FIM_E13] --perfil chrome-profile-e13 --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E14] --fim [FIM_E14] --perfil chrome-profile-e14 --assume-logged-in
-```
-
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
-
-#### Passo 8 — Enviar resultados para a Kethlen
-
-Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
-
----
-
----
-
-## Máquina 8 — Leo
-
-### Passo 0 — Setup (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-cd webscrapping-2026/webscrapping/versao3
-
-python3 -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-playwright install chrome
-
-brew install tmux    # macOS; Linux: sudo apt install tmux
-```
-
-**Windows (PowerShell):**
-```powershell
-cd webscrapping-2026\webscrapping\versao3
-
-python -m venv venv
-venv\Scripts\Activate.ps1
-
-pip install -r requirements.txt
-playwright install chrome
-```
-
----
-
-### Fase 1 — Coleta
-
-#### Passo 1 — Configurar perfis no Chrome (fazer uma vez)
-
-Quando o Chrome abrir, faça login no Glassdoor pelo botão "Continuar com Google"
-e pressione Enter para confirmar. Depois, encerre com Ctrl+C.
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-
-# Terminal 1
-python coleta_glassdoor.py --kw-inicio 176 --kw-fim 188 --perfil chrome-profile-t15 --sem-enriquecer
-
-# Terminal 2 (outro terminal)
-python coleta_glassdoor.py --kw-inicio 188 --kw-fim 200 --perfil chrome-profile-t16 --sem-enriquecer
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 176 --kw-fim 188 --perfil chrome-profile-t15 --sem-enriquecer
-```
-```powershell
-# Terminal 2 (outra janela)
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 188 --kw-fim 200 --perfil chrome-profile-t16 --sem-enriquecer
-```
-
-#### Passo 2 — Rodar a coleta completa
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s t15
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 176 --kw-fim 188 \
-  --perfil chrome-profile-t15 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-
-tmux new -s t16
-source venv/bin/activate
-caffeinate -i python coleta_glassdoor.py \
-  --kw-inicio 188 --kw-fim 200 \
-  --perfil chrome-profile-t16 \
-  --sem-enriquecer --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows (PowerShell):**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 176 --kw-fim 188 --perfil chrome-profile-t15 --sem-enriquecer --assume-logged-in
-```
-```powershell
-# Terminal 2 — manter aberto
-venv\Scripts\Activate.ps1
-python coleta_glassdoor.py --kw-inicio 188 --kw-fim 200 --perfil chrome-profile-t16 --sem-enriquecer --assume-logged-in
-```
-
-#### Passo 3 — Verificar se terminou
-
-**macOS / Linux:** `ls data/bronze/*.csv | wc -l` → esperado: **648**
-
-**Windows:** `(Get-ChildItem data\bronze\*.csv).Count` → esperado: **648**
-
-#### Passo 4 — Enviar para a Kethlen
-
-Envie a pasta `data/bronze/` para a Kethlen no Slack (Drive ou CSVs direto).
-Avise quando tiver enviado.
-
----
-
-### Fase 3 — Enriquecimento (aguardar sinal da Kethlen)
-
-A Kethlen vai te enviar no Slack o arquivo `vagas_unicas.csv` e os índices
-específicos para os seus dois terminais.
-
-> **⚠️ Sobre os valores entre colchetes:** `[INICIO_Exx]` e `[FIM_Exx]` nos
-> comandos abaixo são números que a Kethlen vai te mandar. Ela vai copiar a
-> saída do script de deduplicação e enviar a linha exata com os valores para
-> você. Substitua os colchetes pelos números recebidos, sem espaços extras.
-> **Exemplo:** se ela mandar `--inicio 43716 --fim 49181`, seu comando fica:
-> ```
-> python enriquecer.py --inicio 43716 --fim 49181 --perfil chrome-profile-eXX --assume-logged-in
-> ```
-
-#### Passo 5 — Instalar o arquivo
-
-**macOS / Linux:** `cp ~/Downloads/vagas_unicas.csv data/silver/`
-
-**Windows:**
-```powershell
-Copy-Item $HOME\Downloads\vagas_unicas.csv data\silver\
-```
-
-#### Passo 6 — Configurar perfis de enriquecimento (fazer uma vez)
-
-**macOS / Linux:**
-```bash
-source venv/bin/activate
-python enriquecer.py --inicio [INICIO_E15] --fim [FIM_E15] --perfil chrome-profile-e15
-# (outro terminal)
-python enriquecer.py --inicio [INICIO_E16] --fim [FIM_E16] --perfil chrome-profile-e16
-```
-
-**Windows:**
-```powershell
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E15] --fim [FIM_E15] --perfil chrome-profile-e15
+python enriquecer.py --inicio 100538 --fim 108271 --perfil chrome-profile-e14
 ```
 ```powershell
 venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E16] --fim [FIM_E16] --perfil chrome-profile-e16
-```
-
-#### Passo 7 — Rodar o enriquecimento
-
-**macOS / Linux (com tmux):**
-```bash
-tmux new -s e15
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E15] --fim [FIM_E15] \
-  --perfil chrome-profile-e15 --assume-logged-in
-# Ctrl+b d
-
-tmux new -s e16
-source venv/bin/activate
-caffeinate -i python enriquecer.py \
-  --inicio [INICIO_E16] --fim [FIM_E16] \
-  --perfil chrome-profile-e16 --assume-logged-in
-# Ctrl+b d
-```
-
-**Windows:**
-```powershell
-# Terminal 1 — manter aberto
-venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E15] --fim [FIM_E15] --perfil chrome-profile-e15 --assume-logged-in
+python enriquecer.py --inicio 108271 --fim 116004 --perfil chrome-profile-e15
 ```
 ```powershell
-# Terminal 2 — manter aberto
 venv\Scripts\Activate.ps1
-python enriquecer.py --inicio [INICIO_E16] --fim [FIM_E16] --perfil chrome-profile-e16 --assume-logged-in
+python enriquecer.py --inicio 116004 --fim 123737 --perfil chrome-profile-e16
 ```
 
-*(os valores entre colchetes são os que a Kethlen vai enviar)*
+#### Passo 3 — Rodar o enriquecimento (4 PowerShells — manter abertos)
 
-#### Passo 8 — Enviar resultados para a Kethlen
+Abra 4 janelas do PowerShell e rode um bloco em cada. **Nao feche as janelas**
+enquanto o processo estiver rodando.
 
-Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
+```powershell
+# PowerShell 1 — manter aberto
+venv\Scripts\Activate.ps1
+python enriquecer.py --inicio 92805 --fim 100538 --perfil chrome-profile-e13 --assume-logged-in
+```
+
+```powershell
+# PowerShell 2 — manter aberto
+venv\Scripts\Activate.ps1
+python enriquecer.py --inicio 100538 --fim 108271 --perfil chrome-profile-e14 --assume-logged-in
+```
+
+```powershell
+# PowerShell 3 — manter aberto
+venv\Scripts\Activate.ps1
+python enriquecer.py --inicio 108271 --fim 116004 --perfil chrome-profile-e15 --assume-logged-in
+```
+
+```powershell
+# PowerShell 4 — manter aberto
+venv\Scripts\Activate.ps1
+python enriquecer.py --inicio 116004 --fim 123737 --perfil chrome-profile-e16 --assume-logged-in
+```
+
+#### Passo 4 — Enviar resultados para a Kethlen
+
+Quando terminar, envie os arquivos `data\silver\enriquecido_*.csv` para a
+Kethlen no Slack (Drive ou direto).
 
 ---
 
@@ -1776,15 +825,13 @@ Envie os arquivos `data/silver/enriquecido_*.csv` para a Kethlen no Slack.
 
 ---
 
-## Resumo da distribuição
+## Resumo da distribuição — Fase 3
 
-| Máquina | Pessoa | Fase 1 T1 | Fase 1 T2 | Fase 3 T1 | Fase 3 T2 | CSVs Fase 1 |
-|---------|--------|-----------|-----------|-----------|-----------|-------------|
-| M1 ⭐   | MacBook Kethlen | t1 (0–13) | t2 (13–26) | e1 | e2 | 702 |
-| M2      | PC Inteli Kethlen | t3 (26–39) | t4 (39–52) | e3 | e4 | 702 |
-| M3      | Luana | t5 (52–65) | t6 (65–78) | e5 | e6 | 702 |
-| M4      | Tati | t7 (78–91) | t8 (91–104) | e7 | e8 | 702 |
-| M5      | Lucas | t9 (104–116) | t10 (116–128) | e9 | e10 | 648 |
-| M6      | PC Inteli Marco | t11 (128–140) | t12 (140–152) | e11 | e12 | 648 |
-| M7      | PC Inteli Scarpelin | t13 (152–164) | t14 (164–176) | e13 | e14 | 648 |
-| M8      | Leo | t15 (176–188) | t16 (188–200) | e15 | e16 | 648 |
+| Máquina | Pessoa | OS | e1 | e2 | e3 | e4 |
+|---------|--------|----|----|----|----|----|
+| M1 ⭐   | MacBook Kethlen | macOS | 0–7734 | 7734–15468 | 15468–23202 | 23202–30936 |
+| M2      | PC Inteli Kethlen | Linux | 30936–38670 | 38670–46404 | 46404–54138 | 54138–61872 |
+| M3      | PC Inteli Marco | Linux | 61872–69606 | 69606–77339 | 77339–85072 | 85072–92805 |
+| M4      | Leo | Windows | 92805–100538 | 100538–108271 | 108271–116004 | 116004–123737 |
+
+**Total de vagas únicas:** 123.737 — divididas em 16 terminais (4 máquinas × 4)
