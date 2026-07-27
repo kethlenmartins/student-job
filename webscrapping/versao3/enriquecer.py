@@ -160,9 +160,18 @@ async def main() -> None:
         print("Execute deduplicar.py primeiro.")
         return
 
-    df_total = pd.read_csv(INPUT_FILE, dtype=str).fillna("")
-    fim = args.fim if args.fim is not None else len(df_total)
-    fatia = df_total.iloc[args.inicio:fim].copy()
+    # Lê apenas a fatia necessária — evita carregar o CSV inteiro por terminal
+    fim_arg = args.fim
+    if fim_arg is None:
+        # Precisa saber o total de linhas só para calcular o fim
+        fim_arg = sum(1 for _ in open(INPUT_FILE, encoding="utf-8")) - 1  # -1 pelo header
+    fim = fim_arg
+    fatia = pd.read_csv(
+        INPUT_FILE,
+        dtype=str,
+        skiprows=range(1, args.inicio + 1) if args.inicio > 0 else None,
+        nrows=fim - args.inicio,
+    ).fillna("")
     fatia = fatia.reset_index(drop=True)
 
     pendentes_mask = fatia["Skills Necessarias"].isin(["NF", ""]) & fatia["URL"].str.strip().ne("")
