@@ -1,0 +1,100 @@
+import json
+
+with open('analytics/scp_comparativo.ipynb') as f:
+    nb = json.load(f)
+
+new_source = [
+    "import re\n",
+    "from unidecode import unidecode\n",
+    "\n",
+    "# ── 2025: carrega xlsx já processado (tem nivel) ──────────────────────────\n",
+    "sal_25 = pd.read_excel(PATH_25 + 'analise_salario_por_nivel.xlsx', index_col=0)\n",
+    "print('=== 2025 — Salário médio por nível (R$ mil) ===')\n",
+    "display(sal_25)\n",
+    "\n",
+    "# ── 2026: parseia salário + nível diretamente do scp_01 ──────────────────\n",
+    "def parse_faixa(text):\n",
+    "    if not isinstance(text, str) or text.strip().upper() in ['NF', '', 'N/E', 'N/F']:\n",
+    "        return None\n",
+    "    text = text.replace('\\xa0', ' ')\n",
+    "    nums = re.findall(r'R\\$\\s*([\\d\\.]+)', text)\n",
+    "    if not nums:\n",
+    "        return None\n",
+    "    try:\n",
+    "        val_k = float(nums[0].replace('.', '')) / 1000\n",
+    "        if val_k < 2:    return '|- 2'\n",
+    "        elif val_k < 5:  return '2 |- 5'\n",
+    "        elif val_k < 10: return '5 |- 10'\n",
+    "        elif val_k < 30: return '10 |- 30'\n",
+    "        else:            return '30 |-'\n",
+    "    except Exception:\n",
+    "        return None\n",
+    "\n",
+    "df26_s1 = pd.read_csv(PATH_26 + 'scp_01.csv')\n",
+    "\n",
+    "# Classifica Nivel inline usando os mesmos critérios do scp_02\n",
+    "df_nivel_cargo = pd.read_excel(PATH_26 + 'criterios.xlsx', sheet_name='nivel_cargo')\n",
+    "df_nivel_cargo = df_nivel_cargo.sort_values(by='Prioridade')\n",
+    "\n",
+    "def match_nivel(text):\n",
+    "    if text == '' or pd.isna(text):\n",
+    "        return 'n/e'\n",
+    "    res = 'n/f'\n",
+    "    rows = df_nivel_cargo[df_nivel_cargo['Cargo'].apply(lambda k: f' {k} ' in f' {text} ')]\n",
+    "    if rows.shape[0] > 0:\n",
+    "        for _, row in rows.iterrows():\n",
+    "            for column in df_nivel_cargo.columns[2:]:\n",
+    "                if row[column] == 1:\n",
+    "                    res = column\n",
+    "                    break\n",
+    "    return res\n",
+    "\n",
+    "df26_s1['Nivel'] = df26_s1['Cargo'].apply(match_nivel)\n",
+    "df26_s1['Faixa'] = df26_s1['Salario'].apply(parse_faixa)\n",
+    "df26_sal_ok = df26_s1[df26_s1['Faixa'].notna()].copy()\n",
+    "\n",
+    "n_total_26 = len(df26_s1)\n",
+    "n_com_sal_26 = len(df26_sal_ok)\n",
+    "print(f'\\n2026 — vagas com salário: {n_com_sal_26:,} ({n_com_sal_26/n_total_26*100:.1f}%)')\n",
+    "\n",
+    "faixa_ordem = {'|- 2': 1, '2 |- 5': 3.5, '5 |- 10': 7.5, '10 |- 30': 20, '30 |-': 35}\n",
+    "df26_sal_ok['Salario_Medio'] = df26_sal_ok['Faixa'].map(faixa_ordem)\n",
+    "\n",
+    "sal_26_geral = df26_sal_ok.groupby('Faixa')['Salario_Medio'].agg(\n",
+    "    Quantidade='count'\n",
+    ").reindex(['|- 2','2 |- 5','5 |- 10','10 |- 30','30 |-'])\n",
+    "sal_26_geral['% vagas'] = (sal_26_geral['Quantidade'] / n_com_sal_26 * 100).round(1)\n",
+    "\n",
+    "print('\\n=== 2026 — Distribuição por faixa salarial (R$ mil) ===')\n",
+    "display(sal_26_geral)\n",
+    "\n",
+    "# ── Comparativo por nível ─────────────────────────────────────────────────\n",
+    "sal_26_nivel = df26_sal_ok.groupby('Nivel')['Salario_Medio'].agg(\n",
+    "    Média='mean', Quantidade='count'\n",
+    ").round(2)\n",
+    "\n",
+    "niveis_comuns = sal_25.index.intersection(sal_26_nivel.index)\n",
+    "if len(niveis_comuns) > 0 and 'Média' in sal_25.columns:\n",
+    "    comp_sal = pd.DataFrame({\n",
+    "        'Média 2025 (R$ mil)': sal_25.loc[niveis_comuns, 'Média'],\n",
+    "        'Média 2026 (R$ mil)': sal_26_nivel.loc[niveis_comuns, 'Média'],\n",
+    "    })\n",
+    "    comp_sal['Δ'] = (comp_sal['Média 2026 (R$ mil)'] - comp_sal['Média 2025 (R$ mil)']).round(2)\n",
+    "    ordem_nivel = ['Nível Júnior', 'Nível Pleno / Sênior', 'Nível Liderança', 'n/f']\n",
+    "    comp_sal = comp_sal.reindex([n for n in ordem_nivel if n in comp_sal.index])\n",
+    "    print('\\n=== Comparativo — ponto médio salarial por nível (R$ mil) ===')\n",
+    "    display(comp_sal)\n",
+    "else:\n",
+    "    print('(sem níveis em comum para comparar)')\n"
+]
+
+for cell in nb['cells']:
+    if cell.get('id') == 'salario':
+        cell['source'] = new_source
+        cell['outputs'] = []
+        print('Célula salario reescrita.')
+
+with open('analytics/scp_comparativo.ipynb', 'w') as f:
+    json.dump(nb, f, indent=1, ensure_ascii=False)
+
+print('Salvo.')

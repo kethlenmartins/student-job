@@ -38,7 +38,7 @@ body{font-family:var(--font-body);background:#1E1B32;color:rgba(255,255,255,.88)
   --periwinkle:#7B8CDE;
   --font-title:'Platypi',Georgia,serif;
   --font-body:'Manrope',system-ui,sans-serif;
-  --nav-h:68px;
+  --nav-h:0px;
 }
 
 /* ── NAV ── */
@@ -80,12 +80,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:calc(var(--nav-h) + 20px) clamp(16px,2.5vw,40px) clamp(20px,2.5vw,40px);
+  padding:calc(var(--nav-h) + 20px) clamp(24px,2.5vw,40px) clamp(20px,2.5vw,40px);
   box-sizing:border-box;
 }
 .chapter-shell{
   width:100%;
-  max-width:1360px;
+  max-width:1340px;
   height:calc(100vh - var(--nav-h) - 44px);
   min-height:520px;
   max-height:880px;
@@ -114,18 +114,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   width:100%;
 }
 @media(max-width:960px){
-  .chapter-shell{height:auto;min-height:calc(100vh - var(--nav-h) - 44px);max-height:none}
-  .insight-slide{grid-template-columns:1fr;height:auto;min-height:680px}
-  .panel-metrics{min-height:380px}
-  .section-chapter:has(.insight-slide) .chapter-shell{
+  /* section cresce para conter o card, sem transbordar para a seção seguinte */
+  .section-chapter{
+    align-items:flex-start;
+    min-height:0;
     height:auto;
-    min-height:min(88vh,680px);
-    max-height:none;
+    padding-top:32px;
+    padding-bottom:40px;
   }
+  .chapter-shell{height:auto;min-height:0;max-height:none}
+  .chapter-box{height:auto;min-height:0}
+  .insight-slide{grid-template-columns:1fr;height:auto;min-height:0}
+  .panel-metrics{min-height:0}
+  .section-chapter:has(.insight-slide) .chapter-shell{height:auto!important;min-height:0!important;max-height:none!important}
   .section-chapter:has(.insight-slide) .chapter-box,
-  .section-chapter:has(.insight-slide) .insight-slide{min-height:min(88vh,680px);height:auto}
-  .section-chapter:has(.insight-slide) .insight-stack{flex:1 1 auto;height:auto;min-height:200px;max-height:none}
-  .section-chapter:has(.insight-slide) .metrics-body{min-height:460px}
+  .section-chapter:has(.insight-slide) .insight-slide{height:auto!important;min-height:0!important}
+  .section-chapter:has(.insight-slide) .insight-stack{flex:1 1 auto;height:auto;min-height:0;max-height:none}
+  .section-chapter:has(.insight-slide) .metrics-body{min-height:0}
   .section-chapter:has(.insight-slide) .insight-stack .ib,
   .section-chapter:has(.insight-slide) .metrics-body .ip{overflow-y:auto;padding-right:4px}
 }
@@ -536,7 +541,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   );
 }
 .hero-inner{
-  max-width:1280px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(24px,4vw,48px);
+  max-width:1340px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(24px,4vw,48px);
   position:relative;z-index:1;width:100%;
 }
 .hh{font-family:var(--font-title);font-size:clamp(32px,5vw,60px);font-weight:900;line-height:1.05;margin-bottom:16px}
@@ -556,7 +561,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   padding:calc(var(--nav-h) + clamp(32px,4vw,56px)) clamp(20px,3vw,48px) clamp(48px,6vw,80px);
   min-height:100vh;box-sizing:border-box;
 }
-.analisador-inner{width:100%;max-width:1200px;margin:0 auto}
+.analisador-inner{width:100%;max-width:1340px;margin:0 auto}
 .analisador-head{margin-bottom:clamp(28px,4vw,48px)}
 .section-band-dark.section-analisador .analisador-head .ch-lbl{color:rgba(255,255,255,.45)}
 .section-band-dark.section-analisador .analisador-head .sl-h{margin-bottom:0;color:#fff}
@@ -567,7 +572,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   min-height:100vh;box-sizing:border-box;
 }
 .section-band-light.section-areas .ch-lbl{color:var(--text-muted)}
-.areas-inner{width:100%;max-width:1280px;margin:0 auto}
+.areas-inner{width:100%;max-width:1340px;margin:0 auto}
 .areas-lead{font-size:14px;color:var(--text-body);line-height:1.75;max-width:720px;margin-top:12px}
 .areas-fonte{font-size:11px;color:var(--text-muted);margin-top:8px}
 
@@ -576,7 +581,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   padding:calc(var(--nav-h) + clamp(32px,4vw,56px)) clamp(20px,3vw,48px) clamp(48px,6vw,80px);
   min-height:auto;box-sizing:border-box;
 }
-.stack-inner{width:100%;max-width:1280px;margin:0 auto}
+.stack-inner{width:100%;max-width:1340px;margin:0 auto}
 .section-band-dark.section-stack .stack-inner .ch-lbl{color:rgba(255,255,255,.45)}
 .section-band-dark.section-stack .stack-inner>.sl-h{color:#fff}
 .section-band-dark.section-stack .stack-intro{color:rgba(255,255,255,.65)}
@@ -739,28 +744,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   grid-column:2;display:flex;justify-content:space-between;margin-top:2px;
   padding:0 8px;font-size:8px;color:var(--text-muted);font-weight:600;
 }
-.area-detail .detail-col-title{
+.area-detail .detail-col-title,.area-mob-detail .detail-col-title{
   font-family:var(--font-title);font-size:9px;font-weight:700;text-transform:uppercase;
   letter-spacing:.12em;color:var(--coral);margin-bottom:12px;padding-bottom:8px;
   border-bottom:1px solid #e0e0e8;
 }
-.area-detail .chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
-.area-detail .chip{
+.area-detail .chip-group,.area-mob-detail .chip-group{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.area-detail .chip,.area-mob-detail .chip{
   display:inline-flex;align-items:center;padding:5px 12px;
   font-size:11px;font-weight:600;background:var(--panel-light);color:var(--text-dark);border:1px solid #e0e0e8;
 }
-.area-detail .chip.hard{background:#e8eeff;color:#2a4db5;border-color:#b8c8f8}
-.area-detail .chip.soft{background:#f0e8ff;color:#5a2d82;border-color:#d0b8f8}
-.area-detail .chip.lang{background:#e6f5ed;color:#1a6b3a;border-color:#a8d8b8}
-.area-detail .chip.tool{background:#fff5e6;color:#8a5200;border-color:#f0d8a0}
-.area-detail .level-block{margin-bottom:14px}
-.area-detail .level-label{font-size:12px;font-weight:700;color:var(--text-dark);margin-bottom:6px}
-.area-detail .level-chips{display:flex;flex-wrap:wrap;gap:5px}
-.area-detail .diferencial-box{
+.area-detail .chip.hard,.area-mob-detail .chip.hard{background:#e8eeff;color:#2a4db5;border-color:#b8c8f8}
+.area-detail .chip.soft,.area-mob-detail .chip.soft{background:#f0e8ff;color:#5a2d82;border-color:#d0b8f8}
+.area-detail .chip.lang,.area-mob-detail .chip.lang{background:#e6f5ed;color:#1a6b3a;border-color:#a8d8b8}
+.area-detail .chip.tool,.area-mob-detail .chip.tool{background:#fff5e6;color:#8a5200;border-color:#f0d8a0}
+.area-detail .level-block,.area-mob-detail .level-block{margin-bottom:14px}
+.area-detail .level-label,.area-mob-detail .level-label{font-size:12px;font-weight:700;color:var(--text-dark);margin-bottom:6px}
+.area-detail .level-chips,.area-mob-detail .level-chips{display:flex;flex-wrap:wrap;gap:5px}
+.area-detail .diferencial-box,.area-mob-detail .diferencial-box{
   background:var(--panel-light);border-left:3px solid var(--teal);
   padding:10px 14px;font-size:12px;color:var(--text-body);line-height:1.55;margin-top:8px;
 }
-.area-detail .detail-source{
+.area-detail .detail-source,.area-mob-detail .detail-source{
   grid-column:1/-1;font-size:10px;color:var(--text-muted);
   border-top:1px solid #e0e0e8;padding-top:12px;margin-top:4px;
 }
@@ -771,10 +776,59 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   .salary-axis{grid-column:1}
 }
 
+/* ── ÁREA CARDS: accordion mobile ── */
+/* desktop: oculta o detail interno; mostra o panel externo normalmente */
+@media(min-width:769px){.area-mob-detail{display:none!important}}
+@media(max-width:768px){
+  /* desabilita hover lift no touch */
+  .area-card:hover{transform:none;box-shadow:0 2px 10px rgba(30,27,50,.06)}
+  .area-card.open{box-shadow:0 4px 16px rgba(30,27,50,.12)}
+  /* oculta detail externo (não é inserido no mobile de qualquer forma) */
+  .area-detail{display:none!important}
+  /* expansão do card via accordion */
+  .area-mob-detail{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .3s ease;
+    overflow:hidden;
+  }
+  .area-mob-detail>.amd-inner{min-height:0}
+  .area-card.open .area-mob-detail{
+    grid-template-rows:1fr;
+    margin-top:12px;
+    border-top:1px solid #e8eaed;
+  }
+  /* sub-accordion: seções dentro do detail */
+  .amd-sec{border-bottom:1px solid #e8eaed}
+  .amd-sec:last-child{border-bottom:none}
+  .amd-trig{
+    width:100%;display:flex;align-items:center;justify-content:space-between;
+    gap:8px;padding:13px 0;background:none;border:none;cursor:pointer;
+    font-family:var(--font-title);font-size:10px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.12em;color:var(--coral);
+    text-align:left;-webkit-tap-highlight-color:transparent;
+  }
+  .amd-trig:focus-visible{outline:2px solid var(--coral);outline-offset:2px}
+  .amd-chev{flex-shrink:0;transition:transform .25s ease;color:var(--text-muted);opacity:.55}
+  .amd-sec[data-open]>.amd-trig .amd-chev{transform:rotate(180deg);opacity:1}
+  .amd-body{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .25s ease;
+    overflow:hidden;
+  }
+  .amd-body-in{min-height:0;padding-bottom:14px}
+  .amd-sec[data-open]>.amd-body{grid-template-rows:1fr}
+  /* salary chart: coluna única */
+  .area-mob-detail .salary-chart{padding:14px 16px}
+  .area-mob-detail .salary-grid{grid-template-columns:1fr;row-gap:18px}
+  .area-mob-detail .salary-axis{grid-column:1}
+}
+
 /* ── SOBRE / FORM ── */
-.plain-inner{max-width:1280px;margin:0 auto;padding:clamp(40px,5vw,72px) clamp(24px,4vw,48px);width:100%}
+.plain-inner{max-width:1340px;margin:0 auto;padding:clamp(40px,5vw,72px) clamp(24px,4vw,48px);width:100%}
 .content-box{
-  max-width:1360px;
+  max-width:1340px;
   margin:0 auto;
   padding:clamp(36px,4vw,56px);
   
@@ -838,12 +892,69 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 #sobre .content-box{
   box-sizing:border-box;
 }
+
+/* ── METHOD-CARD: estrutura accordion ── */
+/* Desktop: trigger é transparente, body sempre visível */
+.m-trigger{
+  display:block;background:none;border:none;padding:0;margin:0;
+  width:100%;text-align:left;cursor:default;color:inherit;
+}
+.m-chev{display:none}
+.m-hd{display:block}
+.m-stat{display:block}
+.m-stat .m-big{display:block}
+.m-stat .m-label{display:block}
+.m-body{display:block}
+.m-body-in{display:block}
+
+/* Mobile: accordion ativo */
+@media(max-width:768px){
+  .method-grid{grid-template-columns:1fr;gap:8px;margin-top:20px}
+  .method-card{padding:0;cursor:default;transition:box-shadow .15s ease}
+  .m-trigger{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;padding:18px 20px;cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .m-trigger:focus-visible{outline:2px solid var(--coral);outline-offset:-2px}
+  .m-hd{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;gap:6px}
+  .m-stat{display:flex;align-items:baseline;gap:8px}
+  .m-stat .m-big{font-size:clamp(22px,6vw,32px);line-height:1}
+  .m-stat .m-label{font-size:9px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--coral);font-family:var(--font-title)}
+  .m-chev{
+    display:block;flex-shrink:0;
+    transition:transform .28s ease;
+    opacity:.55;
+  }
+  .section-band-light .m-chev{color:var(--text-muted)}
+  .method-card[data-open] .m-chev{transform:rotate(180deg);opacity:1}
+  /* body colapsável via grid-template-rows */
+  .m-body{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .28s ease;
+    overflow:hidden;
+  }
+  .m-body-in{
+    min-height:0;
+    padding:0 20px;
+  }
+  .method-card[data-open] .m-body{grid-template-rows:1fr}
+  .method-card[data-open] .m-body-in{padding:0 20px 20px}
+  /* separador entre trigger e body */
+  .method-card[data-open] .m-trigger{
+    border-bottom:1px solid rgba(30,27,50,.1);
+  }
+  .section-band-dark .method-card[data-open] .m-trigger{
+    border-bottom-color:rgba(255,255,255,.08);
+  }
+}
 .section-form{
   display:flex;align-items:center;justify-content:center;
   padding:calc(var(--nav-h) + 40px) clamp(16px,2.5vw,40px) clamp(40px,4vw,60px);
   box-sizing:border-box;
 }
-.leads-inner{width:100%;max-width:1280px;margin:0 auto}
+.leads-inner{width:100%;max-width:1340px;margin:0 auto}
 .fw{
   display:grid;grid-template-columns:1fr 400px;
   border:1px solid rgba(255,255,255,.08);
@@ -916,50 +1027,170 @@ footer{
   padding:16px 48px;font-size:10px;color:rgba(255,255,255,.4);
   display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
 }
+
+/* ════════════════════════════════════════════
+   RESPONSIVIDADE — MOBILE / TABLET
+   ════════════════════════════════════════════ */
+
+/* ── Botão hamburger ── */
+.nm{
+  display:none;flex-direction:column;justify-content:center;gap:5px;
+  background:none;border:none;cursor:pointer;padding:10px 6px;
+  flex-shrink:0;-webkit-tap-highlight-color:transparent;
+}
+.nm span{
+  display:block;width:22px;height:2px;
+  background:#fff;border-radius:1px;
+  transition:transform .22s ease,opacity .22s ease;
+}
+.nm.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nm.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nm.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ── Nav mobile (<= 860px) ── */
+@media(max-width:860px){
+  .nm{display:flex}
+  .nv,.nc{display:none}
+
+  /* menu aberto */
+  .nv.mob-open{
+    display:flex;flex-direction:column;
+    position:absolute;top:var(--nav-h);left:0;right:0;
+    background:#1E1B32;padding:8px 0 16px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+    z-index:299;gap:0;
+    box-shadow:0 16px 40px rgba(0,0,0,.55);
+  }
+  .nv.mob-open>a{
+    font-size:14px;padding:14px 24px;white-space:normal;
+    border-bottom:1px solid rgba(255,255,255,.05);
+  }
+  /* Ferramentas: label estático + subitens expandidos */
+  .nv.mob-open .nd{flex-direction:column;position:static}
+  .nv.mob-open .nd::after{display:none}
+  .nv.mob-open .nd-btn{
+    font-size:12px;padding:10px 24px;width:100%;text-align:left;
+    justify-content:flex-start;color:rgba(255,255,255,.4);
+    font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    border-bottom:none;pointer-events:none;cursor:default;
+  }
+  .nv.mob-open .nd-chevron{display:none}
+  .nv.mob-open .nd-menu{
+    display:block!important;position:static;
+    background:rgba(255,255,255,.03);box-shadow:none;
+    border:none;border-bottom:1px solid rgba(255,255,255,.05);
+    padding:0;min-width:auto;
+  }
+  .nv.mob-open .nd-menu a{padding:12px 24px 12px 40px;font-size:13px}
+  /* CTA dentro do menu */
+  .nc-mob{
+    display:block;margin:16px 16px 0;
+    font-family:var(--font-title);font-size:13px;font-weight:700;
+    background:var(--coral);color:#fff;padding:13px 20px;
+    text-decoration:none;letter-spacing:.04em;text-align:center;
+  }
+  .nc-mob:hover{opacity:.9}
+}
+/* CTA-mob não aparece em desktop */
+@media(min-width:861px){.nc-mob{display:none}}
+
+/* ── Hero stats: 4 cols → 2 cols em mobile ── */
+@media(max-width:580px){
+  .hstats{grid-template-columns:1fr 1fr}
+  .hs-c{padding:18px 14px}
+  .hs-v{font-size:22px}
+}
+
+/* ── Method grid: 4 cols → 2 cols → 1 col ── */
+@media(max-width:900px){
+  .method-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:580px){
+  .method-grid{grid-template-columns:1fr}
+}
+
+/* ── Chapter/insight slides: mobile pequeno ── */
+@media(max-width:640px){
+  .section-chapter:has(.insight-slide) .chapter-shell{min-height:auto}
+  .section-chapter:has(.insight-slide) .chapter-box,
+  .section-chapter:has(.insight-slide) .insight-slide{min-height:auto;height:auto}
+  .insight-slide{min-height:auto}
+  .panel-metrics{min-height:240px}
+  .section-chapter:has(.insight-slide) .metrics-body{min-height:280px}
+  .panel-text{padding:clamp(20px,5vw,32px) clamp(16px,5vw,28px)}
+  .bn-card{padding:16px 14px;gap:12px;min-height:72px}
+  .bn-val{font-size:clamp(32px,8vw,48px);min-width:90px}
+  .sl-h{font-size:clamp(22px,6vw,36px)}
+}
+
+/* ── Área-detail e salary: 1 col em mobile ── */
+@media(max-width:560px){
+  .area-detail.show{grid-template-columns:1fr}
+  .salary-grid{grid-template-columns:1fr}
+  .salary-axis{grid-column:1}
+  .trilhas-mini{grid-template-columns:1fr}
+  .stat2{grid-template-columns:1fr}
+}
+
+/* ── Footer ── */
+@media(max-width:680px){
+  footer{padding:16px 20px;flex-direction:column;gap:4px}
+}
+
+/* ── CARROSSEL · shadcn/Embla ── */
+.car-wrap{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;margin-top:40px}
+.car-viewport{position:relative;overflow:hidden;flex:1 1 auto;min-height:0}
+.car-container{display:flex;height:100%}
+.car-slide.ib{flex:0 0 100%;min-width:0;height:100%;position:relative!important;display:flex!important;flex-direction:column;justify-content:flex-start;inset:auto!important;overflow-y:auto;overflow-x:hidden;padding-right:4px}
+.car-metrics-wrap{flex:1 1 auto;min-height:0;overflow:hidden;padding-top:48px;display:flex;flex-direction:column}
+.car-metrics-wrap .car-viewport{height:100%}
+.car-metrics-wrap .car-container{height:100%;align-items:stretch}
+.car-slide.ip{flex:0 0 100%;min-width:0;height:100%;position:relative!important;display:flex!important;flex-direction:column;gap:14px;inset:auto!important;overflow-y:auto;overflow-x:hidden}
+.car-ctrl{display:flex;align-items:center;gap:12px;padding-top:16px;flex-shrink:0}
+.car-btn{width:32px;height:32px;border-radius:50%;border:1px solid rgba(30,27,50,.18);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--text-dark);flex-shrink:0;padding:0}
+.section-band-dark .car-btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.8)}
+.car-btn:hover:not(:disabled){background:var(--coral);border-color:var(--coral);color:#fff}
+.car-btn:disabled{opacity:.35;cursor:default}
+.car-counter{font-family:var(--font-title);font-size:13px;color:var(--text-muted)}
+.section-band-dark .car-counter{color:rgba(255,255,255,.45)}
+.car-counter .car-cur{color:var(--coral);font-weight:800}
+
+/* ── Carousel: responsividade mobile/tablet ── */
+@media(max-width:960px){
+  .section-chapter:has(.insight-slide) .panel-text{overflow:hidden}
+  .section-chapter .car-wrap{margin-top:16px;flex:none}
+  .section-chapter .car-viewport{height:280px;flex:none}
+  .section-chapter .car-container{height:280px}
+  .section-chapter .car-slide.ib{height:280px}
+  .section-chapter .car-metrics-wrap{padding-top:16px;flex:none}
+  .section-chapter .car-metrics-wrap .car-viewport{height:340px;flex:none}
+  .section-chapter .car-metrics-wrap .car-container{height:340px;align-items:flex-start}
+  .section-chapter .car-slide.ip{height:340px}
+  .car-btn{width:40px;height:40px}
+  .car-ctrl{padding-top:12px;gap:16px}
+}
+@media(max-width:540px){
+  .section-chapter .car-viewport{height:240px}
+  .section-chapter .car-container{height:240px}
+  .section-chapter .car-slide.ib{height:240px}
+  .section-chapter .car-metrics-wrap .car-viewport{height:300px}
+  .section-chapter .car-metrics-wrap .car-container{height:300px}
+  .section-chapter .car-slide.ip{height:300px}
+}
 </style>
+<script src="https://unpkg.com/embla-carousel@8.5.2/embla-carousel.umd.js"></script>
 </head>
 <body>
 
-<nav>
-  <div class="ni">
-    <div class="nl">
-      <img src="logos/logo%20inteli%20%20(4)%20-%20Copia.png" alt="Inteli">
-    </div>
-    <div class="nv">
-      <a href="#panorama-trajetorias">Panorama e Trajetórias</a>
-      <a href="#oportunidades">Áreas e posicionamento</a>
-      <a href="#stack-tecnica">Stack tecnológica</a>
-      <div class="nd">
-        <button class="nd-btn">
-          Ferramentas
-          <svg class="nd-chevron" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-        <div class="nd-menu">
-          <a href="#analisador">Analisador de transição</a>
-          <a href="#visao-area">Visão por Área</a>
-        </div>
-      </div>
-      <a href="#projecoes">Projeções</a>
-      <a href="#sobre">Sobre essa pesquisa</a>
-    </div>
-    <a href="#leads" class="nc">Baixar relatório</a>
-  </div>
-</nav>
 
 <!-- HERO -->
 <section class="section-full section-hero section-band-dark" id="hero">
   <div class="hero-inner">
-    <h1 class="hh">Para onde ir:<br>habilidades, remuneração<br>e <em>trajetórias</em> em tech</h1>
+    <h1 class="hh">Estudo de Carreiras em tecnologias 2026</h1>
     <p class="hs">A maior análise de vagas do mercado brasileiro de tecnologia.</p>
     <div class="hctas">
       <a href="#leads" class="btn-r">Baixar o estudo completo</a>
       <a href="#panorama-trajetorias" class="btn-o">Explorar os dados →</a>
-    </div>
-    <div class="hstats">
-      <div class="hs-c"><div class="hs-v">19.655</div><div class="hs-l">Vagas analisadas</div></div>
-      <div class="hs-c"><div class="hs-v">110</div><div class="hs-l">Profissionais pesquisados</div></div>
-      <div class="hs-c"><div class="hs-v">10</div><div class="hs-l">Especialistas</div></div>
-      <div class="hs-c"><div class="hs-v">Abr–Jun/25</div><div class="hs-l">Coleta</div></div>
     </div>
   </div>
 </section>
@@ -972,16 +1203,10 @@ footer{
         <div class="panel-text">
           <div class="ch-lbl" id="mkt-ch-lbl">Capítulo 1 · Panorama do Mercado</div>
           <h2 class="sl-h">Panorama e Trajetórias</h2>
-          <div class="sw">
-            <button class="sb on" type="button" onclick="sw('mkt',1,this)">01</button>
-            <button class="sb" type="button" onclick="sw('mkt',2,this)">02</button>
-            <button class="sb" type="button" onclick="sw('mkt',3,this)">03</button>
-            <button class="sb" type="button" onclick="sw('mkt',4,this)">04</button>
-            <button class="sb" type="button" onclick="sw('mkt',5,this)">05</button>
-            <button class="sb" type="button" onclick="sw('mkt',6,this)">06</button>
-          </div>
-          <div class="insight-stack">
-          <div class="ib on" id="mkt-1">
+          <div class="car-wrap" id="car-mkt-text">
+            <div class="car-viewport">
+              <div class="car-container">
+          <div class="car-slide ib" id="mkt-1">
             <div class="ih">O mercado aquecido tem mais portas do que parece</div>
             <div class="it">
               <p>O mercado de tecnologia continua operando com um déficit estrutural de talentos. Entre 2019 e 2024, a demanda acumulada chegou a 665 mil profissionais, enquanto a oferta ficou em cerca de 464 mil, gerando um descasamento de 30,2% (Brasscom, 2025).</p>
@@ -989,7 +1214,7 @@ footer{
               <p>O resultado é um mercado com mais portas de entrada do que aparenta. As oportunidades estão distribuídas por diferentes setores e organizações, muito além das empresas tradicionalmente associadas à tecnologia.</p>
             </div>
           </div>
-          <div class="ib" id="mkt-2">
+          <div class="car-slide ib" id="mkt-2">
             <div class="ih">Código já não é suficiente</div>
             <div class="it">
               <p>O Brasil perde cerca de R$ 1 trilhão por ano em produtividade devido a lacunas de habilidades e trajetórias profissionais mal direcionadas (Pearson, 2024). Em tecnologia, parte desse desafio está na dificuldade de conectar conhecimento técnico às necessidades do negócio.</p>
@@ -997,7 +1222,7 @@ footer{
               <p>Hoje, destacar-se depende da capacidade de transformar conhecimento técnico em impacto, conectando tecnologia, pessoas e resultados de negócio.</p>
             </div>
           </div>
-          <div class="ib" id="mkt-3">
+          <div class="car-slide ib" id="mkt-3">
             <div class="ih">A oportunidade é grande, mas a volatilidade também</div>
             <div class="it">
               <p>O mercado brasileiro de tecnologia combina crescimento acelerado e alta instabilidade. Com mais de 13 mil startups ativas e movimentação de US$ 73,9 bilhões em 2022, o setor se consolidou como peça central da economia digital.</p>
@@ -1005,16 +1230,14 @@ footer{
               <p>O paradoxo é evidente: empresas continuam contratando, mas encontrar profissionais qualificados permanece um desafio. Em tecnologia, a oportunidade é abundante, mas construir relevância em um mercado que muda rapidamente tornou-se essencial.</p>
             </div>
           </div>
-          <div class="ib" id="mkt-4">
+          <div class="car-slide ib" id="mkt-4">
             <div class="ih">Carreiras em tecnologia são fluidas e não lineares</div>
             <div class="it">
               <p>A ideia de uma trajetória única em tecnologia está cada vez mais ultrapassada. À medida que o setor se expande, também se multiplicam os caminhos de crescimento profissional.</p>
               <p>A carreira pode evoluir por diferentes direções, como liderança, especialização técnica, empreendedorismo ou educação e pesquisa. Mais do que escolher uma trilha definitiva, profissionais costumam transitar entre diferentes papéis ao longo da jornada.</p>
-              <p>Como resume Arthur Massa:</p>
-              <p><em>“A nossa estrutura precisa acomodar esses perfis diversos. Não existe só um caminho certo.”</em></p>
             </div>
           </div>
-          <div class="ib" id="mkt-5">
+          <div class="car-slide ib" id="mkt-5">
             <div class="ih">Inglês e IA alavancam a carreira</div>
             <div class="it">
               <p>Entre as competências que mais ampliam oportunidades em tecnologia, duas se destacam de forma consistente: inglês e inteligência artificial.</p>
@@ -1023,7 +1246,7 @@ footer{
               <p>Em um setor cada vez mais conectado e impulsionado por IA, dominar essas habilidades deixou de ser um diferencial para se tornar um importante acelerador de carreira.</p>
             </div>
           </div>
-          <div class="ib" id="mkt-6">
+          <div class="car-slide ib" id="mkt-6">
             <div class="ih">A experiência se tornou a moeda do mercado</div>
             <div class="it">
               <p>Entrar em tecnologia é apenas o começo. O avanço na carreira depende cada vez mais da capacidade de acumular repertório técnico, contexto de negócio e experiência prática.</p>
@@ -1031,19 +1254,32 @@ footer{
               <p>O recado do mercado é claro: a entrada pode acontecer por diferentes caminhos, mas a progressão continua fortemente associada à construção consistente de experiência.</p>
             </div>
           </div>
+              </div>
+            </div>
+            <div class="car-ctrl">
+              <button class="car-btn" id="car-mkt-prev" aria-label="Anterior" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <span class="car-counter"><span id="car-mkt-cur" class="car-cur">1</span> / 6</span>
+              <button class="car-btn" id="car-mkt-next" aria-label="Próximo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
           </div>
         </div>
         <div class="panel-metrics">
 
-          <div class="metrics-body">
-            <div class="ip on" id="mkt-p1">
+          <div class="car-metrics-wrap" id="car-mkt-metrics">
+            <div class="car-viewport">
+              <div class="car-container">
+            <div class="car-slide ip" id="mkt-p1">
               <div class="bn-list">
                 <div class="bn-card"><div class="bn-val coral">665k</div><div class="bn-label coral">Demanda acumulada de profissionais entre 2019 e 2024</div></div>
                 <div class="bn-card"><div class="bn-val teal">464k</div><div class="bn-label teal">Oferta acumulada de profissionais entre 2019 e 2024</div></div>
                 <div class="bn-card"><div class="bn-val blue">+30%</div><div class="bn-label blue">Gap estrutural de 30,2%</div></div>
               </div>
             </div>
-            <div class="ip" id="mkt-p2">
+            <div class="car-slide ip" id="mkt-p2">
               <div class="bn-list">
                 <div class="bn-card" style="flex-direction:column;align-items:flex-start;gap:10px">
                   <div class="bn-val coral" style="min-width:0">R$1tri</div>
@@ -1052,7 +1288,7 @@ footer{
                 <div class="note-card"><p>Boa parte desse custo está ligado à dificuldade de profissionais técnicos em traduzir seu trabalho em valor de negócio.</p></div>
               </div>
             </div>
-            <div class="ip" id="mkt-p3">
+            <div class="car-slide ip" id="mkt-p3">
               <div class="bn-list">
                 <div class="bn-card"><div class="bn-val coral">47%</div><div class="bn-label coral">dos profissionais de tech pretendem mudar de emprego em um futuro próximo</div></div>
                 <div class="bn-card"><div class="bn-val teal">1 em 4</div><div class="bn-label teal">trocaria de empresa por um aumento salarial de 35%</div></div>
@@ -1060,7 +1296,7 @@ footer{
                 <div class="bn-card"><div class="bn-val dark">10,9%</div><div class="bn-label dark">conseguem encontrar profissionais sem dificuldade</div></div>
               </div>
             </div>
-            <div class="ip" id="mkt-p4">
+            <div class="car-slide ip" id="mkt-p4">
               <div class="mkt-p4-stack">
                 <div class="traj4">
                   <div class="bn-card"><div class="bn-val coral">39%</div><div class="bn-label coral"><strong>Estágio em tech</strong><br>Porta principal, mais relevante para perfis jovens e universitários.</div></div>
@@ -1068,13 +1304,9 @@ footer{
                   <div class="bn-card"><div class="bn-val blue">15%</div><div class="bn-label blue"><strong>Bootcamp</strong><br>Formação técnica intensiva, já reconhecida como rota de entrada.</div></div>
                   <div class="bn-card"><div class="bn-val dark">25%</div><div class="bn-label dark"><strong>Outros caminhos</strong><br>trainee / jovens talentos (9%), CLT direto (8%), indicação e redes pessoais (5%), outros (3%).</div></div>
                 </div>
-                <div class="quote-panel">
-                  <p class="qt">"A nossa estrutura precisa acomodar esses perfis diversos. Não existe só um caminho certo."</p>
-                  <p class="qa">Arthur Massa</p>
-                </div>
               </div>
             </div>
-            <div class="ip" id="mkt-p5">
+            <div class="car-slide ip" id="mkt-p5">
               <div class="panel-extra" style="margin-bottom:14px">
                 <div class="bc-ttl">IA como acelerador salarial</div>
                 <div class="bc" style="margin-bottom:6px"><div class="br"><span class="bl">Até R$2K — sem IA</span><div class="bt"><div class="bf" style="width:1.9%;background:rgba(255,255,255,.35)"></div></div><span class="bv">1,9%</span></div>
@@ -1093,10 +1325,10 @@ footer{
                 <div class="bc"><div class="br"><span class="bl">Pleno/Sênior</span><div class="bt"><div class="bf" style="width:8.7%;background:#5b5480"></div></div><span class="bv">8,7%</span></div>
                 <div class="br"><span class="bl">Liderança</span><div class="bt"><div class="bf" style="width:7.7%;background:var(--coral)"></div></div><span class="bv">7,7%</span></div>
                 <div class="br"><span class="bl">Júnior</span><div class="bt"><div class="bf" style="width:6.6%;background:var(--teal)"></div></div><span class="bv">6,6%</span></div>
-                <div class="br"><span class="bl">Networking / comunidades</span><div class="bt"><div class="bf" style="width:5.2%;background:rgba(255,255,255,.4)"></div></div><span class="bv">5,2%</span></div></div>
+</div>
               </div>
             </div>
-            <div class="ip" id="mkt-p6">
+            <div class="car-slide ip" id="mkt-p6">
               <div class="seniority-wrap" role="img" aria-label="Distribuição de senioridade por área">
                 <div class="seniority-title">Distribuição de senioridade por área</div>
                 <div class="seniority-leg">
@@ -1169,6 +1401,8 @@ footer{
                     <div class="sen-lbl">Segurança da Informação</div>
                   </div>
                 </div>
+              </div>
+            </div>
               </div>
             </div>
           </div>
@@ -1430,21 +1664,19 @@ function analyzeTransition(){
     <div class="chapter-box">
       <div class="insight-slide">
         <div class="panel-text">
-          <div class="ch-lbl" id="emp-ch-lbl">Capítulo 3 · Áreas e Posicionamento</div>
+          <div class="ch-lbl" id="emp-ch-lbl">Principais competências</div>
           <h2 class="sl-h">Áreas e posicionamento</h2>
-          <div class="sw">
-            <button class="sb on" type="button" onclick="sw('emp',1,this)">01</button>
-            <button class="sb" type="button" onclick="sw('emp',2,this)">02</button>
-          </div>
-          <div class="insight-stack">
-          <div class="ib on" id="emp-1">
+          <div class="car-wrap" id="car-emp-text">
+            <div class="car-viewport">
+              <div class="car-container">
+          <div class="car-slide ib" id="emp-1">
             <div class="ih">O mercado é grande, mas não é onde parece</div>
             <div class="it">
               <p>Há mais demanda do que oferta em tecnologia, mas as oportunidades não estão distribuídas onde o discurso aponta. Enquanto a Inteligência Artificial concentra atenção e percepção de valor, a maior parte das vagas segue ancorada em desenvolvimento e infraestrutura.</p>
               <p>O mercado fala sobre o futuro, mas contrata para sustentar o presente. Quem entra pelo hype encontra barreiras. Quem entende onde o volume real está, encontra espaço.</p>
             </div>
           </div>
-          <div class="ib" id="emp-2">
+          <div class="car-slide ib" id="emp-2">
             <div class="ih">Além de escolher tecnologia, é possível escolher o setor</div>
             <div class="it">
               <p>A tecnologia deixou de ser um setor isolado e passou a operar como base de praticamente todos os negócios. Finanças, varejo, saúde, indústria, agronegócio e educação disputam os mesmos profissionais, em diferentes estágios de maturidade digital.</p>
@@ -1452,17 +1684,30 @@ function analyzeTransition(){
               <p>No painel ao lado, selecione um setor para ver as principais competências e tecnologias demandadas.</p>
             </div>
           </div>
+              </div>
+            </div>
+            <div class="car-ctrl">
+              <button class="car-btn" id="car-emp-prev" aria-label="Anterior" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <span class="car-counter"><span id="car-emp-cur" class="car-cur">1</span> / 2</span>
+              <button class="car-btn" id="car-emp-next" aria-label="Próximo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
           </div>
         </div>
         <div class="panel-metrics">
 
-          <div class="metrics-body">
-            <div class="ip on" id="emp-p1">
+          <div class="car-metrics-wrap" id="car-emp-metrics">
+            <div class="car-viewport">
+              <div class="car-container">
+            <div class="car-slide ip" id="emp-p1">
               <div class="panel-extra">
                 <img class="viz-img" src="distribuicao-tecnica.png" alt="Distribuição técnica das vagas mapeadas — Índice de Vagas (Inteli, 2025)">
               </div>
             </div>
-            <div class="ip" id="emp-p2">
+            <div class="car-slide ip" id="emp-p2">
               <div class="sps" id="sec-pills">
                 <button class="sp on" type="button" onclick="setSec(this,'financas')">Finanças</button>
                 <button class="sp" type="button" onclick="setSec(this,'varejo')">Varejo</button>
@@ -1474,6 +1719,8 @@ function analyzeTransition(){
                 <button class="sp" type="button" onclick="setSec(this,'publico')">Setor público</button>
               </div>
               <div class="ol" id="sec-list"></div>
+            </div>
+              </div>
             </div>
           </div>
           <p class="metrics-src" id="emp-src">Fonte: Sonda Tech e Índice de Vagas (Inteli, 2025)</p>
@@ -1487,7 +1734,7 @@ function analyzeTransition(){
 <section class="section-full section-stack section-band-light" id="stack-tecnica">
   <div class="stack-inner">
     <p class="ch-lbl">Complemento · Capítulo 3</p>
-    <h2 class="sl-h">Stack tecnológica</h2>
+    <h2 class="sl-h">Principais competências</h2>
     <p class="stack-intro">O mercado não busca linguagens isoladas, mas um sistema integrado de competências. A técnica define o que se constrói — as soft skills definem se isso gera valor dentro da organização.</p>
 
     <div class="stack-split">
@@ -1691,43 +1938,63 @@ function analyzeTransition(){
 <section class="section-full section-plain section-chapter section-band-light" id="sobre">
   <div class="chapter-shell" style="max-height:none;height:auto">
     <div class="content-box plain-inner" style="margin:0;width:100%">
-      <div class="ch-lbl">Sobre esse relatório</div>
+      <div class="ch-lbl">Metodologia</div>
       <h2 class="hh" style="font-size:clamp(28px,4vw,42px)">Quatro camadas de<br><em>dados complementares</em></h2>
       <p class="hs" style="max-width:720px;margin-bottom:0">Como este estudo foi construído: desk research, coleta massiva de vagas, entrevistas com lideranças e pesquisa quantitativa com profissionais de tecnologia.</p>
       <div class="method-grid">
-        <div class="method-card featured">
-          <div class="m-num">01 · Desk Research</div>
-          <div class="m-big">10+</div>
-          <div class="m-label">Relatórios</div>
-          <div class="m-title">Revisão bibliográfica</div>
-          <div class="m-desc">Brasscom, Robert Half, PwC, MIT Sloan, Banco Mundial, IBGE, Sebrae, IDC/ABES, Gi Group, Pearson. Artigos, marcos legais e bases governamentais.</div>
+        <div class="method-card">
+          <button class="m-trigger" aria-expanded="false">
+            <div class="m-hd">
+              <div class="m-num">01 · Desk Research</div>
+              <div class="m-stat"><span class="m-big">10+</span><span class="m-label">Relatórios</span></div>
+            </div>
+            <svg class="m-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="m-body"><div class="m-body-in">
+            <div class="m-title">Revisão bibliográfica</div>
+            <div class="m-desc">Brasscom, Robert Half, PwC, MIT Sloan, Banco Mundial, IBGE, Sebrae, IDC/ABES, Gi Group, Pearson. Artigos, marcos legais e bases governamentais.</div>
+          </div></div>
         </div>
         <div class="method-card">
-          <div class="m-num">02 · Web Scraping</div>
-          <div class="m-big">72,7K</div>
-          <div class="m-label">Vagas coletadas</div>
-          <div class="m-title">Índice de vagas</div>
-          <div class="m-desc">Plataformas públicas de recrutamento, abril a junho de 2025. Extrato limpo com deduplicação: 19.655 vagas diretamente relacionadas ao setor de tecnologia.</div>
+          <button class="m-trigger" aria-expanded="false">
+            <div class="m-hd">
+              <div class="m-num">02 · Web Scraping</div>
+              <div class="m-stat"><span class="m-big">72,7K</span><span class="m-label">Vagas coletadas</span></div>
+            </div>
+            <svg class="m-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="m-body"><div class="m-body-in">
+            <div class="m-title">Índice de vagas</div>
+            <div class="m-desc">Plataformas públicas de recrutamento, abril a junho de 2025. Extrato limpo com deduplicação: 19.655 vagas diretamente relacionadas ao setor de tecnologia.</div>
+          </div></div>
         </div>
         <div class="method-card">
-          <div class="m-num">03 · Entrevistas</div>
-          <div class="m-big">10</div>
-          <div class="m-label">Especialistas</div>
-          <div class="m-title">Vozes do mercado</div>
-          <div class="m-desc">Lideranças de RH, tecnologia, educação, empreendedorismo e regulação. Perfis: Atos, Ambev Tech, QI Tech, Printi, Accenture, SAP, Confea e Inteli.</div>
+          <button class="m-trigger" aria-expanded="false">
+            <div class="m-hd">
+              <div class="m-num">03 · Entrevistas</div>
+              <div class="m-stat"><span class="m-big">10</span><span class="m-label">Especialistas</span></div>
+            </div>
+            <svg class="m-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="m-body"><div class="m-body-in">
+            <div class="m-title">Vozes do mercado</div>
+            <div class="m-desc">Lideranças de RH, tecnologia, educação, empreendedorismo e regulação. Perfis: Atos, Ambev Tech, QI Tech, Printi, Accenture, SAP, Confea e Inteli.</div>
+          </div></div>
         </div>
         <div class="method-card">
-          <div class="m-num">04 · Survey</div>
-          <div class="m-big">110</div>
-          <div class="m-label">Respondentes</div>
-          <div class="m-title">Sonda Tech</div>
-          <div class="m-desc">Formulário com 40+ perguntas abertas e fechadas. Concentração no Sudeste (90,5%), faixa etária 25–34 anos (34,7%), nível Pleno/Sênior predominante (45%).</div>
+          <button class="m-trigger" aria-expanded="false">
+            <div class="m-hd">
+              <div class="m-num">04 · Survey</div>
+              <div class="m-stat"><span class="m-big">110</span><span class="m-label">Respondentes</span></div>
+            </div>
+            <svg class="m-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="m-body"><div class="m-body-in">
+            <div class="m-title">Sonda Tech</div>
+            <div class="m-desc">Formulário com 40+ perguntas abertas e fechadas. Concentração no Sudeste (90,5%), faixa etária 25–34 anos (34,7%), nível Pleno/Sênior predominante (45%).</div>
+          </div></div>
         </div>
       </div>
-      <p class="method-foot">
-        Metodologia: Web Scraping · Pesquisa Quantitativa · Entrevistas em Profundidade · Desk Research<br>
-        Período de coleta de vagas: abril a junho de 2025 · Inteli — Estudo de Carreiras em Tecnologia 2025
-      </p>
     </div>
   </div>
 </section>
@@ -1814,7 +2081,7 @@ var MERCADO_SRC=[
   'Fonte: Índice de Vagas (Inteli, 2025)',
   'Fonte: Índice de Vagas (Inteli, 2025)'
 ];
-var EMPREGO_CH=['Capítulo 3 · Áreas e Posicionamento','Capítulo 3 · Áreas e Posicionamento'];
+var EMPREGO_CH=['Principais competências','Principais competências'];
 var EMPREGO_SRC=[
   'Fonte: Índice de Vagas (Inteli, 2025)',
   'Fonte: Índice de Vagas (Inteli, 2025)'
@@ -1831,25 +2098,31 @@ var SETORES={
   publico:[{r:'01',t:'Arquitetura e engenharia de sistemas',s:'Modernização de legados críticos',l:'Alta'},{r:'02',t:'Segurança da informação',s:'Infraestrutura crítica nacional',l:'Alta'},{r:'03',t:'Transformação digital de serviços',s:'Gov.br, serviços ao cidadão',l:'Alta'},{r:'04',t:'Análise de dados e transparência',s:'Dados abertos, indicadores',l:'Crescente'},{r:'05',t:'Gestão de projetos tech',s:'Contratos complexos, compliance',l:'Alta'}]
 };
 
-function sw(ns,n,btn){
-  var root=btn.closest('.insight-slide');
-  btn.closest('.sw').querySelectorAll('.sb').forEach(function(b){b.classList.remove('on')});
-  btn.classList.add('on');
-  if(root){
-    root.querySelectorAll('.ib').forEach(function(el){el.classList.remove('on')});
-    root.querySelectorAll('.ip').forEach(function(el){el.classList.remove('on')});
+function initChapterCarousel(ns,total,chLabels,srcLabels,chLblId,srcId){
+  if(typeof EmblaCarousel==='undefined'){return;}
+  var textVp=document.querySelector('#car-'+ns+'-text .car-viewport');
+  var metricsVp=document.querySelector('#car-'+ns+'-metrics .car-viewport');
+  if(!textVp||!metricsVp)return;
+  var opts={loop:false};
+  var emblaText=EmblaCarousel(textVp,opts);
+  var emblaMetrics=EmblaCarousel(metricsVp,{loop:false,watchDrag:false});
+  var prevBtn=document.getElementById('car-'+ns+'-prev');
+  var nextBtn=document.getElementById('car-'+ns+'-next');
+  var curEl=document.getElementById('car-'+ns+'-cur');
+  function onSelect(){
+    var idx=emblaText.selectedScrollSnap();
+    if(emblaMetrics.selectedScrollSnap()!==idx)emblaMetrics.scrollTo(idx);
+    if(curEl)curEl.textContent=idx+1;
+    if(chLblId&&chLabels[idx])document.getElementById(chLblId).textContent=chLabels[idx];
+    if(srcId&&srcLabels[idx])document.getElementById(srcId).textContent=srcLabels[idx];
+    if(prevBtn)prevBtn.disabled=!emblaText.canScrollPrev();
+    if(nextBtn)nextBtn.disabled=!emblaText.canScrollNext();
+    setTimeout(animBars,50);
   }
-  var b=document.getElementById(ns+'-'+n);if(b)b.classList.add('on');
-  var p=document.getElementById(ns+'-p'+n);if(p)p.classList.add('on');
-  if(ns==='mkt'){
-    if(MERCADO_CH[n-1])document.getElementById('mkt-ch-lbl').textContent=MERCADO_CH[n-1];
-    if(MERCADO_SRC[n-1])document.getElementById('mkt-src').textContent=MERCADO_SRC[n-1];
-  }
-  if(ns==='emp'){
-    if(EMPREGO_CH[n-1])document.getElementById('emp-ch-lbl').textContent=EMPREGO_CH[n-1];
-    if(EMPREGO_SRC[n-1])document.getElementById('emp-src').textContent=EMPREGO_SRC[n-1];
-  }
-  setTimeout(animBars,50);
+  emblaText.on('select',onSelect);
+  if(prevBtn)prevBtn.addEventListener('click',function(){emblaText.scrollPrev();});
+  if(nextBtn)nextBtn.addEventListener('click',function(){emblaText.scrollNext();});
+  onSelect();
 }
 
 function setSec(btn,key){
@@ -1920,13 +2193,53 @@ function subForm(){
   if(successState)successState.style.display='block';
 }
 
+function toggleNav(btn){
+  var nv=document.querySelector('.nv');
+  var open=nv.classList.toggle('mob-open');
+  btn.classList.toggle('open',open);
+  btn.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
+}
+
+function closeNav(){
+  var nv=document.querySelector('.nv');
+  var btn=document.querySelector('.nm');
+  if(nv)nv.classList.remove('mob-open');
+  if(btn){btn.classList.remove('open');btn.setAttribute('aria-label','Abrir menu');}
+}
+
+function initMethodAccordions(){
+  if(!window.matchMedia('(max-width:768px)').matches)return;
+  document.querySelectorAll('.method-card').forEach(function(card){
+    var btn=card.querySelector('.m-trigger');
+    if(!btn)return;
+    btn.addEventListener('click',function(){
+      var isOpen=card.hasAttribute('data-open');
+      document.querySelectorAll('.method-card[data-open]').forEach(function(c){
+        c.removeAttribute('data-open');
+        c.querySelector('.m-trigger').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){
+        card.setAttribute('data-open','');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+}
+
 document.addEventListener('DOMContentLoaded',function(){
   var firstSec=document.querySelector('#sec-pills .sp');
   if(firstSec)setSec(firstSec,'financas');
   initStackSoftRank();
   animBars();
+  initChapterCarousel('mkt',6,MERCADO_CH,MERCADO_SRC,'mkt-ch-lbl','mkt-src');
+  initChapterCarousel('emp',2,EMPREGO_CH,EMPREGO_SRC,'emp-ch-lbl','emp-src');
+  initMethodAccordions();
   var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)animBars()})},{threshold:.15});
   document.querySelectorAll('.insight-slide').forEach(function(s){obs.observe(s)});
+  /* Fecha o menu mobile ao clicar em qualquer link */
+  document.querySelector('.nv')&&document.querySelector('.nv').addEventListener('click',function(e){
+    if(e.target.tagName==='A')closeNav();
+  });
 });
 </script>
 </body>

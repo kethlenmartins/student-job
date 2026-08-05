@@ -285,6 +285,53 @@ var grid=document.getElementById('areasGrid');if(!grid)return;
 let activeCard = null;
 let activeDetail = null;
 
+function isMobile(){return window.matchMedia('(max-width:768px)').matches;}
+
+var _chevSvg='<svg class="amd-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
+function _amdSection(label,content){
+  return '<div class="amd-sec">'+
+    '<button class="amd-trig" type="button" aria-expanded="false">'+label+_chevSvg+'</button>'+
+    '<div class="amd-body"><div class="amd-body-in">'+content+'</div></div>'+
+  '</div>';
+}
+
+function renderMobileDetail(area){
+  var ss=area.softSkills.map(function(s){
+    return '<span class="chip soft">'+s.t+' <strong style="margin-left:.2rem;font-size:.62rem">'+s.v+'</strong></span>';
+  }).join('');
+  var hard=collectHardSkills(area).map(function(c){
+    return '<span class="chip '+c.c+'">'+c.t+'</span>';
+  }).join('');
+  var salary=renderSalaryChart(area.id);
+  return '<div class="amd-inner">'+
+    _amdSection('Soft skills','<div class="chip-group">'+ss+'</div>')+
+    _amdSection('Hard skills','<div class="chip-group">'+hard+'</div>')+
+    _amdSection('Médias salariais',salary)+
+  '</div>';
+}
+
+function initCardMobAccordions(card){
+  var mobDetail=card.querySelector('.area-mob-detail');
+  if(!mobDetail)return;
+  mobDetail.addEventListener('click',function(e){e.stopPropagation();});
+  card.querySelectorAll('.amd-trig').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var sec=btn.closest('.amd-sec');
+      var isOpen=sec.hasAttribute('data-open');
+      card.querySelectorAll('.amd-sec[data-open]').forEach(function(s){
+        s.removeAttribute('data-open');
+        s.querySelector('.amd-trig').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){
+        sec.setAttribute('data-open','');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+}
+
 function getSeniorityColors(area) {
   return `
     <div class="seniority-bar">
@@ -344,8 +391,10 @@ function renderCards(filter) {
       <div class="area-name">${area.nome}</div>
       <div class="area-desc-short">${area.descShort}</div>
       ${getSeniorityColors(area)}
-      <div class="area-toggle">+</div>`;
+      <div class="area-toggle">+</div>
+      <div class="area-mob-detail">${renderMobileDetail(area)}</div>`;
 
+    initCardMobAccordions(card);
     card.addEventListener('click', () => toggleDetail(area, card));
     grid.appendChild(card);
   });
@@ -354,20 +403,21 @@ function renderCards(filter) {
 
 function toggleDetail(area, card) {
   const isOpen = card.classList.contains('open');
-  // close any open
+  const mobile = isMobile();
+
+  // close previously open card
   if(activeCard && activeCard !== card) {
     activeCard.classList.remove('open');
     activeCard.querySelector('.area-toggle').textContent = '+';
-  }
-  if(activeDetail) {
-    activeDetail.classList.remove('show');
-    activeDetail.remove();
+    if(!mobile && activeDetail) { activeDetail.classList.remove('show'); activeDetail.remove(); activeDetail = null; }
+    activeCard = null;
   }
 
   if(isOpen) {
     card.classList.remove('open');
     card.querySelector('.area-toggle').textContent = '+';
-    activeCard = null; activeDetail = null;
+    if(!mobile && activeDetail) { activeDetail.classList.remove('show'); activeDetail.remove(); activeDetail = null; }
+    activeCard = null;
     return;
   }
 
@@ -375,15 +425,17 @@ function toggleDetail(area, card) {
   card.querySelector('.area-toggle').textContent = '×';
   activeCard = card;
 
+  if(mobile) {
+    setTimeout(function(){ card.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 50);
+    return;
+  }
+
   const detailEl = document.createElement('div');
   detailEl.innerHTML = renderDetail(area);
   const panel = detailEl.firstElementChild;
   panel.classList.add('show');
-
-  // insert after card's row
   card.after(panel);
   activeDetail = panel;
-
   panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
