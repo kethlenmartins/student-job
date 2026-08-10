@@ -246,14 +246,30 @@ function collectHardSkills(area){
 
 function salaryPos(val,min,max){
   if(max<=min)return 50;
-  return Math.max(4,Math.min(96,((val-min)/(max-min))*100));
+  return Math.max(0,Math.min(100,((val-min)/(max-min))*100));
+}
+
+function fmtSalaryK(v){
+  var n=Math.round(v*10)/10;
+  var s=(n%1===0?String(n):n.toFixed(1)).replace('.',',');
+  return s+'k';
+}
+
+function buildSalaryAxis(min,max,steps){
+  var ticks=[],n=steps||4;
+  for(var i=0;i<=n;i++)ticks.push(min+(max-min)*i/n);
+  return ticks;
+}
+
+function salaryDotStyle(pct){
+  return 'left:calc(8px + (100% - 16px) * '+pct+' / 100)';
 }
 
 function renderSalaryChart(areaId){
   var s=SALARIOS[areaId];
   if(!s)return '';
-  var axisMin=parseFloat(s.axis[0]);
-  var axisMax=parseFloat(s.axis[s.axis.length-1]);
+  var axisMin=s.min;
+  var axisMax=s.max;
   var rows=s.roles.map(function(r){
     var pj=salaryPos(r.jr,axisMin,axisMax);
     var pp=salaryPos(r.pl,axisMin,axisMax);
@@ -261,12 +277,14 @@ function renderSalaryChart(areaId){
     return '<div class="salary-row">'+
       '<div class="salary-role">'+r.role+'</div>'+
       '<div class="salary-track">'+
-        '<span class="salary-dot jr" style="left:'+pj+'%"><span class="salary-dot-lbl">'+r.jr+'k</span></span>'+
-        '<span class="salary-dot pl" style="left:'+pp+'%"><span class="salary-dot-lbl">'+r.pl+'k</span></span>'+
-        '<span class="salary-dot sr" style="left:'+ps+'%"><span class="salary-dot-lbl">'+r.sr+'k</span></span>'+
+        '<span class="salary-dot jr" style="'+salaryDotStyle(pj)+'"><span class="salary-dot-lbl">'+fmtSalaryK(r.jr)+'</span></span>'+
+        '<span class="salary-dot pl" style="'+salaryDotStyle(pp)+'"><span class="salary-dot-lbl">'+fmtSalaryK(r.pl)+'</span></span>'+
+        '<span class="salary-dot sr" style="'+salaryDotStyle(ps)+'"><span class="salary-dot-lbl">'+fmtSalaryK(r.sr)+'</span></span>'+
       '</div></div>';
   }).join('');
-  var axis=s.axis.map(function(a){return '<span>'+a+'</span>'}).join('');
+  var axis=buildSalaryAxis(axisMin,axisMax,4).map(function(a){
+    return '<span>'+fmtSalaryK(a)+'</span>';
+  }).join('');
   return '<div class="salary-chart">'+
     '<div class="salary-chart-h">Principais faixas salariais</div>'+
     '<div class="salary-chart-sub">Média salarial mensal (R$) por cargo — Júnior, Pleno e Sênior</div>'+

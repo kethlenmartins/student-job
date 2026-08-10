@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estudo de Carreiras em Tech — Inteli 2025</title>
+<title>Estudo de Carreiras em Tecnologia — Inteli 2026</title>
 <style>
 /* ── FONTES LOCAIS ── */
 @font-face{
@@ -227,7 +227,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 
 .ib{display:none}
 .ib.on{display:block}
-.ih{font-family:var(--font-title);font-size:13px;font-weight:800;color:var(--coral);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;line-height:1.35}
+.ih{font-family:var(--font-title);font-size:13px;font-weight:800;color:var(--coral);text-transform:none;letter-spacing:.02em;margin-bottom:14px;line-height:1.35}
 .it{font-size:14px;color:var(--text-body);line-height:1.85}
 .it p{margin-bottom:14px}
 .it p:last-child{margin-bottom:0}
@@ -235,6 +235,38 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 
 .viz-img{width:100%;height:auto;display:block;background:#fff}
 .panel-extra .viz-img{box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.chart-card{
+  background:#f3f3f6;padding:18px 16px 14px;width:100%;
+  box-shadow:0 2px 12px rgba(0,0,0,.12);display:flex;flex-direction:column;
+  box-sizing:border-box;min-height:min(420px,calc(100vh - 280px));
+}
+.chart-card .chart-title{
+  font-family:var(--font-title);font-size:15px;font-weight:800;color:var(--coral);
+  margin-bottom:18px;line-height:1.25;flex-shrink:0;
+}
+#emp-p1 .panel-extra{flex:1;display:flex;min-height:0}
+#emp-p1 .chart-card{flex:1;min-height:0}
+.chart-card .chart-leg{
+  display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:10px;
+  font-size:9px;color:var(--text-body);font-weight:600;
+}
+.chart-card .chart-leg span{display:inline-flex;align-items:center;gap:5px}
+.chart-card .chart-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.chart-card .chart-caption{
+  margin-top:10px;font-size:9px;color:var(--text-muted);line-height:1.4;
+}
+.chart-card .dist-vchart{flex:1;min-height:260px;height:auto}
+.chart-card .dist-pct{color:var(--coral)}
+.chart-card .dist-lbl{color:var(--text-dark);font-weight:600;font-size:9px;max-width:none}
+.chart-card .dist-bar{background:var(--coral);border-radius:0}
+.bc-leg{display:flex;flex-wrap:wrap;gap:8px 14px;margin:0 0 10px;font-size:9px;color:rgba(255,255,255,.65);font-weight:600}
+.bc-leg span{display:inline-flex;align-items:center;gap:5px}
+.bc-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.bc-leg .leg-sem{background:rgba(255,255,255,.35)}
+.bc-leg .leg-com{background:var(--coral)}
+.bc-leg .leg-pl{background:#5b5480}
+.bc-leg .leg-lid{background:var(--coral)}
+.bc-leg .leg-jr{background:var(--teal)}
 
 .mkt-p4-scroll{overflow-y:auto;max-height:100%;padding-right:4px}
 .trilhas-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -282,6 +314,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 .ip.on{display:flex;flex-direction:column;gap:14px;width:100%;min-height:0;flex:1}
 #mkt-p6.on{display:block!important;width:100%}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.panel-metrics .metrics-ttl,
+.panel-metrics .bc-ttl{
+  display:block!important;
+  font-family:var(--font-title);
+  font-size:15px;
+  font-weight:800;
+  letter-spacing:.01em;
+  text-transform:none;
+  color:var(--coral)!important;
+  line-height:1.3;
+  margin:0 0 14px;
+  flex:0 0 auto;
+  position:relative;
+  z-index:2;
+  opacity:1;
+  visibility:visible;
+}
+.panel-metrics .metrics-ttl.on-light{color:var(--text-dark)!important}
+.metrics-body > .metrics-ttl{margin-bottom:16px}
+.car-slide.ip > .metrics-ttl{order:-1}
 
 /* ── BIG NUMBER CARDS (slide style) ── */
 .bn-list{display:flex;flex-direction:column;gap:12px;width:100%}
@@ -334,12 +387,30 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 .sector-item strong{display:block;font-family:var(--font-title);font-size:12px;font-weight:800;color:var(--text-dark);margin-bottom:4px}
 .sector-item span{font-size:11px;color:var(--text-body);line-height:1.45}
 
-.dist-vchart{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;height:200px;padding:8px 4px 0}
-.dist-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
-.dist-bar-wrap{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
-.dist-bar{width:100%;max-width:48px;background:var(--coral);min-height:4px}
-.dist-pct{font-family:var(--font-title);font-size:13px;font-weight:900;color:var(--coral);line-height:1}
-.dist-lbl{font-size:8px;color:rgba(255,255,255,.75);text-align:center;line-height:1.25;max-width:72px}
+.dist-vchart{
+  display:flex;align-items:stretch;justify-content:space-between;gap:8px;
+  height:280px;padding:4px 2px 0;box-sizing:border-box;
+}
+.dist-col{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  min-width:0;height:100%;
+}
+.dist-pct{
+  flex-shrink:0;font-family:var(--font-body);font-size:12px;font-weight:800;
+  color:var(--coral);line-height:1;margin-bottom:6px;text-align:center;
+}
+.dist-bar-wrap{
+  flex:1 1 auto;width:100%;min-height:0;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.dist-bar{
+  width:72%;max-width:64px;background:var(--coral);min-height:3px;border-radius:0;
+}
+.dist-lbl{
+  flex-shrink:0;font-family:var(--font-body);font-size:9px;font-weight:600;
+  color:var(--text-dark);text-align:center;line-height:1.25;
+  margin-top:10px;max-width:100%;min-height:2.6em;
+}
 
 .stack-block{margin-bottom:14px}
 .stack-block:last-child{margin-bottom:0}
@@ -360,7 +431,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 }
 #mkt-p6 .seniority-wrap{width:100%;min-height:min(420px,calc(100vh - 280px))}
 .seniority-title{
-  font-family:var(--font-title);font-size:11px;font-weight:800;color:var(--text-dark);
+  font-family:var(--font-title);font-size:15px;font-weight:800;color:var(--coral);
   margin-bottom:10px;line-height:1.25;
 }
 .seniority-leg{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:12px;font-size:9px;color:var(--text-body);font-weight:600}
@@ -393,7 +464,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 /* charts / extras on dark panel */
 .panel-extra{width:100%}
 .bc{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:16px 18px}
-.bc-ttl{font-family:var(--font-title);font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px}
+.bc-ttl{margin-bottom:12px}
 .br{display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .bl{font-size:10px;color:rgba(255,255,255,.7);width:140px;flex-shrink:0;text-align:right}
 .bt{flex:1;height:18px;background:rgba(255,255,255,.08);overflow:hidden}
@@ -467,20 +538,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 #projecoes .projecoes-body p:last-child{margin-bottom:0}
 #projecoes .projecoes-kicker{font-weight:700;color:var(--text-dark)}
 #projecoes .projecoes-inteli{font-weight:600;color:var(--text-dark)}
-#projecoes .projecoes-cta{margin-top:16px;align-self:flex-start;font-size:11px;padding:11px 20px}
+#projecoes .projecoes-cta{margin-top:16px;align-self:flex-start}
 #projecoes .metrics-body{
   position:relative;
   padding-top:48px;
   justify-content:flex-start;
-  overflow:hidden;
+  align-items:stretch;
+  overflow:auto;
+  gap:0;
 }
 #projecoes .ia-roles-stack{
   display:flex;
   flex-direction:column;
   gap:12px;
   width:100%;
-  height:100%;
-  justify-content:center;
+  flex:1 1 auto;
+  min-height:0;
+  height:auto;
+  justify-content:flex-start;
 }
 .ia-role-card{
   display:flex;
@@ -521,40 +596,57 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 
 /* ── HERO ── */
 .section-hero{
-  display:flex;align-items:center;position:relative;overflow:hidden;
-  isolation:isolate;
+  display:block;position:relative;overflow:hidden;
+  padding:0;min-height:100vh;box-sizing:border-box;
 }
-.section-hero::before{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:url('_R2V4959.jpg') 78% center/cover no-repeat;
-  opacity:.34;
+.hero-split{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:100vh;width:100%;
 }
-.section-hero::after{
-  content:'';position:absolute;inset:0;z-index:0;
-  background:linear-gradient(
-    to right,
-    var(--bg-page) 0%,
-    var(--bg-page) 20%,
-    rgba(30,27,50,.88) 52%,
-    rgba(30,27,50,.5) 72%,
-    rgba(30,27,50,.2) 100%
-  );
+.hero-copy{
+  background:var(--bg-page);color:#fff;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(40px,6vw,80px) clamp(28px,4vw,64px);
+  box-sizing:border-box;
 }
-.hero-inner{
-  max-width:1340px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(24px,4vw,48px);
-  position:relative;z-index:1;width:100%;
+.hero-media{
+  position:relative;overflow:hidden;min-height:100%;
+  background:var(--bg-box-metrics);
 }
-.hh{font-family:var(--font-title);font-size:clamp(32px,5vw,60px);font-weight:900;line-height:1.05;margin-bottom:16px}
+.hero-media img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 28%;display:block;
+}
+.hh{font-family:var(--font-title);font-size:clamp(32px,4.2vw,56px);font-weight:900;line-height:1.05;margin-bottom:16px;color:#fff;max-width:18ch}
 .hh em{font-style:italic;color:var(--coral)}
-.hs{font-size:15px;color:rgba(255,255,255,.7);max-width:520px;margin-bottom:28px}
+.hs{font-size:clamp(15px,1.4vw,18px);color:rgba(255,255,255,.78);max-width:36ch;margin-bottom:28px;line-height:1.55}
 .hctas{display:flex;gap:10px;flex-wrap:wrap}
-.btn-r,.btn-o{font-family:var(--font-title);font-size:12px;font-weight:700;padding:12px 22px;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-r,.btn-o{font-family:var(--font-body);font-size:15px;font-weight:700;padding:16px 28px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;letter-spacing:.02em}
 .btn-r{background:var(--coral);color:#fff}
-.btn-o{border:1px solid rgba(255,255,255,.2);color:#fff}
+.btn-o{border:1px solid rgba(255,255,255,.28);color:#fff}
+.btn-o:hover{background:rgba(255,255,255,.08)}
 .hstats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:48px;border:1px solid rgba(255,255,255,.1);overflow:hidden}
 .hs-c{background:rgba(255,255,255,.04);padding:24px 20px}
 .hs-v{font-family:var(--font-title);font-size:28px;font-weight:900}
 .hs-l{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-top:4px}
+@media(max-width:900px){
+  .section-hero{min-height:0}
+  .hero-split{
+    grid-template-columns:1fr;
+    min-height:0;
+  }
+  .hero-media{
+    order:-1;
+    min-height:0;
+    aspect-ratio:4/3;
+    max-height:52vh;
+  }
+  .hero-copy{
+    padding:clamp(28px,6vw,48px) clamp(20px,5vw,32px) clamp(40px,8vw,64px);
+  }
+  .hh{max-width:none}
+  .hs{max-width:none}
+}
 
 /* ── ANALISADOR (seção inteira, sem caixa) ── */
 .section-analisador{
@@ -589,6 +681,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 #stack-tecnica{background:#e6eaeb}
 #oportunidades{background:#ffffff}
 #visao-area{background:#ffffff}
+#projecoes{background:#ffffff}
 .stack-inner>.sl-h{margin-bottom:12px}
 .stack-intro{font-size:14px;color:var(--text-body);line-height:1.75;max-width:820px;margin-bottom:32px}
 .stack-split{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
@@ -936,7 +1029,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
     overflow:hidden;
   }
   .m-body-in{
+    display:block;
     min-height:0;
+    overflow:hidden;
     padding:0 20px;
   }
   .method-card[data-open] .m-body{grid-template-rows:1fr}
@@ -951,26 +1046,29 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 }
 .section-form{
   display:flex;align-items:center;justify-content:center;
-  padding:calc(var(--nav-h) + 40px) clamp(16px,2.5vw,40px) clamp(40px,4vw,60px);
-  box-sizing:border-box;
+  padding:calc(var(--nav-h) + 32px) clamp(16px,2.5vw,40px) clamp(32px,4vw,48px);
+  box-sizing:border-box;min-height:0;
 }
+#leads.section-full{min-height:0}
 .leads-inner{width:100%;max-width:1340px;margin:0 auto}
 .fw{
-  display:grid;grid-template-columns:1fr 400px;
+  display:grid;grid-template-columns:1fr minmax(280px,360px);
   border:1px solid rgba(255,255,255,.08);
   overflow:hidden;background:var(--bg-box-metrics);
   box-shadow:0 20px 48px rgba(0,0,0,.35);
+  align-items:stretch;
 }
 .fl2{
-  padding:44px;
+  padding:32px 36px;
   background:linear-gradient(135deg,#3A3660,var(--bg-box-metrics));
+  display:flex;flex-direction:column;justify-content:flex-start;
 }
 .fe{
   font-family:var(--font-title);font-size:9px;font-weight:700;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--coral);margin-bottom:14px;display:block;
+  text-transform:uppercase;color:var(--coral);margin-bottom:12px;display:block;
 }
-.ft{font-family:var(--font-title);font-size:clamp(20px,2.5vw,24px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px}
-.fd{font-size:13px;color:rgba(200,196,224,.9);line-height:1.7;margin-bottom:22px}
+.ft{font-family:var(--font-title);font-size:clamp(20px,2.5vw,24px);font-weight:900;color:#fff;line-height:1.15;margin-bottom:10px}
+.fd{font-size:13px;color:rgba(200,196,224,.9);line-height:1.6;margin-bottom:0}
 .finc{display:flex;flex-direction:column;gap:8px}
 .fi{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(200,196,224,.85);line-height:1.45}
 .fck{
@@ -979,8 +1077,94 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   flex-shrink:0;font-size:9px;color:var(--coral);font-weight:700;margin-top:1px;
 }
 .fr{
-  padding:38px 32px;display:flex;flex-direction:column;gap:12px;justify-content:center;
-  background:#252244;
+  padding:12px 14px;display:flex;flex-direction:column;gap:0;justify-content:flex-start;
+  background:#F2F3F5;
+}
+#hs-form-target{width:100%;max-width:100%;line-height:1.2}
+#hs-form-target iframe{
+  width:100%!important;border:0!important;display:block!important;
+  margin:0!important;padding:0!important;
+}
+#hs-form-target h1,#hs-form-target h2,#hs-form-target h3,
+#hs-form-target .hs-form-title,
+#hs-form-target .hs-header,
+#hs-form-target legend{display:none!important;margin:0!important;padding:0!important;height:0!important;overflow:hidden!important}
+#hs-form-target form,#hs-form-target fieldset{
+  max-width:none!important;width:100%!important;min-width:0!important;
+  border:0!important;padding:0!important;margin:0!important;
+}
+#hs-form-target .hs-form-field,
+#hs-form-target .hs_firstname,
+#hs-form-target .hs_lastname,
+#hs-form-target .hs_email,
+#hs-form-target .hs_phone,
+#hs-form-target .hs_state,
+#hs-form-target .hs_city,
+#hs-form-target ul.inputs-list > li{
+  margin:0 0 8px!important;padding:0!important;
+}
+#hs-form-target label,#hs-form-target .hs-label{
+  font-size:8px!important;font-weight:700!important;letter-spacing:.1em!important;
+  text-transform:uppercase!important;color:var(--text-dark)!important;
+  display:block!important;margin:0 0 3px!important;line-height:1.2!important;
+  padding:0!important;
+}
+#hs-form-target .hs-input,
+#hs-form-target input[type=text],
+#hs-form-target input[type=email],
+#hs-form-target input[type=tel],
+#hs-form-target input[type=number],
+#hs-form-target select,
+#hs-form-target textarea{
+  background:#fff!important;border:1px solid #d0d0dc!important;
+  padding:7px 10px!important;font-size:12px!important;color:var(--text-dark)!important;
+  width:100%!important;box-sizing:border-box!important;height:auto!important;
+  min-height:0!important;line-height:1.3!important;
+  border-radius:0!important;outline:none!important;box-shadow:none!important;
+  -webkit-appearance:none!important;margin:0!important;
+}
+#hs-form-target .hs-input::placeholder,
+#hs-form-target input::placeholder{color:var(--text-muted)!important}
+#hs-form-target .hs-input:focus,
+#hs-form-target input:focus,
+#hs-form-target select:focus{border-color:var(--coral)!important}
+#hs-form-target select option{background:#fff!important;color:var(--text-dark)!important}
+#hs-form-target .hs-button,
+#hs-form-target input[type=submit]{
+  background:var(--coral)!important;color:#fff!important;border:none!important;
+  font-family:var(--font-body)!important;font-size:13px!important;font-weight:700!important;
+  padding:10px 12px!important;cursor:pointer!important;width:100%!important;
+  letter-spacing:.02em!important;border-radius:0!important;
+  margin:4px 0 0!important;box-shadow:none!important;
+}
+#hs-form-target .hs-button:hover,
+#hs-form-target input[type=submit]:hover{opacity:.88!important}
+#hs-form-target .hs-error-msgs{
+  color:var(--coral)!important;font-size:9px!important;
+  list-style:none!important;padding:0!important;margin:2px 0 0!important;
+}
+#hs-form-target .legal-consent-container,
+#hs-form-target .hs-richtext,
+#hs-form-target .hs-richtext *,
+#hs-form-target .hs-field-desc{
+  color:var(--text-muted)!important;font-size:9px!important;line-height:1.35!important;
+  margin:0 0 4px!important;padding:0!important;
+}
+#hs-form-target .inputs-list{list-style:none!important;padding:0!important;margin:0!important}
+#hs-form-target .hs-form-required{color:var(--coral)!important}
+#hs-form-target .submitted-message{color:var(--text-dark)!important;text-align:center!important;padding:12px 0!important}
+/* phone field flag */
+#hs-form-target .hs-input.iti__tel-input{padding-left:52px!important}
+#hs-form-target .iti__flag-container{background:#fff!important;border-right:1px solid #d0d0dc!important}
+/* Nome + sobrenome lado a lado para reduzir altura */
+#hs-form-target form{
+  display:grid!important;grid-template-columns:1fr 1fr;gap:0 8px;align-items:start;
+}
+#hs-form-target form > *:not(.hs_firstname):not(.hs_lastname){grid-column:1/-1}
+#hs-form-target .hs_firstname,#hs-form-target .hs_lastname{grid-column:span 1;min-width:0}
+@media(max-width:520px){
+  #hs-form-target form{grid-template-columns:1fr}
+  #hs-form-target .hs_firstname,#hs-form-target .hs_lastname{grid-column:1/-1}
 }
 .ff{display:flex;flex-direction:column;gap:5px}
 .ffl{
@@ -1018,7 +1202,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
 @media(max-width:900px){
   .fw{grid-template-columns:1fr}
   .fl2{padding:28px 24px}
-  .fr{padding:28px 24px}
+  .fr{padding:24px 16px}
   .f2c{grid-template-columns:1fr}
 }
 
@@ -1115,11 +1299,9 @@ footer{
   .section-chapter:has(.insight-slide) .chapter-box,
   .section-chapter:has(.insight-slide) .insight-slide{min-height:auto;height:auto}
   .insight-slide{min-height:auto}
-  .panel-metrics{min-height:240px}
-  .section-chapter:has(.insight-slide) .metrics-body{min-height:280px}
+  .panel-metrics{min-height:0}
+  .section-chapter:has(.insight-slide) .metrics-body{min-height:0}
   .panel-text{padding:clamp(20px,5vw,32px) clamp(16px,5vw,28px)}
-  .bn-card{padding:16px 14px;gap:12px;min-height:72px}
-  .bn-val{font-size:clamp(32px,8vw,48px);min-width:90px}
   .sl-h{font-size:clamp(22px,6vw,36px)}
 }
 
@@ -1145,7 +1327,7 @@ footer{
 .car-metrics-wrap{flex:1 1 auto;min-height:0;overflow:hidden;padding-top:48px;display:flex;flex-direction:column}
 .car-metrics-wrap .car-viewport{height:100%}
 .car-metrics-wrap .car-container{height:100%;align-items:stretch}
-.car-slide.ip{flex:0 0 100%;min-width:0;height:100%;position:relative!important;display:flex!important;flex-direction:column;gap:14px;inset:auto!important;overflow-y:auto;overflow-x:hidden}
+.car-slide.ip{flex:0 0 100%;min-width:0;height:100%;position:relative!important;display:flex!important;flex-direction:column;justify-content:flex-start;align-items:stretch;gap:14px;inset:auto!important;overflow-y:auto;overflow-x:hidden}
 .car-ctrl{display:flex;align-items:center;gap:12px;padding-top:16px;flex-shrink:0}
 .car-btn{width:32px;height:32px;border-radius:50%;border:1px solid rgba(30,27,50,.18);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;color:var(--text-dark);flex-shrink:0;padding:0}
 .section-band-dark .car-btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.8)}
@@ -1177,20 +1359,164 @@ footer{
   .section-chapter .car-metrics-wrap .car-container{height:300px}
   .section-chapter .car-slide.ip{height:300px}
 }
+
+/* ── Mobile: textos + métricas em accordion ── */
+.mob-acc-trig{display:none}
+@media(max-width:768px){
+  .section-full.section-chapter{min-height:0}
+  .section-chapter:has(.insight-slide) .chapter-box,
+  .section-chapter:has(.insight-slide) .insight-slide{
+    overflow:hidden;max-width:100%;
+  }
+  .section-chapter:has(.insight-slide) .panel-text{
+    justify-content:flex-start;
+    overflow:hidden;
+    padding:24px 18px 18px;
+    max-width:100%;
+  }
+  .section-chapter:has(.insight-slide) .panel-text > .ch-lbl{margin-top:0;margin-bottom:10px}
+  .section-chapter:has(.insight-slide) .sl-h{margin-bottom:12px;max-width:100%}
+  .section-chapter .car-wrap{
+    margin-top:10px;flex:none!important;gap:0;max-width:100%;min-width:0;
+  }
+  /* Embla: slides 100% largura; altura do viewport controlada via JS (inline !important) */
+  .section-chapter .car-viewport,
+  .section-chapter .car-metrics-wrap .car-viewport{
+    overflow:hidden!important;width:100%;max-width:100%;
+    min-height:0!important;flex:none!important;
+    /* anula heights fixos do breakpoint 960/540 — JS define a altura real */
+    height:0!important;
+    transition:height .2s ease;
+  }
+  .section-chapter .car-container,
+  .section-chapter .car-metrics-wrap .car-container{
+    align-items:flex-start!important;height:auto!important;min-height:0!important;
+  }
+  .section-chapter .car-slide.ib,
+  .section-chapter .car-slide.ip{
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    overflow:hidden!important;
+    box-sizing:border-box;
+    align-self:flex-start!important;
+  }
+  .section-chapter .car-ctrl{padding-top:10px;margin-top:4px}
+
+  .panel-metrics{
+    min-height:0!important;height:auto!important;flex:none;
+    padding:14px 16px 16px;overflow:hidden;max-width:100%;
+  }
+  .section-chapter:has(.insight-slide) .metrics-body{
+    min-height:0!important;padding-top:0!important;flex:none!important;
+    align-items:stretch!important;
+  }
+  .car-metrics-wrap{
+    flex:none!important;min-height:0!important;padding-top:0!important;
+    overflow:hidden;max-width:100%;
+  }
+  .ip.on{flex:none!important;min-height:0!important;width:100%;max-width:100%;box-sizing:border-box}
+  .metrics-src{margin-top:12px;padding-top:12px}
+
+  .car-slide.ib .ih{
+    cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;
+    gap:10px;-webkit-tap-highlight-color:transparent;margin-bottom:0;line-height:1.35;
+    max-width:100%;min-width:0;
+  }
+  .car-slide.ib .ih .ih-chev{
+    flex-shrink:0;margin-top:2px;opacity:.55;transition:transform .25s ease;color:var(--coral);
+  }
+  .car-slide.ib[data-text-open] .ih .ih-chev{transform:rotate(180deg);opacity:1}
+  .car-slide.ib .it{
+    display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease;overflow:hidden;
+    margin-top:0;max-width:100%;
+  }
+  .car-slide.ib .it-inner{min-height:0;overflow:hidden;max-width:100%}
+  .car-slide.ib[data-text-open] .it{grid-template-rows:1fr;margin-top:10px}
+  .car-slide.ib[data-text-open] .it-inner{padding-bottom:2px}
+  .car-slide.ib .it p{margin-bottom:10px;max-width:100%;overflow-wrap:anywhere}
+
+  .mob-acc-trig{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    width:100%;padding:10px 0;margin:0;background:none;border:none;
+    border-bottom:1px solid rgba(255,255,255,.12);cursor:pointer;
+    font-family:var(--font-title);font-size:11px;font-weight:800;letter-spacing:.06em;
+    text-transform:lowercase;color:rgba(255,255,255,.75);text-align:left;
+    -webkit-tap-highlight-color:transparent;flex-shrink:0;
+  }
+  .mob-acc-trig .ih-chev{flex-shrink:0;opacity:.55;transition:transform .25s ease;color:rgba(255,255,255,.7)}
+  .panel-metrics[data-metrics-open] .mob-acc-trig{margin-bottom:12px}
+  .panel-metrics[data-metrics-open] .mob-acc-trig .ih-chev{transform:rotate(180deg);opacity:1}
+
+  /* Accordion de gráficos: esconde de verdade quando fechado */
+  .panel-metrics:not([data-metrics-open]) .car-metrics-wrap,
+  .panel-metrics:not([data-metrics-open]) > .metrics-body,
+  .panel-metrics:not([data-metrics-open]) .metrics-src{
+    display:none!important;
+    height:0!important;
+    max-height:0!important;
+    overflow:hidden!important;
+    padding:0!important;
+    margin:0!important;
+    border:none!important;
+  }
+  .panel-metrics[data-metrics-open] .car-metrics-wrap{
+    display:flex!important;
+    flex-direction:column;
+    flex:none!important;
+    min-height:0!important;
+    height:auto!important;
+    padding-top:0!important;
+    overflow:hidden;
+    max-width:100%;
+  }
+  .panel-metrics[data-metrics-open] > .metrics-body{
+    display:flex!important;
+    flex-direction:column;
+    flex:none!important;
+    min-height:0!important;
+    height:auto!important;
+    padding-top:0!important;
+    overflow:visible;
+  }
+  .panel-metrics[data-metrics-open] .metrics-src{display:block}
+
+  .bn-list{gap:8px;width:100%;max-width:100%;box-sizing:border-box}
+  .bn-card{
+    padding:12px 14px;gap:8px;min-height:0;align-items:flex-start;
+    flex-direction:column;width:100%;max-width:100%;box-sizing:border-box;
+  }
+  .bn-val{
+    font-size:clamp(28px,8vw,36px)!important;
+    min-width:0!important;flex:none!important;line-height:1;
+  }
+  .bn-label{
+    flex:none!important;width:100%;min-width:0;font-size:12px;line-height:1.35;
+    overflow-wrap:anywhere;word-break:break-word;
+  }
+}
 </style>
 <script src="https://unpkg.com/embla-carousel@8.5.2/embla-carousel.umd.js"></script>
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
 </head>
 <body>
 
 
 <!-- HERO -->
 <section class="section-full section-hero section-band-dark" id="hero">
-  <div class="hero-inner">
-    <h1 class="hh">Estudo de Carreiras em tecnologias 2026</h1>
-    <p class="hs">A maior análise de vagas do mercado brasileiro de tecnologia.</p>
-    <div class="hctas">
-      <a href="#leads" class="btn-r">Baixar o estudo completo</a>
-      <a href="#panorama-trajetorias" class="btn-o">Explorar os dados →</a>
+  <div class="hero-split">
+    <div class="hero-copy">
+      <h1 class="hh">Estudo de Carreiras em tecnologia 2026</h1>
+      <p class="hs">A maior análise de vagas do mercado brasileiro de tecnologia</p>
+      <div class="hctas">
+        <a href="#leads" class="btn-r">Baixar o estudo completo</a>
+        <a href="#panorama-trajetorias" class="btn-o">Explorar os dados →</a>
+      </div>
+    </div>
+    <div class="hero-media" aria-hidden="true">
+      <img src="_R2V4959.jpg" alt="">
     </div>
   </div>
 </section>
@@ -1273,6 +1599,7 @@ footer{
             <div class="car-viewport">
               <div class="car-container">
             <div class="car-slide ip" id="mkt-p1">
+              <div class="metrics-ttl">Gap entre demanda e oferta de talentos</div>
               <div class="bn-list">
                 <div class="bn-card"><div class="bn-val coral">665k</div><div class="bn-label coral">Demanda acumulada de profissionais entre 2019 e 2024</div></div>
                 <div class="bn-card"><div class="bn-val teal">464k</div><div class="bn-label teal">Oferta acumulada de profissionais entre 2019 e 2024</div></div>
@@ -1280,6 +1607,7 @@ footer{
               </div>
             </div>
             <div class="car-slide ip" id="mkt-p2">
+              <div class="metrics-ttl">Custo da lacuna de habilidades</div>
               <div class="bn-list">
                 <div class="bn-card" style="flex-direction:column;align-items:flex-start;gap:10px">
                   <div class="bn-val coral" style="min-width:0">R$1tri</div>
@@ -1289,6 +1617,7 @@ footer{
               </div>
             </div>
             <div class="car-slide ip" id="mkt-p3">
+              <div class="metrics-ttl">Mobilidade profissional e contratação</div>
               <div class="bn-list">
                 <div class="bn-card"><div class="bn-val coral">47%</div><div class="bn-label coral">dos profissionais de tech pretendem mudar de emprego em um futuro próximo</div></div>
                 <div class="bn-card"><div class="bn-val teal">1 em 4</div><div class="bn-label teal">trocaria de empresa por um aumento salarial de 35%</div></div>
@@ -1297,6 +1626,7 @@ footer{
               </div>
             </div>
             <div class="car-slide ip" id="mkt-p4">
+              <div class="metrics-ttl">Principais portas de entrada em tech</div>
               <div class="mkt-p4-stack">
                 <div class="traj4">
                   <div class="bn-card"><div class="bn-val coral">39%</div><div class="bn-label coral"><strong>Estágio em tech</strong><br>Porta principal, mais relevante para perfis jovens e universitários.</div></div>
@@ -1309,6 +1639,10 @@ footer{
             <div class="car-slide ip" id="mkt-p5">
               <div class="panel-extra" style="margin-bottom:14px">
                 <div class="bc-ttl">IA como acelerador salarial</div>
+                <div class="bc-leg">
+                  <span><i class="leg-sem"></i>Sem IA</span>
+                  <span><i class="leg-com"></i>Com IA</span>
+                </div>
                 <div class="bc" style="margin-bottom:6px"><div class="br"><span class="bl">Até R$2K — sem IA</span><div class="bt"><div class="bf" style="width:1.9%;background:rgba(255,255,255,.35)"></div></div><span class="bv">1,9%</span></div>
                 <div class="br"><span class="bl">Até R$2K — com IA</span><div class="bt"><div class="bf" style="width:0.3%;background:var(--coral)"></div></div><span class="bv">0,3%</span></div>
                 <div class="br"><span class="bl">R$2K–5K — sem IA</span><div class="bt"><div class="bf" style="width:67.6%;background:rgba(255,255,255,.35)"></div></div><span class="bv">67,6%</span></div>
@@ -1320,8 +1654,14 @@ footer{
                 <div class="br"><span class="bl">Acima R$30K — sem IA</span><div class="bt"><div class="bf" style="width:2.1%;background:rgba(255,255,255,.35)"></div></div><span class="bv">2,1%</span></div>
                 <div class="br"><span class="bl">Acima R$30K — com IA</span><div class="bt"><div class="bf" style="width:3.4%;background:var(--coral)"></div></div><span class="bv">3,4%</span></div>
               </div>
+              </div>
               <div class="panel-extra">
                 <div class="bc-ttl">Exigência de inglês por senioridade</div>
+                <div class="bc-leg">
+                  <span><i class="leg-jr"></i>Júnior</span>
+                  <span><i class="leg-pl"></i>Pleno/Sênior</span>
+                  <span><i class="leg-lid"></i>Liderança</span>
+                </div>
                 <div class="bc"><div class="br"><span class="bl">Pleno/Sênior</span><div class="bt"><div class="bf" style="width:8.7%;background:#5b5480"></div></div><span class="bv">8,7%</span></div>
                 <div class="br"><span class="bl">Liderança</span><div class="bt"><div class="bf" style="width:7.7%;background:var(--coral)"></div></div><span class="bv">7,7%</span></div>
                 <div class="br"><span class="bl">Júnior</span><div class="bt"><div class="bf" style="width:6.6%;background:var(--teal)"></div></div><span class="bv">6,6%</span></div>
@@ -1344,7 +1684,7 @@ footer{
                       <div class="sen-seg sen-pl" style="height:50%">50%</div>
                       <div class="sen-seg sen-lid" style="height:8%">8%</div>
                     </div>
-                    <div class="sen-lbl">Infraestrutura e Suporte</div>
+                    <div class="sen-lbl">Infra e Suporte</div>
                   </div>
                   <div class="sen-col">
                     <div class="sen-lid-top">6%</div>
@@ -1353,7 +1693,7 @@ footer{
                       <div class="sen-seg sen-pl" style="height:53%">53%</div>
                       <div class="sen-seg sen-lid" style="height:6%">6%</div>
                     </div>
-                    <div class="sen-lbl">Automação de Processos</div>
+                    <div class="sen-lbl">Automação</div>
                   </div>
                   <div class="sen-col">
                     <div class="sen-lid-top">5%</div>
@@ -1362,7 +1702,7 @@ footer{
                       <div class="sen-seg sen-pl" style="height:69%">69%</div>
                       <div class="sen-seg sen-lid" style="height:5%">5%</div>
                     </div>
-                    <div class="sen-lbl">Testes e Qualidade</div>
+                    <div class="sen-lbl">Testes</div>
                   </div>
                   <div class="sen-col">
                     <div class="sen-lid-top">21%</div>
@@ -1371,7 +1711,7 @@ footer{
                       <div class="sen-seg sen-pl" style="height:54%">54%</div>
                       <div class="sen-seg sen-lid" style="height:21%">21%</div>
                     </div>
-                    <div class="sen-lbl">Projetos e Gerenciamento</div>
+                    <div class="sen-lbl">Ger. Projetos</div>
                   </div>
                   <div class="sen-col">
                     <div class="sen-lid-top">5%</div>
@@ -1380,7 +1720,7 @@ footer{
                       <div class="sen-seg sen-pl" style="height:73%">73%</div>
                       <div class="sen-seg sen-lid" style="height:5%">5%</div>
                     </div>
-                    <div class="sen-lbl">Desenvolvimento de Software</div>
+                    <div class="sen-lbl">Desenvolvimento</div>
                   </div>
                   <div class="sen-col">
                     <div class="sen-lid-top">6%</div>
@@ -1389,7 +1729,7 @@ footer{
                       <div class="sen-seg sen-pl" style="height:76%">76%</div>
                       <div class="sen-seg sen-lid" style="height:6%">6%</div>
                     </div>
-                    <div class="sen-lbl">Dados e Inteligência Artificial</div>
+                    <div class="sen-lbl">Dados e IA</div>
                   </div>
                   <div class="sen-col">
                     <div class="sen-lid-top">9%</div>
@@ -1398,12 +1738,12 @@ footer{
                       <div class="sen-seg sen-pl" style="height:75%">75%</div>
                       <div class="sen-seg sen-lid" style="height:9%">9%</div>
                     </div>
-                    <div class="sen-lbl">Segurança da Informação</div>
+                    <div class="sen-lbl">Segurança</div>
                   </div>
                 </div>
+                <p class="chart-caption" style="margin-top:10px;font-size:9px;color:var(--text-muted);line-height:1.4">Fonte: Índice de Vagas (Inteli, 2025)</p>
               </div>
             </div>
-              </div>
             </div>
           </div>
           <p class="metrics-src" id="mkt-src">Fonte: Brasscom, Perspectivas do Mercado de Trabalho do Macrossetor TIC, 2025</p>
@@ -1413,11 +1753,223 @@ footer{
   </div>
 </section>
 
+<!-- CAPÍTULO 3 · Oportunidades de Empregabilidade -->
+<section class="section-full section-chapter section-band-light" id="oportunidades">
+  <div class="chapter-shell">
+    <div class="chapter-box">
+      <div class="insight-slide">
+        <div class="panel-text">
+          <div class="ch-lbl" id="emp-ch-lbl">Principais competências</div>
+          <h2 class="sl-h">Áreas e posicionamento</h2>
+          <div class="car-wrap" id="car-emp-text">
+            <div class="car-viewport">
+              <div class="car-container">
+          <div class="car-slide ib" id="emp-1">
+            <div class="ih">O mercado é grande, mas não é onde parece</div>
+            <div class="it">
+              <p>Há mais demanda do que oferta em tecnologia, mas as oportunidades não estão distribuídas onde o discurso aponta. Enquanto a Inteligência Artificial concentra atenção e percepção de valor, a maior parte das vagas segue ancorada em desenvolvimento e infraestrutura.</p>
+              <p>O mercado fala sobre o futuro, mas contrata para sustentar o presente. Quem entra pelo hype encontra barreiras. Quem entende onde o volume real está, encontra espaço.</p>
+            </div>
+          </div>
+          <div class="car-slide ib" id="emp-2">
+            <div class="ih">Além de escolher tecnologia, é possível escolher o setor</div>
+            <div class="it">
+              <p>A tecnologia deixou de ser um setor isolado e passou a operar como base de praticamente todos os negócios. Finanças, varejo, saúde, indústria, agronegócio e educação disputam os mesmos profissionais, em diferentes estágios de maturidade digital.</p>
+              <p>Isso muda a lógica de carreira. Escolher tecnologia não define mais o caminho. O profissional ainda decide em que setor atuar, que tipo de problema quer resolver e em qual contexto quer operar.</p>
+              <p>No painel ao lado, selecione um setor para ver as principais competências e tecnologias demandadas.</p>
+            </div>
+          </div>
+              </div>
+            </div>
+            <div class="car-ctrl">
+              <button class="car-btn" id="car-emp-prev" aria-label="Anterior" disabled>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+              </button>
+              <span class="car-counter"><span id="car-emp-cur" class="car-cur">1</span> / 2</span>
+              <button class="car-btn" id="car-emp-next" aria-label="Próximo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="panel-metrics">
+
+          <div class="car-metrics-wrap" id="car-emp-metrics">
+            <div class="car-viewport">
+              <div class="car-container">
+            <div class="car-slide ip" id="emp-p1">
+              <div class="panel-extra">
+                <div class="chart-card" role="img" aria-label="Distribuição técnica das vagas mapeadas">
+                  <div class="chart-title">Distribuição técnica das vagas mapeadas</div>
+                  <div class="dist-vchart">
+                    <div class="dist-col">
+                      <div class="dist-pct">35,7%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:100%"></div></div>
+                      <div class="dist-lbl">Desenvolvimento</div>
+                    </div>
+                    <div class="dist-col">
+                      <div class="dist-pct">23,2%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:65%"></div></div>
+                      <div class="dist-lbl">Infra e<br>Suporte</div>
+                    </div>
+                    <div class="dist-col">
+                      <div class="dist-pct">17,7%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:49.6%"></div></div>
+                      <div class="dist-lbl">Dados<br>e IA</div>
+                    </div>
+                    <div class="dist-col">
+                      <div class="dist-pct">12,9%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:36.1%"></div></div>
+                      <div class="dist-lbl">Ger. Projetos</div>
+                    </div>
+                    <div class="dist-col">
+                      <div class="dist-pct">5,7%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:16%"></div></div>
+                      <div class="dist-lbl">Testes</div>
+                    </div>
+                    <div class="dist-col">
+                      <div class="dist-pct">2,5%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:7%"></div></div>
+                      <div class="dist-lbl">Segurança</div>
+                    </div>
+                    <div class="dist-col">
+                      <div class="dist-pct">2,3%</div>
+                      <div class="dist-bar-wrap"><div class="dist-bar" style="height:6.4%"></div></div>
+                      <div class="dist-lbl">Automação</div>
+                    </div>
+                  </div>
+                  <p class="chart-caption">Fonte: Índice de Vagas (Inteli, 2025)</p>
+                </div>
+              </div>
+            </div>
+            <div class="car-slide ip" id="emp-p2">
+              <div class="metrics-ttl">Competências mais demandadas por setor</div>
+              <div class="sps" id="sec-pills">
+                <button class="sp on" type="button" onclick="setSec(this,'financas')">Finanças</button>
+                <button class="sp" type="button" onclick="setSec(this,'varejo')">Varejo</button>
+                <button class="sp" type="button" onclick="setSec(this,'saude')">Saúde</button>
+                <button class="sp" type="button" onclick="setSec(this,'industria')">Indústria</button>
+                <button class="sp" type="button" onclick="setSec(this,'logistica')">Logística</button>
+                <button class="sp" type="button" onclick="setSec(this,'agro')">Agro</button>
+                <button class="sp" type="button" onclick="setSec(this,'educacao')">Educação</button>
+                <button class="sp" type="button" onclick="setSec(this,'publico')">Setor público</button>
+              </div>
+              <div class="ol" id="sec-list"></div>
+            </div>
+              </div>
+            </div>
+          </div>
+          <p class="metrics-src" id="emp-src">Fonte: Sonda Tech e Estudo de carreiras em tecnologia (Inteli, 2026)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK TECNOLÓGICA (pós Cap. 3) -->
+<section class="section-full section-stack section-band-light" id="stack-tecnica">
+  <div class="stack-inner">
+    <p class="ch-lbl">Complemento · Capítulo 3</p>
+    <h2 class="sl-h">Principais competências</h2>
+    <p class="stack-intro">O mercado não busca linguagens isoladas, mas um sistema integrado de competências. A técnica define o que se constrói — as soft skills definem se isso gera valor dentro da organização.</p>
+
+    <div class="stack-split">
+      <div class="stack-pane stack-pane-hard">
+        <div class="stack-pane-h">Hard skills</div>
+        <h3 class="stack-pane-title">O ecossistema técnico<br>do mercado</h3>
+        <p class="stack-pane-lead">Sistemas, linguagens, ferramentas e conceitos operacionais se conectam na prática. Selecione uma camada para ver o que mais aparece nas vagas.</p>
+        <div class="stack-tabs" role="tablist" aria-label="Camadas do stack técnico">
+          <button type="button" class="stack-tab active" role="tab" aria-selected="true" data-stack="conceitos" onclick="setStackTab(this,'conceitos')">Conceitos</button>
+          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="sistemas" onclick="setStackTab(this,'sistemas')">Sistemas</button>
+          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="linguagens" onclick="setStackTab(this,'linguagens')">Linguagens</button>
+          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="ferramentas" onclick="setStackTab(this,'ferramentas')">Ferramentas</button>
+        </div>
+        <div class="stack-viewport" id="stackViewport">
+          <div class="stack-hard-panel on" id="stack-conceitos" role="tabpanel">
+            <div class="stack-hard-blabel">Conceitos · 16,9%</div>
+            <div class="stack-hard-title">Como o trabalho se organiza</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">Metodologias Ágeis <span>4.800 menções</span></div>
+              <div class="stack-hard-item">CI/CD <span>4.000 menções</span></div>
+              <div class="stack-hard-item">Cloud <span>3.700 menções</span></div>
+              <div class="stack-hard-item">API <span>3.200 menções</span></div>
+              <div class="stack-hard-item">Machine Learning <span>2.200 menções</span></div>
+            </div>
+          </div>
+          <div class="stack-hard-panel" id="stack-sistemas" role="tabpanel" hidden>
+            <div class="stack-hard-blabel">Sistemas · onde a tech opera</div>
+            <div class="stack-hard-title">Plataformas e ambientes</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">AWS <span>5.380 menções</span></div>
+              <div class="stack-hard-item">Azure <span>4.370 menções</span></div>
+              <div class="stack-hard-item">Linux <span>3.980 menções</span></div>
+              <div class="stack-hard-item">Windows <span>2.090 menções</span></div>
+              <div class="stack-hard-item">GCP <span>2.080 menções</span></div>
+            </div>
+          </div>
+          <div class="stack-hard-panel" id="stack-linguagens" role="tabpanel" hidden>
+            <div class="stack-hard-blabel">Linguagens · desenvolvimento</div>
+            <div class="stack-hard-title">Como os sistemas são construídos</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">Python <span>4.800 menções</span></div>
+              <div class="stack-hard-item">SQL <span>4.300 menções</span></div>
+              <div class="stack-hard-item">JavaScript <span>3.500 menções</span></div>
+              <div class="stack-hard-item">Java <span>2.600 menções</span></div>
+              <div class="stack-hard-item">Go <span>1.300 menções</span></div>
+            </div>
+          </div>
+          <div class="stack-hard-panel" id="stack-ferramentas" role="tabpanel" hidden>
+            <div class="stack-hard-blabel">Ferramentas · operação diária</div>
+            <div class="stack-hard-title">Como o trabalho acontece</div>
+            <div class="stack-hard-items">
+              <div class="stack-hard-item">Git <span>2.482 menções</span></div>
+              <div class="stack-hard-item">Office 365 <span>1.789 menções</span></div>
+              <div class="stack-hard-item">Excel <span>1.300+ menções</span></div>
+              <div class="stack-hard-item">Power BI <span>presente no índice</span></div>
+              <div class="stack-hard-item">Docker <span>presente no índice</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="stack-pane-fonte">Fonte: Estudo de carreiras em tecnologia (Inteli, 2026) · ~19.655 vagas</p>
+      </div>
+
+      <div class="stack-pane">
+        <div class="stack-pane-h">Soft skills</div>
+        <h3 class="stack-pane-title">O que define quem<br>gera impacto</h3>
+        <p class="stack-pane-lead">Comunicação lidera nas vagas (21% das menções). A técnica abre portas — as competências comportamentais sustentam progressão e impacto na organização.</p>
+        <div class="stack-soft-rank" id="stackSoftRank"></div>
+        <div class="stack-soft-quote">
+          <strong>Aprendizado contínuo</strong>
+          "Tem uma coisa que não vai mudar nunca: você ter que estudar." — Maurício Garcia, Inteli. O ritmo de obsolescência tornou o estudo permanente uma condição básica, não um diferencial.
+        </div>
+        <p class="stack-pane-fonte">Fonte: Estudo de carreiras em tecnologia (Inteli, 2026)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPÍTULO 4 · Visão por Área -->
+<section class="section-full section-areas section-band-light" id="visao-area">
+  <div class="areas-inner">
+    <p class="ch-lbl">Capítulo 4 · Visão por Área</p>
+    <h2 class="sl-h">Explore as 7 áreas de atuação em tech</h2>
+    <p class="areas-lead">Distribuição de 19.655 vagas mapeadas entre abril e junho de 2025. Clique em qualquer área para ver soft skills, hard skills e faixas salariais por cargo.</p>
+    <p class="areas-fonte">Fonte: Estudo de carreiras em tecnologia (Inteli, 2026) · Salários: Guia Salarial (Robert Half, 2026)</p>
+
+    <div class="areas-filters" role="group" aria-label="Filtros de área">
+      <button type="button" class="filter-btn active" data-filter="all">Todas as áreas</button>
+      <button type="button" class="filter-btn" data-filter="entrada">Melhor entrada júnior (&gt;30%)</button>
+      <button type="button" class="filter-btn" data-filter="esp">Alta especialização</button>
+    </div>
+
+    <div class="areas-grid" id="areasGrid"></div>
+  </div>
+</section>
+
 <!-- ANALISADOR -->
 <section class="section-full section-analisador section-band-dark" id="analisador">
   <div class="analisador-inner">
     <header class="analisador-head">
-      <p class="ch-lbl">Ferramenta interativa</p>
       <h2 class="sl-h">Analisador de transição de carreira</h2>
     </header>
 <!-- ANALISADOR EMBED START -->
@@ -1433,7 +1985,7 @@ footer{
 #analisador-app{font-family:var(--font-body),Arial,sans-serif;background:transparent;color:var(--fg);line-height:1.6}
 #analisador-app .wrap{max-width:none;margin:0;padding:0}
 #analisador-app .section-title{font-family:var(--font-title);font-size:1.35rem;font-weight:800;color:#fff;margin-bottom:.25rem}
-#analisador-app .section-sub{font-size:.88rem;color:var(--fg-sub);margin-bottom:1.25rem;max-width:640px}
+#analisador-app .section-sub{font-size:1.05rem;color:var(--fg-sub);margin-bottom:1.25rem;max-width:720px;line-height:1.55}
 #analisador-app .intro-text{font-size:.85rem;color:var(--fg);margin-bottom:.75rem}
 #analisador-app .intro-text strong{color:#fff}
 #analisador-app .field-label{font-size:.7rem;font-weight:600;color:var(--fg-muted);display:block;margin-bottom:.25rem}
@@ -1456,25 +2008,70 @@ footer{
 #analisador-app .crossroad-card h5{font-size:.85rem;font-weight:700;color:var(--roxo);margin-bottom:.35rem}
 #analisador-app .crossroad-card .from-to{font-size:.72rem;color:var(--coral);font-weight:700;margin-bottom:.5rem}
 #analisador-app .crossroad-card p{font-size:.78rem;line-height:1.5;color:var(--corpo)}
+#analisador-app .crossroad-card .cr-trig{
+  display:block;background:none;border:none;padding:0;margin:0 0 .35rem;width:100%;
+  text-align:left;cursor:default;font:inherit;color:inherit;
+}
+#analisador-app .crossroad-card .cr-body,#analisador-app .crossroad-card .cr-body-in{display:block}
+#analisador-app .cr-chev{display:none}
 #analisador-app #transBtn{cursor:pointer;transition:opacity .2s}
 #analisador-app #transBtn:hover{opacity:.9}
-@media(max-width:768px){#analisador-app #trColumns{grid-template-columns:1fr!important}}
+#analisador-app .trans-fields{
+  display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto;
+  gap:.75rem;margin-bottom:1.5rem;align-items:end;
+}
+#analisador-app .trans-field{min-width:0}
+#analisador-app .trans-fields select{
+  font-family:inherit;padding:.5rem .75rem;border:1.5px solid var(--border);
+  font-size:.82rem;background:var(--card);color:var(--corpo);width:100%;min-width:0;box-sizing:border-box;
+}
+#analisador-app .trans-arrow{font-size:1.5rem;color:var(--coral);font-weight:800;padding-bottom:.35rem;line-height:1}
+#analisador-app #transBtn{
+  font-family:inherit;padding:.5rem 1.25rem;border:none;background:var(--coral);
+  color:#fff;font-size:.82rem;font-weight:600;white-space:nowrap;
+}
+@media(max-width:768px){
+  #analisador-app #trColumns{grid-template-columns:1fr!important}
+  #analisador-app .trans-fields{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:.5rem}
+  #analisador-app .trans-fields #transBtn{grid-column:1/-1;width:100%}
+  #analisador-app .trans-fields select{font-size:.75rem;padding:.45rem .5rem}
+  #analisador-app .crossroad-card{padding:0;cursor:pointer}
+  #analisador-app .crossroad-card .cr-trig{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+    padding:1rem 1.1rem;width:100%;background:none;border:none;cursor:pointer;
+    text-align:left;font:inherit;color:inherit;-webkit-tap-highlight-color:transparent;
+  }
+  #analisador-app .crossroad-card .cr-trig .cr-hd{flex:1;min-width:0}
+  #analisador-app .crossroad-card .from-to{margin-bottom:.35rem}
+  #analisador-app .crossroad-card h5{margin-bottom:0}
+  #analisador-app .cr-chev{
+    display:block;flex-shrink:0;margin-top:4px;opacity:.55;
+    transition:transform .25s ease;color:var(--roxo);
+  }
+  #analisador-app .crossroad-card[data-open] .cr-chev{transform:rotate(180deg);opacity:1}
+  #analisador-app .crossroad-card .cr-body{
+    display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease;overflow:hidden;
+  }
+  #analisador-app .crossroad-card .cr-body-in{min-height:0;overflow:hidden;padding:0 1.1rem}
+  #analisador-app .crossroad-card[data-open] .cr-body{grid-template-rows:1fr}
+  #analisador-app .crossroad-card[data-open] .cr-body-in{padding:0 1.1rem 1.1rem}
+  #analisador-app .crossroad-card[data-open] .cr-trig{border-bottom:1px solid #e8eaed}
+}
 
 </style>
 <div id="analisador-app">
 <div class="wrap">
 <div class="transicoes-panel" id="transicoes">
 
-<div class="section-title">Transi&ccedil;&otilde;es entre &Aacute;reas</div>
 <div class="section-sub">Quais compet&ecirc;ncias um profissional precisa desenvolver ao migrar de uma &aacute;rea para outra? An&aacute;lise cruzada dos stacks exigidos.</div>
 <div class="accent-bar"></div>
 
 <p class="intro-text">Selecione a <strong>origem</strong> e o <strong>destino</strong> da transi&ccedil;&atilde;o:</p>
 
-<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:end">
-  <div>
+<div class="trans-fields">
+  <div class="trans-field">
     <label class="field-label">DE:</label>
-    <select id="transFrom" style="font-family:inherit;padding:.5rem .75rem;border:1.5px solid var(--border);font-size:.82rem;background:var(--card);color:var(--corpo);min-width:200px">
+    <select id="transFrom">
       <option value="dev">Desenvolvimento de Software</option>
       <option value="dados">Dados e IA</option>
       <option value="infra">Infraestrutura e Suporte</option>
@@ -1484,10 +2081,10 @@ footer{
       <option value="auto">Automa&ccedil;&atilde;o de Processos</option>
     </select>
   </div>
-  <div style="font-size:1.5rem;color:var(--coral);font-weight:800;padding-bottom:.35rem">&rarr;</div>
-  <div>
+  <div class="trans-arrow" aria-hidden="true">&rarr;</div>
+  <div class="trans-field">
     <label class="field-label">PARA:</label>
-    <select id="transTo" style="font-family:inherit;padding:.5rem .75rem;border:1.5px solid var(--border);font-size:.82rem;background:var(--card);color:var(--corpo);min-width:200px">
+    <select id="transTo">
       <option value="dados">Dados e IA</option>
       <option value="dev">Desenvolvimento de Software</option>
       <option value="infra">Infraestrutura e Suporte</option>
@@ -1497,7 +2094,7 @@ footer{
       <option value="auto">Automa&ccedil;&atilde;o de Processos</option>
     </select>
   </div>
-  <button id="transBtn" style="font-family:inherit;padding:.5rem 1.25rem;border:none;background:var(--coral);color:#fff;font-size:.82rem;font-weight:600;cursor:pointer;transition:opacity .2s">Analisar</button>
+  <button id="transBtn" type="button">Analisar</button>
 </div>
 
 <div id="transResult" style="display:none">
@@ -1529,12 +2126,30 @@ footer{
 
 <h3 class="subsection-title">Transi&ccedil;&otilde;es Mais Comuns (com base nos dados)</h3>
 <div class="crossroad-grid">
-  <div class="crossroad-card"><div class="from-to">Dev Software &rarr; Dados e IA</div><h5>O caminho mais natural</h5><p>Python (14.2% &rarr; 50.7%) e SQL (22.5% &rarr; 50.1%) j&aacute; est&atilde;o no stack de Dev. Falta: ML (28.3%), Power BI (31%), Spark (14.3%), Snowflake (11.8%). Pensamento anal&iacute;tico sobe de irrelevante para 30.9%.</p></div>
-  <div class="crossroad-card"><div class="from-to">Dev Software &rarr; Projetos e Ger.</div><h5>Do c&oacute;digo &agrave; gest&atilde;o</h5><p>&Aacute;geis (25.4% &rarr; 24.1%) e Scrum j&aacute; est&atilde;o presentes. Ganho: Lideran&ccedil;a sobe de 12% para 19.9%, Comunica&ccedil;&atilde;o de 33.6% para 42.5%. Precisa: Product Mgmt (6.3%), Excel/Power BI, SAP (8.9%).</p></div>
-  <div class="crossroad-card"><div class="from-to">Infra &rarr; Seguran&ccedil;a</div><h5>Especializa&ccedil;&atilde;o vertical</h5><p>Linux (22.3% &rarr; 26.9%) e Cloud (22.1% &rarr; 34.4%) s&atilde;o base compartilhada. Falta: Splunk (28.4%), OWASP (13.8%), Pentest (8.6%), Data Privacy (23.8%), Burp Suite (5.6%). Barreira alta &mdash; 79% das vagas s&atilde;o Pl/Sr.</p></div>
-  <div class="crossroad-card"><div class="from-to">Testes &rarr; Dev Software</div><h5>Do QA ao desenvolvimento</h5><p>CI/CD (22.8% &rarr; 19.7%) e API (18.5% &rarr; 28.6%) s&atilde;o pontes. Falta: React (19.3%), Angular (12.8%), TypeScript (11.2%), Docker (13.2%). JavaScript sobe de 10.9% para 28.1%.</p></div>
-  <div class="crossroad-card"><div class="from-to">Dados e IA &rarr; Seguran&ccedil;a</div><h5>Do dado &agrave; prote&ccedil;&atilde;o</h5><p>Python (50.7% &rarr; 15.9%), Cloud (23.6% &rarr; 34.4%) e Data Privacy (4.8% &rarr; 23.8%) conectam. Falta: Splunk (28.4%), OWASP (13.8%), Linux (26.9%), Pentest (8.6%). Perfil raro e muito valorizado.</p></div>
-  <div class="crossroad-card"><div class="from-to">Qualquer &Aacute;rea &rarr; Lideran&ccedil;a</div><h5>A transi&ccedil;&atilde;o universal</h5><p>Comunica&ccedil;&atilde;o (31&ndash;42%) &eacute; #1 em quase todas as &aacute;reas. Lideran&ccedil;a sobe de 10&ndash;12% para 17&ndash;20% na transi&ccedil;&atilde;o. P&oacute;s-grad exigida em 9.3% das vagas de lideran&ccedil;a vs 3.6% Pleno. O gap real: vis&atilde;o de neg&oacute;cio.</p></div>
+  <div class="crossroad-card">
+    <button type="button" class="cr-trig" aria-expanded="false"><div class="cr-hd"><div class="from-to">Dev Software &rarr; Dados e IA</div><h5>O caminho mais natural</h5></div><svg class="cr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="cr-body"><div class="cr-body-in"><p>Python (14.2% &rarr; 50.7%) e SQL (22.5% &rarr; 50.1%) j&aacute; est&atilde;o no stack de Dev. Falta: ML (28.3%), Power BI (31%), Spark (14.3%), Snowflake (11.8%). Pensamento anal&iacute;tico sobe de irrelevante para 30.9%.</p></div></div>
+  </div>
+  <div class="crossroad-card">
+    <button type="button" class="cr-trig" aria-expanded="false"><div class="cr-hd"><div class="from-to">Dev Software &rarr; Projetos e Ger.</div><h5>Do c&oacute;digo &agrave; gest&atilde;o</h5></div><svg class="cr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="cr-body"><div class="cr-body-in"><p>&Aacute;geis (25.4% &rarr; 24.1%) e Scrum j&aacute; est&atilde;o presentes. Ganho: Lideran&ccedil;a sobe de 12% para 19.9%, Comunica&ccedil;&atilde;o de 33.6% para 42.5%. Precisa: Product Mgmt (6.3%), Excel/Power BI, SAP (8.9%).</p></div></div>
+  </div>
+  <div class="crossroad-card">
+    <button type="button" class="cr-trig" aria-expanded="false"><div class="cr-hd"><div class="from-to">Infra &rarr; Seguran&ccedil;a</div><h5>Especializa&ccedil;&atilde;o vertical</h5></div><svg class="cr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="cr-body"><div class="cr-body-in"><p>Linux (22.3% &rarr; 26.9%) e Cloud (22.1% &rarr; 34.4%) s&atilde;o base compartilhada. Falta: Splunk (28.4%), OWASP (13.8%), Pentest (8.6%), Data Privacy (23.8%), Burp Suite (5.6%). Barreira alta &mdash; 79% das vagas s&atilde;o Pl/Sr.</p></div></div>
+  </div>
+  <div class="crossroad-card">
+    <button type="button" class="cr-trig" aria-expanded="false"><div class="cr-hd"><div class="from-to">Testes &rarr; Dev Software</div><h5>Do QA ao desenvolvimento</h5></div><svg class="cr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="cr-body"><div class="cr-body-in"><p>CI/CD (22.8% &rarr; 19.7%) e API (18.5% &rarr; 28.6%) s&atilde;o pontes. Falta: React (19.3%), Angular (12.8%), TypeScript (11.2%), Docker (13.2%). JavaScript sobe de 10.9% para 28.1%.</p></div></div>
+  </div>
+  <div class="crossroad-card">
+    <button type="button" class="cr-trig" aria-expanded="false"><div class="cr-hd"><div class="from-to">Dados e IA &rarr; Seguran&ccedil;a</div><h5>Do dado &agrave; prote&ccedil;&atilde;o</h5></div><svg class="cr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="cr-body"><div class="cr-body-in"><p>Python (50.7% &rarr; 15.9%), Cloud (23.6% &rarr; 34.4%) e Data Privacy (4.8% &rarr; 23.8%) conectam. Falta: Splunk (28.4%), OWASP (13.8%), Linux (26.9%), Pentest (8.6%). Perfil raro e muito valorizado.</p></div></div>
+  </div>
+  <div class="crossroad-card">
+    <button type="button" class="cr-trig" aria-expanded="false"><div class="cr-hd"><div class="from-to">Qualquer &Aacute;rea &rarr; Lideran&ccedil;a</div><h5>A transi&ccedil;&atilde;o universal</h5></div><svg class="cr-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div class="cr-body"><div class="cr-body-in"><p>Comunica&ccedil;&atilde;o (31&ndash;42%) &eacute; #1 em quase todas as &aacute;reas. Lideran&ccedil;a sobe de 10&ndash;12% para 17&ndash;20% na transi&ccedil;&atilde;o. P&oacute;s-grad exigida em 9.3% das vagas de lideran&ccedil;a vs 3.6% Pleno. O gap real: vis&atilde;o de neg&oacute;cio.</p></div></div>
+  </div>
 </div>
 
 </div><!-- /transicoes -->
@@ -1658,180 +2273,9 @@ function analyzeTransition(){
   </div>
 </section>
 
-<!-- CAPÍTULO 3 · Oportunidades de Empregabilidade -->
-<section class="section-full section-chapter section-band-light" id="oportunidades">
-  <div class="chapter-shell">
-    <div class="chapter-box">
-      <div class="insight-slide">
-        <div class="panel-text">
-          <div class="ch-lbl" id="emp-ch-lbl">Principais competências</div>
-          <h2 class="sl-h">Áreas e posicionamento</h2>
-          <div class="car-wrap" id="car-emp-text">
-            <div class="car-viewport">
-              <div class="car-container">
-          <div class="car-slide ib" id="emp-1">
-            <div class="ih">O mercado é grande, mas não é onde parece</div>
-            <div class="it">
-              <p>Há mais demanda do que oferta em tecnologia, mas as oportunidades não estão distribuídas onde o discurso aponta. Enquanto a Inteligência Artificial concentra atenção e percepção de valor, a maior parte das vagas segue ancorada em desenvolvimento e infraestrutura.</p>
-              <p>O mercado fala sobre o futuro, mas contrata para sustentar o presente. Quem entra pelo hype encontra barreiras. Quem entende onde o volume real está, encontra espaço.</p>
-            </div>
-          </div>
-          <div class="car-slide ib" id="emp-2">
-            <div class="ih">Além de escolher tecnologia, é possível escolher o setor</div>
-            <div class="it">
-              <p>A tecnologia deixou de ser um setor isolado e passou a operar como base de praticamente todos os negócios. Finanças, varejo, saúde, indústria, agronegócio e educação disputam os mesmos profissionais, em diferentes estágios de maturidade digital.</p>
-              <p>Isso muda a lógica de carreira. Escolher tecnologia não define mais o caminho. O profissional ainda decide em que setor atuar, que tipo de problema quer resolver e em qual contexto quer operar.</p>
-              <p>No painel ao lado, selecione um setor para ver as principais competências e tecnologias demandadas.</p>
-            </div>
-          </div>
-              </div>
-            </div>
-            <div class="car-ctrl">
-              <button class="car-btn" id="car-emp-prev" aria-label="Anterior" disabled>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
-              </button>
-              <span class="car-counter"><span id="car-emp-cur" class="car-cur">1</span> / 2</span>
-              <button class="car-btn" id="car-emp-next" aria-label="Próximo">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="panel-metrics">
-
-          <div class="car-metrics-wrap" id="car-emp-metrics">
-            <div class="car-viewport">
-              <div class="car-container">
-            <div class="car-slide ip" id="emp-p1">
-              <div class="panel-extra">
-                <img class="viz-img" src="distribuicao-tecnica.png" alt="Distribuição técnica das vagas mapeadas — Índice de Vagas (Inteli, 2025)">
-              </div>
-            </div>
-            <div class="car-slide ip" id="emp-p2">
-              <div class="sps" id="sec-pills">
-                <button class="sp on" type="button" onclick="setSec(this,'financas')">Finanças</button>
-                <button class="sp" type="button" onclick="setSec(this,'varejo')">Varejo</button>
-                <button class="sp" type="button" onclick="setSec(this,'saude')">Saúde</button>
-                <button class="sp" type="button" onclick="setSec(this,'industria')">Indústria</button>
-                <button class="sp" type="button" onclick="setSec(this,'logistica')">Logística</button>
-                <button class="sp" type="button" onclick="setSec(this,'agro')">Agro</button>
-                <button class="sp" type="button" onclick="setSec(this,'educacao')">Educação</button>
-                <button class="sp" type="button" onclick="setSec(this,'publico')">Setor público</button>
-              </div>
-              <div class="ol" id="sec-list"></div>
-            </div>
-              </div>
-            </div>
-          </div>
-          <p class="metrics-src" id="emp-src">Fonte: Sonda Tech e Índice de Vagas (Inteli, 2025)</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STACK TECNOLÓGICA (pós Cap. 3) -->
-<section class="section-full section-stack section-band-light" id="stack-tecnica">
-  <div class="stack-inner">
-    <p class="ch-lbl">Complemento · Capítulo 3</p>
-    <h2 class="sl-h">Principais competências</h2>
-    <p class="stack-intro">O mercado não busca linguagens isoladas, mas um sistema integrado de competências. A técnica define o que se constrói — as soft skills definem se isso gera valor dentro da organização.</p>
-
-    <div class="stack-split">
-      <div class="stack-pane stack-pane-hard">
-        <div class="stack-pane-h">Hard skills</div>
-        <h3 class="stack-pane-title">O ecossistema técnico<br>do mercado</h3>
-        <p class="stack-pane-lead">Sistemas, linguagens, ferramentas e conceitos operacionais se conectam na prática. Selecione uma camada para ver o que mais aparece nas vagas.</p>
-        <div class="stack-tabs" role="tablist" aria-label="Camadas do stack técnico">
-          <button type="button" class="stack-tab active" role="tab" aria-selected="true" data-stack="conceitos" onclick="setStackTab(this,'conceitos')">Conceitos</button>
-          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="sistemas" onclick="setStackTab(this,'sistemas')">Sistemas</button>
-          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="linguagens" onclick="setStackTab(this,'linguagens')">Linguagens</button>
-          <button type="button" class="stack-tab" role="tab" aria-selected="false" data-stack="ferramentas" onclick="setStackTab(this,'ferramentas')">Ferramentas</button>
-        </div>
-        <div class="stack-viewport" id="stackViewport">
-          <div class="stack-hard-panel on" id="stack-conceitos" role="tabpanel">
-            <div class="stack-hard-blabel">Conceitos · 16,9%</div>
-            <div class="stack-hard-title">Como o trabalho se organiza</div>
-            <div class="stack-hard-items">
-              <div class="stack-hard-item">Metodologias Ágeis <span>4.800 menções</span></div>
-              <div class="stack-hard-item">CI/CD <span>4.000 menções</span></div>
-              <div class="stack-hard-item">Cloud <span>3.700 menções</span></div>
-              <div class="stack-hard-item">API <span>3.200 menções</span></div>
-              <div class="stack-hard-item">Machine Learning <span>2.200 menções</span></div>
-            </div>
-          </div>
-          <div class="stack-hard-panel" id="stack-sistemas" role="tabpanel" hidden>
-            <div class="stack-hard-blabel">Sistemas · onde a tech opera</div>
-            <div class="stack-hard-title">Plataformas e ambientes</div>
-            <div class="stack-hard-items">
-              <div class="stack-hard-item">AWS <span>5.380 menções</span></div>
-              <div class="stack-hard-item">Azure <span>4.370 menções</span></div>
-              <div class="stack-hard-item">Linux <span>3.980 menções</span></div>
-              <div class="stack-hard-item">Windows <span>2.090 menções</span></div>
-              <div class="stack-hard-item">GCP <span>2.080 menções</span></div>
-            </div>
-          </div>
-          <div class="stack-hard-panel" id="stack-linguagens" role="tabpanel" hidden>
-            <div class="stack-hard-blabel">Linguagens · desenvolvimento</div>
-            <div class="stack-hard-title">Como os sistemas são construídos</div>
-            <div class="stack-hard-items">
-              <div class="stack-hard-item">Python <span>4.800 menções</span></div>
-              <div class="stack-hard-item">SQL <span>4.300 menções</span></div>
-              <div class="stack-hard-item">JavaScript <span>3.500 menções</span></div>
-              <div class="stack-hard-item">Java <span>2.600 menções</span></div>
-              <div class="stack-hard-item">Go <span>1.300 menções</span></div>
-            </div>
-          </div>
-          <div class="stack-hard-panel" id="stack-ferramentas" role="tabpanel" hidden>
-            <div class="stack-hard-blabel">Ferramentas · operação diária</div>
-            <div class="stack-hard-title">Como o trabalho acontece</div>
-            <div class="stack-hard-items">
-              <div class="stack-hard-item">Git <span>2.482 menções</span></div>
-              <div class="stack-hard-item">Office 365 <span>1.789 menções</span></div>
-              <div class="stack-hard-item">Excel <span>1.300+ menções</span></div>
-              <div class="stack-hard-item">Power BI <span>presente no índice</span></div>
-              <div class="stack-hard-item">Docker <span>presente no índice</span></div>
-            </div>
-          </div>
-        </div>
-        <p class="stack-pane-fonte">Fonte: Inteli — Índice de Vagas (Web Scraping, 2025) · ~19.655 vagas</p>
-      </div>
-
-      <div class="stack-pane">
-        <div class="stack-pane-h">Soft skills</div>
-        <h3 class="stack-pane-title">O que define quem<br>gera impacto</h3>
-        <p class="stack-pane-lead">Comunicação lidera nas vagas (21% das menções). A técnica abre portas — as competências comportamentais sustentam progressão e impacto na organização.</p>
-        <div class="stack-soft-rank" id="stackSoftRank"></div>
-        <div class="stack-soft-quote">
-          <strong>Aprendizado contínuo</strong>
-          "Tem uma coisa que não vai mudar nunca: você ter que estudar." — Maurício Garcia, Inteli. O ritmo de obsolescência tornou o estudo permanente uma condição básica, não um diferencial.
-        </div>
-        <p class="stack-pane-fonte">Fonte: Inteli — Índice de Vagas (Web Scraping, 2025)</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CAPÍTULO 4 · Visão por Área -->
-<section class="section-full section-areas section-band-light" id="visao-area">
-  <div class="areas-inner">
-    <p class="ch-lbl">Capítulo 4 · Visão por Área</p>
-    <h2 class="sl-h">Explore as 7 áreas de atuação em tech</h2>
-    <p class="areas-lead">Distribuição de 19.655 vagas mapeadas entre abril e junho de 2025. Clique em qualquer área para ver soft skills, hard skills e faixas salariais por cargo.</p>
-    <p class="areas-fonte">Fonte: Inteli — Índice de Vagas (Web Scraping, 2025) · Salários: Guia Salarial (Robert Half, 2026)</p>
-
-    <div class="areas-filters" role="group" aria-label="Filtros de área">
-      <button type="button" class="filter-btn active" data-filter="all">Todas as áreas</button>
-      <button type="button" class="filter-btn" data-filter="entrada">Melhor entrada júnior (&gt;30%)</button>
-      <button type="button" class="filter-btn" data-filter="esp">Alta especialização</button>
-    </div>
-
-    <div class="areas-grid" id="areasGrid"></div>
-  </div>
-</section>
 
 <!-- PROJEÇÕES IA -->
-<section class="section-full section-chapter section-band-dark" id="projecoes">
+<section class="section-full section-chapter section-band-light" id="projecoes">
   <div class="chapter-shell">
     <div class="chapter-box">
       <div class="insight-slide">
@@ -1850,6 +2294,7 @@ function analyzeTransition(){
         <div class="panel-metrics">
 
           <div class="metrics-body">
+            <div class="metrics-ttl">Três perfis profissionais diante da IA</div>
             <div class="ia-roles-stack" role="img" aria-label="Três perfis profissionais diante da IA: Displaced, Augmented e Builders">
               <article class="ia-role-card">
                 <div class="ia-role-icon" aria-hidden="true">
@@ -2005,70 +2450,15 @@ function analyzeTransition(){
     <div class="fw">
       <div class="fl2">
         <span class="fe">Acesso gratuito</span>
-        <h3 class="ft">Baixe o estudo completo de carreiras tech 2025</h3>
+        <h3 class="ft">Baixe o estudo completo de carreiras 2026</h3>
         <p class="fd">Análise profunda por área, faixas salariais reais, stack técnico por nível de senioridade e trajetórias mapeadas com dados de 19.655 vagas.</p>
-        <div class="finc">
-          <div class="fi"><div class="fck">✓</div>7 setores com análise individual e funções demandadas</div>
-          <div class="fi"><div class="fck">✓</div>Stack técnico por nível: júnior, pleno, sênior e liderança</div>
-          <div class="fi"><div class="fck">✓</div>Faixas salariais reais — Guia Salarial Robert Half 2026</div>
-          <div class="fi"><div class="fck">✓</div>Trajetórias de carreira com competências por transição</div>
-          <div class="fi"><div class="fck">✓</div>10 entrevistas em profundidade com lideranças</div>
-          <div class="fi"><div class="fck">✓</div>Base: 19.655 vagas · Abr–Jun 2025</div>
-        </div>
       </div>
       <div class="fr">
-        <div id="form-state">
-          <div class="form-head">Preencha para receber o PDF</div>
-          <div class="form-sub">Acesso imediato · Sem spam · Dados tratados conforme LGPD</div>
-          <div class="f2c">
-            <div class="ff"><div class="ffl">Nome</div><input class="ffi" type="text" placeholder="Seu nome" id="fn"></div>
-            <div class="ff"><div class="ffl">Sobrenome</div><input class="ffi" type="text" placeholder="Sobrenome" id="fs"></div>
-          </div>
-          <div class="ff"><div class="ffl">E-mail profissional</div><input class="ffi" type="email" placeholder="seu@email.com" id="fe"></div>
-          <div class="f2c">
-            <div class="ff"><div class="ffl">Empresa</div><input class="ffi" type="text" placeholder="Opcional" id="fco"></div>
-            <div class="ff"><div class="ffl">Área</div>
-              <select class="ffs" id="fa">
-                <option value="" disabled selected>Selecione</option>
-                <option>Dev de Software</option><option>Dados e IA</option>
-                <option>Infraestrutura e Cloud</option><option>Projetos e PM</option>
-                <option>Segurança da Informação</option><option>Testes e QA</option>
-                <option>Estudante / Início de carreira</option><option>Outra área</option>
-              </select>
-            </div>
-          </div>
-          <div class="ff"><div class="ffl">Senioridade</div>
-            <select class="ffs" id="fni">
-              <option value="" disabled selected>Selecione</option>
-              <option>Estágio ou trainee</option><option>Júnior</option>
-              <option>Pleno</option><option>Sênior</option>
-              <option>Tech lead ou gerência</option><option>Diretoria ou C-level</option>
-            </select>
-          </div>
-          <button class="fsb" type="button" onclick="subForm()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar o estudo completo
-          </button>
-          <div class="fpv">Sem spam. Seus dados estão seguros. Cancele quando quiser.</div>
-        </div>
-        <div class="ss" id="success-state">
-          <div class="ss-ico">✓</div>
-          <div class="ss-t">Tudo certo!</div>
-          <div class="ss-s">O link de download foi enviado para o seu e-mail. Verifique também o spam.</div>
-          <a href="#" class="dlb">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Baixar agora (PDF)
-          </a>
-        </div>
+        <div id="hs-form-target"></div>
       </div>
     </div>
   </div>
 </section>
-
-<footer>
-  <span>Inteli · Estudo de Carreiras em Tecnologia · 2025</span>
-  <span>Layout slide 55/35 — protótipo visual</span>
-</footer>
 
 <script src="areas-section-init.js"></script>
 <script>
@@ -2078,13 +2468,13 @@ var MERCADO_SRC=[
   'Fonte: Pearson, Mind the AI Learning Gap, 2024',
   'Fonte: ManpowerGroup Brasil (2026)',
   'Fonte: Sonda Tech (Inteli, 2025)',
-  'Fonte: Índice de Vagas (Inteli, 2025)',
-  'Fonte: Índice de Vagas (Inteli, 2025)'
+  'Fonte: Estudo de carreiras em tecnologia (Inteli, 2026)',
+  'Fonte: Estudo de carreiras em tecnologia (Inteli, 2026)'
 ];
 var EMPREGO_CH=['Principais competências','Principais competências'];
 var EMPREGO_SRC=[
-  'Fonte: Índice de Vagas (Inteli, 2025)',
-  'Fonte: Índice de Vagas (Inteli, 2025)'
+  'Fonte: Estudo de carreiras em tecnologia (Inteli, 2026)',
+  'Fonte: Estudo de carreiras em tecnologia (Inteli, 2026)'
 ];
 
 var SETORES={
@@ -2098,6 +2488,46 @@ var SETORES={
   publico:[{r:'01',t:'Arquitetura e engenharia de sistemas',s:'Modernização de legados críticos',l:'Alta'},{r:'02',t:'Segurança da informação',s:'Infraestrutura crítica nacional',l:'Alta'},{r:'03',t:'Transformação digital de serviços',s:'Gov.br, serviços ao cidadão',l:'Alta'},{r:'04',t:'Análise de dados e transparência',s:'Dados abertos, indicadores',l:'Crescente'},{r:'05',t:'Gestão de projetos tech',s:'Contratos complexos, compliance',l:'Alta'}]
 };
 
+var CHAPTER_EMBLAS=[];
+function syncEmblaHeight(embla){
+  if(!embla)return;
+  var vp=embla.rootNode();
+  var slides=embla.slideNodes();
+  var idx=embla.selectedScrollSnap();
+  var slide=slides[idx];
+  if(!vp||!slide)return;
+  if(!window.matchMedia('(max-width:768px)').matches){
+    vp.style.removeProperty('height');
+    return;
+  }
+  var panel=vp.closest('.panel-metrics');
+  var inMetrics=!!vp.closest('.car-metrics-wrap');
+  if(panel&&inMetrics&&!panel.hasAttribute('data-metrics-open')){
+    vp.style.setProperty('height','0px','important');
+    return;
+  }
+  /* Mede o slide atual com height temporariamente liberada */
+  var prev=vp.style.getPropertyValue('height');
+  vp.style.setProperty('height','auto','important');
+  var h=Math.ceil(slide.getBoundingClientRect().height);
+  if(!h){
+    /* fallback: soma filhos visíveis */
+    h=Math.ceil(slide.scrollHeight);
+  }
+  vp.style.setProperty('height',Math.max(h,1)+'px','important');
+  if(!h&&prev)vp.style.setProperty('height',prev,'important');
+}
+function reinitChapterEmblas(){
+  CHAPTER_EMBLAS.forEach(function(e){
+    try{
+      e.reInit();
+      syncEmblaHeight(e);
+    }catch(err){}
+  });
+}
+function syncAllEmblaHeights(){
+  CHAPTER_EMBLAS.forEach(function(e){try{syncEmblaHeight(e)}catch(err){}});
+}
 function initChapterCarousel(ns,total,chLabels,srcLabels,chLblId,srcId){
   if(typeof EmblaCarousel==='undefined'){return;}
   var textVp=document.querySelector('#car-'+ns+'-text .car-viewport');
@@ -2106,6 +2536,7 @@ function initChapterCarousel(ns,total,chLabels,srcLabels,chLblId,srcId){
   var opts={loop:false};
   var emblaText=EmblaCarousel(textVp,opts);
   var emblaMetrics=EmblaCarousel(metricsVp,{loop:false,watchDrag:false});
+  CHAPTER_EMBLAS.push(emblaText,emblaMetrics);
   var prevBtn=document.getElementById('car-'+ns+'-prev');
   var nextBtn=document.getElementById('car-'+ns+'-next');
   var curEl=document.getElementById('car-'+ns+'-cur');
@@ -2117,9 +2548,17 @@ function initChapterCarousel(ns,total,chLabels,srcLabels,chLblId,srcId){
     if(srcId&&srcLabels[idx])document.getElementById(srcId).textContent=srcLabels[idx];
     if(prevBtn)prevBtn.disabled=!emblaText.canScrollPrev();
     if(nextBtn)nextBtn.disabled=!emblaText.canScrollNext();
-    setTimeout(animBars,50);
+    syncEmblaHeight(emblaText);
+    syncEmblaHeight(emblaMetrics);
+    setTimeout(function(){
+      syncEmblaHeight(emblaText);
+      syncEmblaHeight(emblaMetrics);
+      animBars();
+    },50);
   }
   emblaText.on('select',onSelect);
+  emblaText.on('reInit',function(){syncEmblaHeight(emblaText);syncEmblaHeight(emblaMetrics);});
+  emblaMetrics.on('reInit',function(){syncEmblaHeight(emblaMetrics);});
   if(prevBtn)prevBtn.addEventListener('click',function(){emblaText.scrollPrev();});
   if(nextBtn)nextBtn.addEventListener('click',function(){emblaText.scrollNext();});
   onSelect();
@@ -2207,18 +2646,115 @@ function closeNav(){
   if(btn){btn.classList.remove('open');btn.setAttribute('aria-label','Abrir menu');}
 }
 
+function isMobAcc(){return window.matchMedia('(max-width:768px)').matches;}
+
+var CHEV_SVG='<svg class="ih-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+
 function initMethodAccordions(){
-  if(!window.matchMedia('(max-width:768px)').matches)return;
   document.querySelectorAll('.method-card').forEach(function(card){
     var btn=card.querySelector('.m-trigger');
-    if(!btn)return;
+    if(!btn||btn.dataset.bound)return;
+    btn.dataset.bound='1';
     btn.addEventListener('click',function(){
+      if(!isMobAcc())return;
       var isOpen=card.hasAttribute('data-open');
       document.querySelectorAll('.method-card[data-open]').forEach(function(c){
         c.removeAttribute('data-open');
-        c.querySelector('.m-trigger').setAttribute('aria-expanded','false');
+        var t=c.querySelector('.m-trigger');
+        if(t)t.setAttribute('aria-expanded','false');
       });
       if(!isOpen){
+        card.setAttribute('data-open','');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+}
+
+function initInsightMobileAccordions(){
+  document.querySelectorAll('.car-slide.ib').forEach(function(slide){
+    var ih=slide.querySelector('.ih');
+    var it=slide.querySelector('.it');
+    if(!ih||!it||ih.dataset.bound)return;
+    ih.dataset.bound='1';
+    if(!it.querySelector('.it-inner')){
+      var inner=document.createElement('div');
+      inner.className='it-inner';
+      while(it.firstChild)inner.appendChild(it.firstChild);
+      it.appendChild(inner);
+    }
+    if(!ih.querySelector('.ih-chev'))ih.insertAdjacentHTML('beforeend',CHEV_SVG);
+    ih.setAttribute('role','button');
+    ih.setAttribute('tabindex','0');
+    ih.setAttribute('aria-expanded','false');
+    function toggleText(){
+      if(!isMobAcc())return;
+      var open=slide.hasAttribute('data-text-open');
+      if(open){
+        slide.removeAttribute('data-text-open');
+        ih.setAttribute('aria-expanded','false');
+      }else{
+        slide.setAttribute('data-text-open','');
+        ih.setAttribute('aria-expanded','true');
+      }
+      requestAnimationFrame(function(){
+        syncAllEmblaHeights();
+        setTimeout(syncAllEmblaHeights,280);
+      });
+    }
+    ih.addEventListener('click',toggleText);
+    ih.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleText();}
+    });
+  });
+
+  document.querySelectorAll('.panel-metrics').forEach(function(panel){
+    if(panel.querySelector('.mob-acc-trig'))return;
+    var target=panel.querySelector('.car-metrics-wrap')||panel.querySelector('.metrics-body');
+    if(!target)return;
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='mob-acc-trig';
+    btn.setAttribute('aria-expanded','false');
+    btn.innerHTML='Ver indicadores e gráficos'+CHEV_SVG;
+    target.parentNode.insertBefore(btn,target);
+    btn.addEventListener('click',function(){
+      if(!isMobAcc())return;
+      var open=panel.hasAttribute('data-metrics-open');
+      if(open){
+        panel.removeAttribute('data-metrics-open');
+        btn.setAttribute('aria-expanded','false');
+        syncAllEmblaHeights();
+      }else{
+        panel.setAttribute('data-metrics-open','');
+        btn.setAttribute('aria-expanded','true');
+        requestAnimationFrame(function(){
+          requestAnimationFrame(function(){
+            reinitChapterEmblas();
+            animBars();
+            setTimeout(syncAllEmblaHeights,50);
+            setTimeout(syncAllEmblaHeights,200);
+          });
+        });
+      }
+    });
+  });
+}
+
+function initCrossroadAccordions(){
+  document.querySelectorAll('#analisador-app .crossroad-card').forEach(function(card){
+    var btn=card.querySelector('.cr-trig');
+    if(!btn||btn.dataset.bound)return;
+    btn.dataset.bound='1';
+    btn.addEventListener('click',function(){
+      if(!isMobAcc())return;
+      var open=card.hasAttribute('data-open');
+      document.querySelectorAll('#analisador-app .crossroad-card[data-open]').forEach(function(c){
+        c.removeAttribute('data-open');
+        var t=c.querySelector('.cr-trig');
+        if(t)t.setAttribute('aria-expanded','false');
+      });
+      if(!open){
         card.setAttribute('data-open','');
         btn.setAttribute('aria-expanded','true');
       }
@@ -2231,15 +2767,135 @@ document.addEventListener('DOMContentLoaded',function(){
   if(firstSec)setSec(firstSec,'financas');
   initStackSoftRank();
   animBars();
+  /* Accordion mobile antes do Embla, para medir altura já colapsada */
+  initInsightMobileAccordions();
   initChapterCarousel('mkt',6,MERCADO_CH,MERCADO_SRC,'mkt-ch-lbl','mkt-src');
   initChapterCarousel('emp',2,EMPREGO_CH,EMPREGO_SRC,'emp-ch-lbl','emp-src');
   initMethodAccordions();
+  initCrossroadAccordions();
+  setTimeout(reinitChapterEmblas,50);
   var obs=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting)animBars()})},{threshold:.15});
   document.querySelectorAll('.insight-slide').forEach(function(s){obs.observe(s)});
   /* Fecha o menu mobile ao clicar em qualquer link */
   document.querySelector('.nv')&&document.querySelector('.nv').addEventListener('click',function(e){
     if(e.target.tagName==='A')closeNav();
   });
+});
+</script>
+<script>
+window.addEventListener('load', function() {
+  var HS_COMPACT_CSS = [
+    "html,body{background:#F2F3F5!important;margin:0!important;padding:0!important;font-family:Manrope,system-ui,sans-serif!important;color:#1E1B32!important}",
+    "*,*::before,*::after{box-sizing:border-box!important}",
+    "h1,h2,h3,h4,.hs-form-title,.hs-header,.hs-main-font-element,.header,legend{display:none!important;margin:0!important;padding:0!important;height:0!important;max-height:0!important;overflow:hidden!important;line-height:0!important;font-size:0!important}",
+    ".hs-form,form{margin:0!important;padding:0!important;max-width:none!important;width:100%!important}",
+    "fieldset{margin:0!important;padding:0!important;border:0!important}",
+    ".hs-form-field,.field,.hs-fieldtype-text,.hs-fieldtype-select,.hs-fieldtype-phonenumber{margin:0 0 6px!important;padding:0!important}",
+    "label,.hs-form-field > label{display:block!important;font-size:8px!important;font-weight:700!important;letter-spacing:.08em!important;text-transform:uppercase!important;color:#1E1B32!important;margin:0 0 2px!important;padding:0!important;line-height:1.15!important}",
+    ".input{margin:0!important;padding:0!important}",
+    ".hs-input,input[type=text],input[type=email],input[type=tel],input[type=number],select,textarea{background:#fff!important;border:1px solid #d0d0dc!important;padding:6px 9px!important;font-size:12px!important;color:#1E1B32!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;border-radius:0!important;outline:none!important;box-shadow:none!important;margin:0!important;line-height:1.25!important;min-height:0!important;height:auto!important}",
+    ".hs-input:focus,input:focus,select:focus{border-color:#e85d4a!important}",
+    ".hs-button,input[type=submit]{background:#e85d4a!important;color:#fff!important;border:none!important;font-size:13px!important;font-weight:700!important;padding:9px 12px!important;cursor:pointer!important;width:100%!important;border-radius:0!important;margin:2px 0 0!important}",
+    ".hs-error-msgs,.hs-error-msg{color:#e85d4a!important;font-size:9px!important;margin:1px 0 0!important;padding:0!important;list-style:none!important}",
+    ".legal-consent-container,.hs-richtext,.hs-richtext *,.hs-field-desc{color:#8B879E!important;font-size:9px!important;line-height:1.3!important;margin:0 0 4px!important;padding:0!important}",
+    ".inputs-list{list-style:none!important;padding:0!important;margin:0!important}",
+    ".hs-form-required{color:#e85d4a!important}",
+    ".submitted-message{color:#1E1B32!important;font-size:13px!important;text-align:center!important;padding:10px 0!important}",
+    ".iti{width:100%!important}",
+    ".hs_firstname,.hs_lastname{display:inline-block!important;width:calc(50% - 4px)!important;vertical-align:top!important;margin:0 0 6px!important}",
+    ".hs_firstname{margin-right:8px!important}",
+    "@media(max-width:420px){.hs_firstname,.hs_lastname{display:block!important;width:100%!important;margin-right:0!important}}"
+  ].join("");
+
+  function compactHsForm(formEl){
+    if(!formEl)return;
+    var doc=formEl.ownerDocument||document;
+    var style=doc.getElementById('inteli-hs-compact');
+    if(!style){
+      style=doc.createElement('style');
+      style.id='inteli-hs-compact';
+      (doc.head||doc.documentElement).appendChild(style);
+    }
+    style.textContent=HS_COMPACT_CSS;
+
+    Array.prototype.forEach.call(doc.querySelectorAll('h1,h2,h3,h4,.hs-form-title,.hs-header,.header,legend'),function(n){
+      n.style.setProperty('display','none','important');
+      n.style.setProperty('margin','0','important');
+      n.style.setProperty('padding','0','important');
+      n.style.setProperty('height','0','important');
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('body *'),function(n){
+      if(n.children&&n.children.length)return;
+      var t=(n.textContent||'').replace(/\s+/g,' ').trim();
+      if(/^pesquisa de carreiras$/i.test(t)){
+        n.style.setProperty('display','none','important');
+        n.style.setProperty('height','0','important');
+        n.style.setProperty('margin','0','important');
+      }
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('.hs-form-field,.field'),function(n){
+      n.style.setProperty('margin','0 0 6px','important');
+      n.style.setProperty('padding','0','important');
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('label'),function(n){
+      n.style.setProperty('margin','0 0 2px','important');
+      n.style.setProperty('padding','0','important');
+      n.style.setProperty('line-height','1.15','important');
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('.hs-input,input,select,textarea'),function(n){
+      n.style.setProperty('padding','6px 9px','important');
+      n.style.setProperty('margin','0','important');
+      n.style.setProperty('min-height','0','important');
+    });
+    if(doc.body){
+      doc.body.style.setProperty('margin','0','important');
+      doc.body.style.setProperty('padding','0','important');
+    }
+    /* reajusta altura do iframe no parent */
+    try{
+      var frame=window.frameElement||document.querySelector('#hs-form-target iframe');
+      if(frame&&doc.body){
+        var h=Math.ceil(doc.body.scrollHeight);
+        if(h>40)frame.style.height=h+'px';
+      }
+    }catch(e){}
+  }
+
+  function resizeHsIframe(){
+    var frame=document.querySelector('#hs-form-target iframe');
+    if(!frame)return;
+    try{
+      var doc=frame.contentDocument||frame.contentWindow.document;
+      if(!doc||!doc.body)return;
+      compactHsForm(doc.querySelector('form')||doc.body);
+      var h=Math.ceil(Math.max(doc.body.scrollHeight,doc.documentElement.scrollHeight));
+      if(h>40)frame.style.setProperty('height',h+'px','important');
+    }catch(e){}
+  }
+
+  hbspt.forms.create({
+    region: "na1",
+    portalId: "49632293",
+    formId: "34f9abb5-3913-485f-b043-6c6f1c0ae69c",
+    target: "#hs-form-target",
+    cssRequired: false,
+    css: HS_COMPACT_CSS,
+    onFormReady: function($form){
+      var form=($form&&($form[0]||($form.get&&$form.get(0))))||$form;
+      compactHsForm(form);
+      setTimeout(resizeHsIframe,50);
+      setTimeout(resizeHsIframe,200);
+      setTimeout(resizeHsIframe,600);
+    }
+  });
+
+  /* HubSpot às vezes monta o iframe depois do ready */
+  var tries=0;
+  var poll=setInterval(function(){
+    tries++;
+    resizeHsIframe();
+    if(tries>20)clearInterval(poll);
+  },150);
 });
 </script>
 </body>
