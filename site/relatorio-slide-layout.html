@@ -240,10 +240,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   box-shadow:0 2px 12px rgba(0,0,0,.12);display:flex;flex-direction:column;
   box-sizing:border-box;min-height:min(420px,calc(100vh - 280px));
 }
-.chart-card .chart-title{
-  font-family:var(--font-title);font-size:15px;font-weight:800;color:var(--coral);
-  margin-bottom:18px;line-height:1.25;flex-shrink:0;
-}
+.chart-card .chart-title{display:none}
 #emp-p1 .panel-extra{flex:1;display:flex;min-height:0}
 #emp-p1 .chart-card{flex:1;min-height:0}
 .chart-card .chart-leg{
@@ -323,7 +320,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   font-weight:800;
   letter-spacing:.01em;
   text-transform:none;
-  color:var(--coral)!important;
+  color:#fff!important;
   line-height:1.3;
   margin:0 0 14px;
   flex:0 0 auto;
@@ -332,7 +329,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   opacity:1;
   visibility:visible;
 }
-.panel-metrics .metrics-ttl.on-light{color:var(--text-dark)!important}
 .metrics-body > .metrics-ttl{margin-bottom:16px}
 .car-slide.ip > .metrics-ttl{order:-1}
 
@@ -430,11 +426,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;height:var(--nav-h);backgrou
   min-height:340px;box-sizing:border-box;
 }
 #mkt-p6 .seniority-wrap{width:100%;min-height:min(420px,calc(100vh - 280px))}
-.seniority-title{
-  font-family:var(--font-title);font-size:15px;font-weight:800;color:var(--coral);
-  margin-bottom:10px;line-height:1.25;
-}
-.seniority-leg{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:12px;font-size:9px;color:var(--text-body);font-weight:600}
+.seniority-title{display:none}
+.seniority-leg{display:flex;flex-wrap:wrap;gap:8px 14px;margin:0 0 12px;font-size:9px;color:var(--text-body);font-weight:600}
 .seniority-leg span{display:inline-flex;align-items:center;gap:5px}
 .seniority-leg i{display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .seniority-leg .leg-lid{background:var(--coral)}
@@ -1638,7 +1631,7 @@ footer{
             </div>
             <div class="car-slide ip" id="mkt-p5">
               <div class="panel-extra" style="margin-bottom:14px">
-                <div class="bc-ttl">IA como acelerador salarial</div>
+                <div class="metrics-ttl">IA como acelerador salarial</div>
                 <div class="bc-leg">
                   <span><i class="leg-sem"></i>Sem IA</span>
                   <span><i class="leg-com"></i>Com IA</span>
@@ -1656,7 +1649,7 @@ footer{
               </div>
               </div>
               <div class="panel-extra">
-                <div class="bc-ttl">Exigência de inglês por senioridade</div>
+                <div class="metrics-ttl">Exigência de inglês por senioridade</div>
                 <div class="bc-leg">
                   <span><i class="leg-jr"></i>Júnior</span>
                   <span><i class="leg-pl"></i>Pleno/Sênior</span>
@@ -1669,8 +1662,8 @@ footer{
               </div>
             </div>
             <div class="car-slide ip" id="mkt-p6">
+              <div class="metrics-ttl">Distribuição de senioridade por área</div>
               <div class="seniority-wrap" role="img" aria-label="Distribuição de senioridade por área">
-                <div class="seniority-title">Distribuição de senioridade por área</div>
                 <div class="seniority-leg">
                   <span><i class="leg-lid"></i>Liderança</span>
                   <span><i class="leg-pl"></i>Pleno / Sênior</span>
@@ -1798,9 +1791,9 @@ footer{
             <div class="car-viewport">
               <div class="car-container">
             <div class="car-slide ip" id="emp-p1">
+              <div class="metrics-ttl">Distribuição técnica das vagas mapeadas</div>
               <div class="panel-extra">
                 <div class="chart-card" role="img" aria-label="Distribuição técnica das vagas mapeadas">
-                  <div class="chart-title">Distribuição técnica das vagas mapeadas</div>
                   <div class="dist-vchart">
                     <div class="dist-col">
                       <div class="dist-pct">35,7%</div>
