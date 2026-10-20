@@ -1,7 +1,7 @@
 # Relatório de Mercado Tech Brasil — 2026
 
-**Data de geração:** 29/07/2026  
-**Fonte:** Glassdoor Brasil, coleta distribuída multi-máquina (versao3)  
+**Data de geração:** 29/07/2026 (atualizado em 31/08/2026)
+**Fonte:** Glassdoor Brasil, coleta distribuída multi-máquina (versao3)
 **Comparativo:** Pipeline Paulo — Glassdoor Brasil 2025
 
 ---
@@ -10,21 +10,17 @@
 
 ### 1.1 Bronze — Coleta
 
-O scraper rodou em modo distribuído, com múltiplas máquinas buscando simultaneamente no Glassdoor Brasil. Cada máquina varreu combinações de **palavra-chave × UF**, gerando um arquivo CSV por combinação (ex: `informacao_SP.csv`, `analista_de_dados_MG.csv`).
+O scraper rodou em modo distribuído, com múltiplas máquinas buscando simultaneamente no Glassdoor Brasil. Cada máquina varreu combinações de **palavra-chave × UF**, gerando um arquivo CSV por combinação.
 
-- **9.124 arquivos CSV** coletados na camada bronze  
-- **~805.000 registros brutos** (com duplicatas entre UFs, máquinas e datas de coleta)  
+- **9.124 arquivos CSV** coletados na camada bronze
+- **~805.000 registros brutos** (com duplicatas entre UFs, máquinas e datas de coleta)
 - Colunas brutas: Função, Localização, Empresa, Data de Publicação, URL
 
 ### 1.2 Silver — Deduplicação e Enriquecimento
 
-**`deduplicar.py`** consolidou todos os CSVs bronze, removendo registros duplicados por URL/combinação de campos-chave.
+**`deduplicar.py`** consolidou todos os CSVs bronze, removendo duplicatas por URL e por hash de campos.
 
-**`enriquecer.py`** acessou a página de cada vaga e usou um LLM (Claude) para extrair campos estruturados:
-- Descrição completa da vaga (`Skills Necessarias`)
-- Salário médio (`Média Salarial`)
-
-Resultado após deduplicação e enriquecimento:
+**`enriquecer.py`** acessou a página de cada vaga e extraiu campos estruturados.
 
 | Etapa | Registros |
 |---|---|
@@ -33,27 +29,29 @@ Resultado após deduplicação e enriquecimento:
 | Silver — com descrição enriquecida (>50 chars) | 123.161 (99,5%) |
 | Silver — com salário informado | 32.758 (26,5%) |
 
-O arquivo consolidado final é `data/silver/vagas_enriquecidas.csv`.
+Arquivo consolidado final: `data/silver/vagas_enriquecidas.csv`.
 
 ### 1.3 Analytics — Filtragem e Classificação
 
-A partir do silver, quatro notebooks ETL rodaram em sequência:
+**`scp_01.ipynb`** — Filtragem para vagas tech
+→ **15.869 vagas tech** (de 123.477 únicas após dedup interno)
 
-**`scp_01.ipynb`** — Filtragem para vagas tech  
-Carrega `vagas_enriquecidas.csv`, normaliza colunas, e filtra apenas cargos que contenham palavras-chave tech (ex: "desenvolvedor", "dados", "infraestrutura").  
-→ **15.869 vagas tech**
+**`scp_02.ipynb`** — Classificação e limpeza
+Classifica Área, Tipo, Nível e Local. Remove blacklist e vagas internacionais.
+→ **15.514 vagas** (15.521 após blacklist, −7 internacionais)
 
-**`scp_02.ipynb`** — Classificação e limpeza  
-Classifica cada vaga em Área, Tipo, Nível e Local via correspondência com a planilha `criterios.xlsx`. Remove vagas com termos da blacklist.  
-→ **15.514 vagas** (−355 pela blacklist)
-
-**`scp_03.ipynb`** — Extração de skills  
-Para cada skill do catálogo (134 skills: hard, soft, idiomas, formação), busca presença na descrição usando `clean_text_search` (remoção de pontuação + `\b` word boundaries) com expansão por sinônimos da planilha de critérios.  
-Detecta também flag `IA` via lista de palavras-chave (ex: llm, chatgpt, generativ).  
+**`scp_03.ipynb`** — Extração de skills
+Busca 134 skills com word boundaries + sinônimos. Detecta flag IA.
 → **matriz 15.514 × 141 colunas**
 
-**`scp_04.ipynb`** — Análise NLP de cargos  
-Análise de n-gramas e frequência de termos nos títulos de cargos, por área.
+**`scp_04.ipynb`** — Análises avançadas
+Rankings por classe de skill, domínios, LLMs citadas, NLP de títulos, investigação da queda de ML.
+
+**`scp_analise_softskills.ipynb`** — Amostras e análise de soft skills
+Amostragem estratificada por área para validação manual.
+
+**`scp_comparativo.ipynb`** — Comparativo 2025 × 2026
+Carga paralela dos dois pipelines com as mesmas 134 skills comparáveis.
 
 ---
 
@@ -61,7 +59,7 @@ Análise de n-gramas e frequência de termos nos títulos de cargos, por área.
 
 ### 2.1 Volume de Vagas
 
-**15.514 vagas tech** classificadas após filtragem.
+**15.514 vagas tech** classificadas após filtragem, com **13.135 títulos de cargo únicos**.
 
 ### 2.2 Distribuição por Área
 
@@ -84,6 +82,18 @@ Análise de n-gramas e frequência de termos nos títulos de cargos, por área.
 | n/f (não encontrado) | 3.153 | 20,3% |
 | Liderança | 1.573 | 10,1% |
 
+**Breakdown das 3.431 vagas Júnior:**
+
+| Subcategoria | Vagas | % |
+|---|---|---|
+| Auxiliar | 1.762 | 48,5% |
+| Júnior | 975 | 26,8% |
+| Estágio | 805 | 22,2% |
+| Aprendiz | 57 | 1,6% |
+| Trainee | 36 | 1,0% |
+
+> Nota: a maioria das vagas classificadas como "Júnior" corresponde, na prática, a vagas de nível auxiliar — cargos de entrada sem progressão técnica clara.
+
 ### 2.4 Localização Geográfica
 
 **Top 10 estados:**
@@ -101,12 +111,29 @@ Análise de n-gramas e frequência de termos nos títulos de cargos, por área.
 | Ceará | 398 | 2,6% |
 | Distrito Federal | 322 | 2,1% |
 
-**Modalidade de trabalho:** 99,7% presencial/nacional, 0,3% remoto classificado  
-*(Nota: a classificação de vagas remotas tem limitações — ver Seção 4)*
+**Modalidade de trabalho** (sobre vagas com tipo classificado, n=15.474):
+
+| Modalidade | Vagas | % |
+|---|---|---|
+| Presencial / Nacional | 14.006 | 90,5% |
+| Híbrido | 940 | 6,1% |
+| Remoto | 528 | 3,4% |
+
+**Híbrido e remoto por área:**
+
+| Área | Híbrido | Remoto |
+|---|---|---|
+| Dados e Inteligência Artificial | 10,1% | 3,4% |
+| Segurança da Informação | 8,5% | 2,7% |
+| Desenvolvimento de Software | 5,9% | 5,5% |
+| Projetos e Gerenciamento | 5,8% | 2,5% |
+| Infraestrutura e Suporte | 4,8% | 2,1% |
+| Testes e Controle de Qualidade | 2,7% | 1,2% |
+| Automação de Processos e Sistemas | 1,8% | 2,5% |
 
 ### 2.5 Hard Skills
 
-Top 20, por frequência de menção nas descrições de vagas:
+**Top 10 por frequência:**
 
 | Rank | Skill | Vagas | % |
 |---|---|---|---|
@@ -115,23 +142,92 @@ Top 20, por frequência de menção nas descrições de vagas:
 | 3 | Metodologias Ágeis | 2.704 | 17,4% |
 | 4 | Python | 2.393 | 15,4% |
 | 5 | API | 2.256 | 14,5% |
-| 6 | Excel | 2.033 | 13,1% |
-| 7 | AWS | 2.137 | 13,8% |
+| 6 | AWS | 2.137 | 13,8% |
+| 7 | Excel | 2.033 | 13,1% |
 | 8 | CI/CD | 1.812 | 11,7% |
-| 9 | Office 365 | 1.428 | 9,2% |
-| 10 | Git | 1.645 | 10,6% |
-| 11 | Azure | 1.628 | 10,5% |
-| 12 | Scrum | 1.194 | 7,7% |
-| 13 | Java | 1.225 | 7,9% |
-| 14 | Power BI | 1.252 | 8,1% |
-| 15 | Windows | 1.004 | 6,5% |
-| 16 | Docker | 1.158 | 7,5% |
-| 17 | Linux | 960 | 6,2% |
-| 18 | JavaScript | 1.377 | 8,9% |
-| 19 | React | 868 | 5,6% |
-| 20 | Kanban | 810 | 5,2% |
+| 9 | Git | 1.645 | 10,6% |
+| 10 | Azure | 1.628 | 10,5% |
+
+**Rankings por classe:**
+
+*Sistemas (plataformas e ambientes):*
+
+| Rank | Sistema | % |
+|---|---|---|
+| 1 | AWS | 13,8% |
+| 2 | Azure | 10,5% |
+| 3 | SAP | 7,0% |
+| 4 | Kubernetes | 6,6% |
+| 5 | Windows | 6,5% |
+| 6 | Linux | 6,2% |
+| 7 | GCP | 6,0% |
+| 8 | React | 5,6% |
+| 9 | PostgreSQL | 5,2% |
+| 10 | Kafka | 4,8% |
+
+*Ferramentas:*
+
+| Rank | Ferramenta | % |
+|---|---|---|
+| 1 | Excel | 13,1% |
+| 2 | Git | 10,6% |
+| 3 | Office 365 | 9,2% |
+| 4 | Power BI | 8,1% |
+| 5 | Docker | 7,5% |
+| 6 | Grafana | 6,0% |
+| 7 | Gestão de tarefas | 3,8% |
+| 8 | Terraform | 3,6% |
+| 9 | Tableau | 2,0% |
+| 10 | LangChain | 1,7% |
+
+*Linguagens de programação:*
+
+| Rank | Linguagem | % |
+|---|---|---|
+| 1 | SQL | 18,2% |
+| 2 | Python | 15,4% |
+| 3 | JavaScript | 8,9% |
+| 4 | Java | 7,9% |
+| 5 | Go | 6,1% |
+| 6 | TypeScript | 4,1% |
+| 7 | C# | 4,0% |
+| 8 | HTML | 4,0% |
+| 9 | CSS | 3,8% |
+| 10 | C++ | 3,0% |
+
+*Conceitos técnicos:*
+
+| Rank | Conceito | % |
+|---|---|---|
+| 1 | Cloud | 18,5% |
+| 2 | Metodologias Ágeis | 17,4% |
+| 3 | API | 14,5% |
+| 4 | CI/CD | 11,7% |
+| 5 | Scrum | 7,7% |
+| 6 | Microservices | 5,6% |
+| 7 | NoSQL | 5,5% |
+| 8 | Kanban | 5,2% |
+| 9 | Machine Learning | 5,2% |
+| 10 | Data Privacy | 3,5% |
+
+**Domínios mais demandados** (agrupamento por tema, não por skill isolada):
+
+| Rank | Domínio | Vagas |
+|---|---|---|
+| 1 | Cloud Computing | 3.918 |
+| 2 | Banco de Dados | 3.756 |
+| 3 | DevOps e Versionamento | 3.214 |
+| 4 | Agilidade e Processos | 3.213 |
+| 5 | Backend | 2.860 |
+| 6 | Dados e BI | 2.645 |
+| 7 | Dados | 2.393 |
+| 8 | Integração / APIs | 2.288 |
+| 9 | Frontend | 1.990 |
+| 10 | Sistemas Operacionais | 1.521 |
 
 ### 2.6 Soft Skills
+
+**Ranking geral:**
 
 | Rank | Skill | Vagas | % |
 |---|---|---|---|
@@ -145,6 +241,28 @@ Top 20, por frequência de menção nas descrições de vagas:
 | 8 | Proatividade | 1.539 | 9,9% |
 | 9 | Pensamento analítico | 1.371 | 8,8% |
 | 10 | Adaptabilidade | 860 | 5,5% |
+| 11 | Resiliência | 714 | 4,6% |
+| 12 | Gestão do tempo | 714 | 4,6% |
+| 13 | Negociação | 605 | 3,9% |
+| 14 | Empatia | 465 | 3,0% |
+| 15 | Foco em resultados | 465 | 3,0% |
+| 16 | Pensamento Crítico | 155 | 1,0% |
+| 17 | Gestão de conflitos | 93 | 0,6% |
+| 18 | Inteligência Emocional | 78 | 0,5% |
+
+**Soft skills por nível de senioridade (top 5–7 por nível):**
+
+| Soft Skill | Liderança | Júnior | Pleno / Sênior |
+|---|---|---|---|
+| Comunicação | 52,1% (1º) | 36,9% (2º) | 40,9% (1º) |
+| Liderança | 51,6% (2º) | — | 14,2% (6º) |
+| Organização | 39,7% (3º) | 40,3% (1º) | 32,5% (3º) |
+| Criatividade | 30,5% (4º) | 28,4% (3º) | 33,5% (2º) |
+| Trabalho em equipe | 14,9% (5º) | 15,3% (4º) | 18,3% (4º) |
+| Resolução de problemas | 14,9% (5º) | 12,8% (6º) | 15,4% (5º) |
+| Proatividade | — | 13,2% (5º) | — |
+| Negociação | 10,3% (7º) | — | — |
+| Autonomia | 10,9% (6º) | — | 13,9% (7º) |
 
 ### 2.7 Idiomas
 
@@ -155,6 +273,9 @@ Top 20, por frequência de menção nas descrições de vagas:
 | Francês | 64 | 0,4% |
 | Alemão | 62 | 0,4% |
 | Italiano | 14 | 0,1% |
+| Mandarim | 9 | 0,1% |
+| Chinês | 0 | — |
+| Japonês | 0 | — |
 
 ### 2.8 Formação
 
@@ -170,12 +291,19 @@ Top 20, por frequência de menção nas descrições de vagas:
 | Engenharia de Software | 807 | 5,2% |
 | Engenharia da Computação | 617 | 4,0% |
 
+**Pós-graduação por nível de senioridade:**
+
+| Nível | % que pede pós | Vagas |
+|---|---|---|
+| Liderança | 10,6% | 166 |
+| Pleno / Sênior | 4,8% | 351 |
+| n/f | 4,5% | 143 |
+| Júnior | 1,9% | 64 |
+
 ### 2.9 Salários
 
-**2.043 vagas com salário informado (12,9%)**  
+**2.043 vagas com salário informado (12,9%)**
 *(Nota: dado subestimado — ver Seção 4)*
-
-Distribuição por faixa (vagas com salário informado):
 
 | Faixa salarial (R$ mil/mês) | Vagas | % |
 |---|---|---|
@@ -199,12 +327,38 @@ Distribuição por faixa (vagas com salário informado):
 | Infraestrutura e Suporte | 15,2% |
 | Testes e Controle de Qualidade | 12,9% |
 
+**LLMs citadas explicitamente nas descrições de vagas:**
+
+| LLM | Vagas | % do total |
+|---|---|---|
+| Claude | 392 | 2,5% |
+| Cursor | 163 | 1,1% |
+| ChatGPT | 155 | 1,0% |
+| Gemini | 154 | 1,0% |
+| Grok | 6 | 0,0% |
+| Deepseek | 2 | 0,0% |
+| Kimi | 2 | 0,0% |
+| **Qualquer LLM** | **528** | **3,4%** |
+
+> Claude lidera por menção direta, concentrado em Dados/IA (5,1%) e Desenvolvimento de Software (3,2%). Cursor é o mais citado em vagas de liderança (1,7%). ChatGPT e Gemini são distribuídos de forma mais homogênea entre áreas e níveis.
+>
+> Co-ocorrências: 73,6% das vagas com Cursor também mencionam Claude; 67,1% das vagas com ChatGPT também mencionam Claude — sugerindo que Claude funciona como benchmark de referência nas descrições.
+
+**LLMs por nível de senioridade:**
+
+| LLM | Liderança | Júnior | Pleno / Sênior | n/f |
+|---|---|---|---|---|
+| Claude | 3,1% | 1,0% | 3,3% | 2,2% |
+| ChatGPT | 1,1% | 1,0% | 1,2% | 0,4% |
+| Cursor | 1,7% | 0,3% | 1,1% | 1,5% |
+| Gemini | 0,6% | 0,7% | 1,4% | 0,4% |
+
 ---
 
 ## 3. Comparativo 2025 vs 2026
 
-**Base de comparação:** Pipeline Paulo 2025 (Glassdoor Brasil) vs Pipeline versao3 2026 (Glassdoor Brasil)  
-**Metodologia de skills:** ambos os anos usam correspondência com `\b` word boundaries + expansão por sinônimos da planilha de critérios.
+**Base de comparação:** Pipeline Paulo 2025 (Glassdoor Brasil) vs Pipeline versao3 2026 (Glassdoor Brasil)
+**134 skills comparáveis** entre os dois pipelines.
 
 ### 3.1 Volume
 
@@ -224,7 +378,7 @@ Distribuição por faixa (vagas com salário informado):
 | Automação de Processos | 2,8% | 1,8% | −1,0 |
 | Segurança da Informação | 2,5% | 2,4% | −0,1 |
 
-> Destaque: Projetos e Gerenciamento cresceu 7,6 pp, enquanto Desenvolvimento caiu 5,6 pp.
+> Destaque: Projetos e Gerenciamento cresceu 7,6 pp — a maior variação positiva — enquanto Desenvolvimento caiu 5,6 pp.
 
 ### 3.3 Nível de Senioridade
 
@@ -244,66 +398,77 @@ Distribuição por faixa (vagas com salário informado):
 | **São Paulo** | 26,6% | 39,7% | **+13,1** |
 | Minas Gerais | 7,9% | 9,6% | +1,7 |
 | Rio de Janeiro | 5,2% | 6,8% | +1,6 |
-| Santa Catarina | 5,3% | 6,2% | +0,9 |
 | Paraná | 6,8% | 6,8% | 0,0 |
+| Santa Catarina | 5,3% | 6,2% | +0,9 |
 | Rio Grande do Sul | 6,3% | 5,4% | −0,9 |
+| Trabalho remoto *(2025)* | 6,5% | — | — |
+| n/e *(sem estado, 2025)* | 17,8% | — | — |
 
-> São Paulo concentrou +13,1 pp do mercado. As categorias "n/e" e "Trabalho Remoto" somavam 24,3% em 2025 e não aparecem em 2026 — parte desse volume pode ter sido reclassificada para estados (ver Seção 4).
+> São Paulo concentrou +13,1 pp. Em 2025 havia 17,8% de vagas sem estado (n/e) e 6,5% como "Trabalho remoto" — categorias que em 2026 passaram a ser classificadas por estado + modalidade de trabalho separadamente. A concentração de SP reflete tanto crescimento real quanto melhor cobertura da planilha de cidades em 2026.
 
 ### 3.5 Modalidade de Trabalho
 
 | Modalidade | 2025 (%) | 2026 (%) | Δ pp |
 |---|---|---|---|
-| Nacional / Presencial | 92,1% | 99,7% | +7,6 |
-| Remoto | 7,9% | 0,3% | −7,6 |
+| Nacional / Presencial | 92,1% | 90,5% | −1,6 |
+| Híbrido | — | 6,1% | +6,1 |
+| Remoto | 7,9% | 3,4% | −4,5 |
 
-> **Atenção:** a queda do remoto é provavelmente um artefato de classificação, não uma tendência real de mercado — ver Seção 4.
+> O trabalho flexível (remoto + híbrido) foi de **7,9% em 2025 para 9,5% em 2026** — um crescimento real de +1,6 pp. O que parecia uma queda abrupta no relatório anterior era um artefato: a categoria "remoto" de 2025 englobava vagas hoje corretamente separadas entre remoto e híbrido. O pipeline de 2026 detecta a modalidade pelo texto da descrição da vaga quando a string de localização não indica explicitamente. Dados/IA tem o maior índice de híbrido (10,1%); Dev de Software tem o maior índice de remoto (5,5%).
 
 ### 3.6 Hard Skills
 
-| Rank | Skill | 2025 (%) | 2026 (%) | Δ pp |
+| Skill | 2025 (%) | 2026 (%) | Δ pp | Tendência |
 |---|---|---|---|---|
-| 1 | SQL | 21,2% | 18,2% | −3,0 |
-| 2 | Cloud | 19,4% | 18,5% | −0,9 |
-| 3 | Metodologias Ágeis | 20,0% | 17,4% | −2,6 |
-| 4 | Python | 18,3% | 15,4% | −2,9 |
-| 5 | API | 14,8% | 14,5% | −0,3 |
-| 6 | AWS | 14,9% | 13,8% | −1,1 |
-| 7 | **CI/CD** | 13,0% | 11,7% | −1,3 |
-| 8 | Git | 13,0% | 10,6% | −2,4 |
-| 9 | **Excel** | 9,8% | 13,1% | **+3,3** |
-| 10 | JavaScript | 13,2% | 8,9% | −4,3 |
-| 11 | Azure | 11,5% | 10,5% | −1,0 |
-| 12 | R *(¹)* | 22,0% | 0,0% | — |
-| 13 | Scrum | 11,9% | 7,7% | −4,2 |
-| 14 | Office 365 | 9,4% | 9,2% | −0,2 |
-| 15 | Java | 9,1% | 7,9% | −1,2 |
-| 16 | Power BI | 7,8% | 8,1% | +0,3 |
-| 17 | Docker | 7,9% | 7,5% | −0,4 |
-| 18 | Linux | 9,2% | 6,2% | −3,0 |
-| 19 | React | 7,9% | 5,6% | −2,3 |
-| 20 | Kanban | 7,8% | 5,2% | −2,6 |
+| SQL | 21,2% | 18,2% | −3,0 | ↓ |
+| Cloud | 19,4% | 18,5% | −0,9 | ↓ |
+| Metodologias Ágeis | 20,0% | 17,4% | −2,6 | ↓ |
+| Python | 18,3% | 15,4% | −2,9 | ↓ |
+| API | 14,8% | 14,5% | −0,3 | ↓ |
+| AWS | 14,9% | 13,8% | −1,1 | ↓ |
+| CI/CD | 13,0% | 11,7% | −1,3 | ↓ |
+| Git | 13,0% | 10,6% | −2,4 | ↓ |
+| **Excel** | **9,8%** | **13,1%** | **+3,3** | ↑ |
+| JavaScript | 13,2% | 8,9% | −4,3 | ↓ |
+| Azure | 11,5% | 10,5% | −1,0 | ↓ |
+| R *(¹)* | 22,0% | 0,0% | — | — |
+| Scrum | 11,9% | 7,7% | −4,2 | ↓ |
+| Office 365 | 9,4% | 9,2% | −0,2 | ↓ |
+| Java | 9,1% | 7,9% | −1,2 | ↓ |
+| Power BI | 7,8% | 8,1% | +0,3 | ↑ |
+| Windows | 9,0% | 6,5% | −2,5 | ↓ |
+| Docker | 7,9% | 7,5% | −0,4 | ↓ |
+| Linux | 9,2% | 6,2% | −3,0 | ↓ |
+| React | 7,9% | 5,6% | −2,3 | ↓ |
 
-> *(¹) R language: o valor de 22% em 2025 é um artefato do pipeline daquele ano (padrão `\b(r)\b` capturava a letra "r" isolada após remoção de pontuação). O valor real de 2025 também deve ser próximo de 0%.*
+> *(¹) R language: o valor de 22% em 2025 é artefato do pipeline daquele ano (padrão `\b(r)\b` capturava a letra "r" isolada). O valor real de 2025 deve ser próximo de zero.*
 
-> **Destaques:** Excel subiu +3,3 pp. Todas as outras skills caíram levemente, indicando que o mercado está exigindo um portfólio mais diversificado em vez de skills isoladas muito dominantes.
+> **Destaques:** Excel é a única skill entre as top-20 com crescimento relevante (+3,3 pp). O declínio generalizado das demais sugere portfólio mais diversificado — nenhuma skill isolada domina.
 
 ### 3.7 Soft Skills
 
-| Skill | 2025 (%) | 2026 (%) | Δ pp |
-|---|---|---|---|
-| Comunicação | 36,9% | 41,6% | **+4,7** |
-| Criatividade / Inovação | 31,3% | 30,1% | −1,2 |
-| **Organização** | 26,7% | 34,4% | **+7,7** |
-| Trabalho em equipe | 20,1% | 15,9% | −4,2 |
-| **Liderança** | 13,5% | 17,0% | **+3,5** |
-| Resolução de problemas | 14,1% | 14,5% | +0,4 |
-| **Autonomia** | 7,8% | 10,3% | **+2,5** |
-| Proatividade | 10,3% | 9,9% | −0,4 |
-| Pensamento analítico | 10,2% | 8,8% | −1,4 |
-| Adaptabilidade | 6,8% | 5,5% | −1,3 |
+| Skill | 2025 (%) | 2026 (%) | Δ pp | Tendência |
+|---|---|---|---|---|
+| Comunicação | 36,9% | 41,6% | **+4,7** | ↑ |
+| **Organização** | 26,7% | 34,4% | **+7,7** | ↑ |
+| Criatividade / Inovação | 31,3% | 30,1% | −1,2 | ↓ |
+| **Liderança** | 13,5% | 17,0% | **+3,5** | ↑ |
+| Trabalho em equipe | 20,1% | 15,9% | −4,2 | ↓ |
+| Resolução de problemas | 14,1% | 14,5% | +0,4 | ↑ |
+| Proatividade | 10,3% | 9,9% | −0,4 | ↓ |
+| Pensamento analítico | 10,2% | 8,8% | −1,4 | ↓ |
+| **Autonomia** | 7,8% | 10,3% | **+2,5** | ↑ |
+| Adaptabilidade | 6,8% | 5,5% | −1,3 | ↓ |
+| Resiliência | 3,5% | 4,6% | +1,1 | ↑ |
+| Gestão do tempo | 3,2% | 4,6% | +1,4 | ↑ |
+| Empatia | 3,9% | 3,0% | −0,9 | ↓ |
+| Negociação | 2,7% | 3,9% | +1,2 | ↑ |
+| Foco em resultados | 2,1% | 3,0% | +0,9 | ↑ |
+| Pensamento Crítico | 1,3% | 1,0% | −0,3 | ↓ |
+| Gestão de conflitos | 0,5% | 0,6% | +0,1 | ↑ |
+| Inteligência Emocional | 0,4% | 0,5% | +0,1 | ↑ |
 
-> Tendência clara: soft skills de **autogestão** (Organização +7,7 pp, Autonomia +2,5 pp, Liderança +3,5 pp) cresceram, enquanto skills de **colaboração passiva** (Trabalho em equipe −4,2 pp) caíram.
+> Tendência clara: soft skills de **autogestão** cresceram (Organização +7,7 pp, Autonomia +2,5 pp, Liderança +3,5 pp), enquanto **colaboração passiva** caiu (Trabalho em equipe −4,2 pp). Skills de gestão interpessoal (Negociação, Gestão do tempo, Resiliência) também crescem levemente.
 
 ### 3.8 Idiomas
 
@@ -314,7 +479,7 @@ Distribuição por faixa (vagas com salário informado):
 | Francês | 0,4% | 0,4% | 0,0 |
 | Alemão | 0,4% | 0,4% | 0,0 |
 
-> Inglês praticamente estável. Demanda de idiomas não sofreu alteração relevante entre os anos.
+> Idiomas estáveis. Demanda de inglês praticamente não se alterou.
 
 ### 3.9 Skills por Área
 
@@ -432,7 +597,7 @@ Distribuição por faixa (vagas com salário informado):
 | Liderança | 12,71 | 8,33 | −4,38 |
 | n/f | 5,73 | 3,32 | −2,41 |
 
-> **Atenção:** valores de 2026 são pontos médios de faixas estimadas (ex: "R$ 2k–R$ 5k" → ponto médio R$ 3.5k), com apenas 12,9% das vagas com salário informado. A queda aparente pode refletir viés de seleção mais do que tendência real de mercado — ver Seção 4.
+> **Atenção:** valores de 2026 são pontos médios de faixas estimadas. A queda aparente pode refletir viés de seleção e problema de parsing (ver Seção 4).
 
 ### 3.11 Inteligência Artificial
 
@@ -450,60 +615,92 @@ Distribuição por faixa (vagas com salário informado):
 | Infraestrutura e Suporte | 2,0% | 15,2% | +13,2 |
 | Testes e CQ | 3,4% | 12,9% | +9,5 |
 
-> Este é o resultado mais robusto do comparativo: IA triplicou sua presença no mercado tech em um ano, de 7,9% para 24,7%. O crescimento é transversal a todas as áreas.
+> IA triplicou sua presença em um ano (7,9% → 24,7%). O crescimento é transversal a todas as áreas, com destaque para áreas antes distantes do tema (Projetos +19,1 pp, Infra +13,2 pp).
+
+### 3.12 Investigação: Queda de Machine Learning
+
+A queda de ML em Dados/IA (28,3% → 21,2%, −7,1 pp) foi investigada no scp_04:
+
+**Decomposição da queda:**
+- Queda total de vagas ML: −541 vagas (−40,3%)
+- Explicada pela queda de volume geral: −263 vagas (48,6%)
+- Queda estrutural (ML menos citado em relação ao total): −278 vagas (51,4%)
+
+> 75,8% da perda absoluta de vagas ML concentra-se na área de Dados e IA.
+
+**Hipótese confirmada — ML absorvido pelo vocabulário de IA:**
+
+| Métrica | 2025 | 2026 |
+|---|---|---|
+| Vagas com ML + flag IA | 867 (64,6% das vagas ML) | 790 (98,5% das vagas ML) |
+| Vagas com ML sem flag IA | 476 (35,4%) | 12 (1,5%) |
+| Vagas com IA mas sem ML | 656 | 3.047 |
+
+> Em 2025, 35,4% das vagas com ML não eram classificadas como IA. Em 2026, isso caiu para 1,5%. Ao mesmo tempo, as vagas de IA sem ML saltaram de 656 para 3.047. O sinal é claro: "Machine Learning" tornou-se um termo específico dentro do guarda-chuva "IA" — as empresas migraram para "IA" como rótulo genérico.
 
 ---
 
-## 4. Pontos a Investigar
+## 4. Pontos em Aberto
 
-### 4.1 Classificação de Vagas Remotas
+### 4.1 Classificação de Vagas Remotas e Híbridas — RESOLVIDO
 
-**Problema:** Em 2025, o Glassdoor retornava "Trabalho Remoto" como string de localização, que o classificador mapeava direto para `Local Tipo = remoto` (7,9% das vagas). Em 2026, as strings de localização chegam em formato diferente (ex: "São Paulo, SP - Híbrido", "Brasil") e não casam com a entrada "Trabalho Remoto" no `criterios.xlsx`.
+**O que foi feito:** o scp_02 detecta modalidade de trabalho pelo texto da descrição da vaga (padrões como `modelo de trabalho remoto`, `100% remoto`, `modelo de trabalho híbrido`), atuando como segunda camada após o match da planilha de localização.
 
-**Impacto:** A queda 7,9% → 0,3% de vagas remotas **não reflete o mercado real**. Os 4,1% de `n/f` em Local Estado provavelmente incluem vagas remotas não classificadas.
+**Resultado:** o scp_02.csv atual reflete corretamente a distribuição — 528 vagas remotas (3,4%) e 940 híbridas (6,1%), totalizando **9,5% de trabalho flexível** — crescimento real sobre os 7,9% de 2025, não queda.
 
-**Ação necessária:** Atualizar a aba `cidades` do `criterios.xlsx` com as novas strings de localização que o scraper de 2026 retorna para vagas remotas/híbridas.
+**O que era artefato:** a aparente queda de 7,9% → 0,3% no relatório anterior vinha de um scp_02.csv gerado antes da detecção por texto estar ativa. Com os dados atuais o comparativo mostra o quadro correto.
 
----
-
-### 4.2 Salário com Baixa Cobertura
-
-**Problema:** Apenas 12,9% das vagas (2.043) têm salário informado em 2026. A coluna `Salario` na `scp_02` está toda como `n/f` porque a aba `salario` do `criterios.xlsx` foi mantida no formato do pipeline de 2025 (`R$ 1 mil`, `R$ 2 mil`…) enquanto o scraper de 2026 retorna o formato do Glassdoor (`R$ 2.500 (fornecido pela empresa)`).
-
-**Impacto:** A análise salarial usa os dados brutos de `scp_01.csv` via regex como contorno, mas perde a integração com nível/área que vem do `scp_02`.
-
-**Ação necessária:** Atualizar a aba `salario` do `criterios.xlsx` com os valores no formato `R$ X.XXX (fornecido pela empresa)`, ou substituir o `match_salario` no `scp_02` por uma função regex equivalente à do comparativo.
+**Resíduo aceitável:** 40 vagas (0,3%) com `Local Tipo = n/e` e 151 vagas sem estado identificado — volume pequeno, não impacta os resultados gerais.
 
 ---
 
-### 4.3 Queda Aparente nos Salários
+### 4.2 Salário com Baixa Cobertura — ABERTO
 
-**Problema:** O comparativo de salários por nível mostra quedas em todos os níveis (Liderança: 12,71 → 8,33 R$ mil). Os dados de 2026 são baseados em pontos médios de faixas (ex: faixa "R$ 2k–R$ 5k" → 3,5k), e os de 2025 em uma análise mais detalhada da distribuição real. A combinação de viés de cobertura (12,9% das vagas) com o método de ponto médio pode distorcer a comparação.
 
-**Ação necessária:** Após corrigir o item 4.2, refazer a análise salarial com os dados completos do `scp_02`.
+**Problema:** apenas 12,9% das vagas têm salário informado. A análise de `scp_analise_softskills` confirma que `scp_02.csv` tem todos os campos `Salario` como `n/f` — o formato do Glassdoor 2026 (`R$ 2.500 (fornecido pela empresa)`) não foi normalizado pela aba `salario` do `criterios.xlsx`, que ainda usa o formato de 2025.
 
----
+**Impacto:** a análise salarial por nível e área fica incompleta. A queda aparente de salários no comparativo (seção 3.10) pode ser artefato de cobertura.
 
-### 4.4 R Language em 2025 (Artefato Confirmado)
-
-**Problema:** O valor de 22% para R language em 2025 é um bug do pipeline daquele ano: o padrão `\b(r)\b` capturava a letra "r" isolada após a remoção de pontuação (ex: "c/r" → "c r", onde o "r" solto casava). O valor corrigido de 2026 (0,0%) é preciso.
-
-**Impacto:** O comparativo mostra "R: 22,0% → 0,0%, −22 pp" que é enganoso. O verdadeiro delta é próximo de zero.
-
-**Ação necessária:** Corrigir o `scp_03.ipynb` de 2025 aplicando a mesma regra especial do R que foi implementada em 2026 (padrão restrito a `linguagem r|rstudio|r studio`). Requer re-executar o pipeline de 2025.
+**Ação necessária:** atualizar a aba `salario` do `criterios.xlsx` com o formato atual, ou substituir o `match_salario` por parsing regex direto.
 
 ---
 
-### 4.5 Alto Percentual de Nível "n/f"
+### 4.3 Queda Aparente nos Salários — DEPENDENTE DE 4.2
 
-**Problema:** 20,3% das vagas de 2026 ficaram com Nível = `n/f` (não encontrado), contra 14,9% em 2025. Isso pode indicar que a aba `nivel_cargo` do `criterios.xlsx` não cobre nomenclaturas novas de cargo que aparecem em 2026 (ex: cargos com termos em inglês como "Staff Engineer", "Principal", "IC4").
-
-**Ação necessária:** Analisar os Cargos com `n/f` no arquivo `scp_02_chk.xlsx` e expandir o `criterios.xlsx` com as novas nomenclaturas.
+Os valores de 2026 são estimados por ponto médio de faixa e têm cobertura de 12,9%. Após resolver 4.2, refazer a análise com os dados completos do `scp_02`.
 
 ---
 
-### 4.6 Machine Learning em Queda na Área de Dados (−7,1 pp)
+### 4.4 R Language em 2025 — RESOLVIDO NOS DADOS DE 2026
 
-**Observação:** A queda de Machine Learning de 28,3% para 21,2% na área de Dados pode ser real (substituição pelo vocabulário de IA Generativa — LLMs, RAG, embeddings) ou pode ser parcialmente explicada por uma cobertura diferente de sinônimos entre os anos. Merece investigação qualitativa nas descrições das vagas.
+O pipeline de 2026 usa padrão restrito (`linguagem r|rstudio|r studio`) e retorna 0,0% corretamente. O artefato de 22% pertence exclusivamente ao pipeline de 2025 e deve ser corrigido lá se necessário.
 
 ---
+
+### 4.5 Alto Percentual de Nível "n/f" (20,3%) — ABERTO
+
+20,3% das vagas ficaram sem nível identificado, contra 14,9% em 2025. Provável causa: cargos em inglês não cobertos pelo `criterios.xlsx` (ex: "Staff Engineer", "Principal", "IC4", "Tech Lead"). O `scp_02_chk.xlsx` contém os cargos para análise.
+
+**Ação necessária:** revisar `scp_02_chk.xlsx` e expandir a aba `nivel_cargo` do `criterios.xlsx`.
+
+---
+
+### 4.6 Machine Learning em Queda — INVESTIGADO E RESPONDIDO
+
+A investigação no scp_04 confirma que a queda é real e estrutural: ML tornou-se vocabulário específico dentro de "IA". Não é artefato de cobertura ou sinônimos. Ponto encerrado.
+
+---
+
+### 4.7 Coluna `sk_seguranca_da_info.` no scp_comparativo — NOVO
+
+No output do scp_comparativo (seção de skills por área — Segurança da Informação), aparece `sk_seguranca_da_info.` como nome de skill em vez do label real. Provavelmente erro de normalização do nome de coluna no critérios.xlsx (ponto no nome da skill). Não impacta os dados, mas gera label incorreto no relatório.
+
+**Ação necessária:** verificar o nome da skill correspondente no `criterios.xlsx` e corrigir o caractere especial.
+
+---
+
+### 4.8 SDR / Sales Dev Rep em Desenvolvimento de Software — NOVO
+
+O NLP de títulos de cargo em Desenvolvimento de Software revela que o 5º e o 6º cargos mais frequentes são "SDR - Sales Development Representative" e "Sales Development Representative" — funções comerciais, não técnicas. Isso indica uma falha nos critérios de filtragem ou blacklist para esta área.
+
+**Ação necessária:** avaliar se SDR deve ser movido para outra área ou adicionado à blacklist da aba `palavras_chave`.
