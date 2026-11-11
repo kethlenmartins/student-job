@@ -4,8 +4,8 @@ Use este arquivo como referência rápida ao trabalhar neste repositório. A doc
 
 ## Escopo e responsabilidade
 
-- `webscrapping/versao1/` e `webscrapping/versao2/` são scripts históricos de **2025**, deixados por **Luana e Tati**. Estão preservados e não devem ser alterados incidentalmente.
-- `webscrapping/versao3/` é o trabalho de **2026** e a referência para evolução do pipeline.
+- `webscrapping/versao1/` é o script histórico de **2025**, deixado por **Luana e Tati**. Está preservado e não deve ser alterado incidentalmente.
+- `webscrapping/versao2/` e `webscrapping/versao3/` são seu trabalho; a versão 3 é a referência para evolução do pipeline.
 - `site/` contém o relatório público estático, publicado pelo workflow de GitHub Pages em `.github/workflows/deploy-pages.yml`.
 
 ## Estado da rodada 2026

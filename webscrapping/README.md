@@ -7,12 +7,12 @@ Esta pasta concentra as tentativas e a versão de produção do scraper de vagas
 | Pasta | Ano / autoria | Tecnologia | Papel |
 | --- | --- | --- | --- |
 | [`versao1/`](versao1/) | 2025 — Luana e Tati | Selenium | Primeira abordagem; preservada como histórico. |
-| [`versao2/`](versao2/) | 2025 — Luana e Tati | Playwright síncrono | Evolução experimental; preservada como histórico. |
+| [`versao2/`](versao2/) | Trabalho atual | Playwright síncrono | Evolução do scraper, de sua autoria. |
 | [`versao3/`](versao3/) | 2026 — trabalho atual | Playwright assíncrono | Pipeline de coleta, enriquecimento e análise. |
 
 ## Escopo do handover
 
-As versões 1 e 2 **não foram alteradas** neste trabalho. Elas existem para consulta e comparação técnica; não são o ponto de partida recomendado para uma nova coleta.
+Somente a versão 1 é material histórico preservado. As versões 2 e 3 são seu trabalho; a versão 3 é a referência operacional para uma nova rodada.
 
 A versão 3 é a referência operacional. Ela separa os dados em Bronze (cards coletados), Silver (vagas deduplicadas e enriquecidas) e análise, além de incluir uma estratégia nova para filtrar os títulos antes de enriquecer as páginas individuais. O guia completo está no [README da versão 3](versao3/README.md).
 

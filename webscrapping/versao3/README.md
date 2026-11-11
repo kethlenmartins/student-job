@@ -2,7 +2,7 @@
 
 Esta é a implementação de 2026 para coleta e análise de vagas de tecnologia no Brasil. Ela é a referência para o próximo time: reúne o pipeline executado, os critérios de classificação, os notebooks e o plano para uma nova rodada mais econômica.
 
-> As versões 1 e 2 são legados de 2025, deixados por Luana e Tati e mantidos sem alteração. Esta pasta contém o trabalho de 2026.
+> A versão 1 é o legado de 2025 deixado por Luana e Tati e mantido sem alteração. As versões 2 e 3 são seu trabalho; esta pasta contém o pipeline de 2026.
 
 ## O que já foi concluído
 

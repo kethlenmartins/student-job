@@ -9,7 +9,7 @@ Este repositório reúne o material da pesquisa de carreiras em tecnologia no Br
 | [`site/`](site/) | Site estático do relatório público e seus assets. | Publicável pelo GitHub Pages. |
 | [`webscrapping/`](webscrapping/) | Histórico e pipeline de coleta de vagas do Glassdoor. | Veja o README da pasta. |
 | [`webscrapping/versao1/`](webscrapping/versao1/) | Primeira implementação, baseada em Selenium. | Legado de 2025; preservado. |
-| [`webscrapping/versao2/`](webscrapping/versao2/) | Segunda implementação, baseada em Playwright. | Legado de 2025; preservado. |
+| [`webscrapping/versao2/`](webscrapping/versao2/) | Segunda implementação, baseada em Playwright. | Trabalho atual; sua autoria. |
 | [`webscrapping/versao3/`](webscrapping/versao3/) | Pipeline 2026, dados de apoio e notebooks de análise. | Trabalho atual; pronto para handover. |
 
 ## Leitura recomendada para o próximo time
@@ -21,7 +21,7 @@ Este repositório reúne o material da pesquisa de carreiras em tecnologia no Br
 
 ## Histórico e responsabilidade
 
-Os scripts das versões 1 e 2 são o material histórico de **2025**, deixado por **Luana e Tati**. Eles foram mantidos sem alterações para preservar o contexto e não devem ser tratados como a implementação atual.
+Somente os scripts da versão 1 são o material histórico de **2025**, deixado por **Luana e Tati**, e foram mantidos sem alterações para preservar o contexto. As versões 2 e 3 são seu trabalho e constituem a base atual do repositório.
 
 A versão 3 e sua documentação descrevem o trabalho de **2026**, preparado para ser analisado e continuado por outro time. Dados de coleta, perfis locais do Chrome, ambientes virtuais e credenciais não são versionados.
 
