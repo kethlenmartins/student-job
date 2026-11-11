@@ -17,9 +17,11 @@ Uso:
 import argparse
 import ast
 import asyncio
+import os
 import platform
 import re
 import subprocess
+import sys
 import time
 import unicodedata
 import urllib.parse
@@ -71,6 +73,16 @@ def localizacoes_ordenadas() -> list[str]:
             ordenadas.append(uf)
             vistos.add(uf)
     return ordenadas
+
+
+def diretorios_run(run_id: str | None) -> tuple[Path, Path, Path]:
+    """Mantém rodadas novas isoladas sem sobrescrever a Bronze histórica."""
+    if not run_id:
+        return BRONZE_DIR, SILVER_DIR, GOLD_DIR
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", run_id):
+        raise ValueError("run-id inválido; use letras, números, _ ou -")
+    raiz = BASE_DIR / "data" / "runs" / run_id
+    return raiz / "bronze", raiz / "silver", raiz / "gold"
 
 
 # ---------------------------------------------------------------------------
@@ -570,7 +582,8 @@ class ColetorGlassdoor:
         return f"txt:{funcao}|{empresa}|{local}"
 
     async def coletar_vagas(
-        self, palavra_chave: str, uf: str, sem_enriquecer: bool = False
+        self, palavra_chave: str, uf: str, sem_enriquecer: bool = False,
+        timeout_interacao: int = 120,
     ) -> list[dict]:
         """
         Itera pelos cards sem clicar em cada um.
@@ -582,12 +595,20 @@ class ColetorGlassdoor:
         rodadas_sem_novos = 0
 
         while len(vagas) < MAX_VAGAS_POR_BUSCA:
-            cards = await self._listar_cards()
+            # A coleta completa pode legitimamente levar muitos minutos em
+            # buscas amplas. O watchdog deve vigiar cada interação com o
+            # navegador, e não encerrar uma extração que segue progredindo.
+            cards = await asyncio.wait_for(
+                self._listar_cards(), timeout=timeout_interacao
+            )
             novos_nesta_rodada = 0
 
             for card in cards:
                 try:
-                    vaga = await self._extrair_card(card, palavra_chave, uf)
+                    vaga = await asyncio.wait_for(
+                        self._extrair_card(card, palavra_chave, uf),
+                        timeout=timeout_interacao,
+                    )
                     chave = self._chave_dedup(vaga)
                     if chave in vistos or (not vaga["Funcao"] and not vaga["Empresa"]):
                         continue
@@ -596,6 +617,10 @@ class ColetorGlassdoor:
                     novos_nesta_rodada += 1
                     if len(vagas) >= MAX_VAGAS_POR_BUSCA:
                         break
+                except asyncio.TimeoutError:
+                    # O contexto possivelmente travou; o chamador vai
+                    # reiniciar o Chrome e retomar as buscas pendentes.
+                    raise
                 except Exception as e:
                     print(f"    Card: erro na extração — {e}")
 
@@ -611,7 +636,9 @@ class ColetorGlassdoor:
             else:
                 rodadas_sem_novos = 0
 
-            if not await self._carregar_mais_vagas():
+            if not await asyncio.wait_for(
+                self._carregar_mais_vagas(), timeout=timeout_interacao
+            ):
                 break
 
         if not vagas:
@@ -691,6 +718,31 @@ def _fechar_chrome_com_perfil(profile_dir: Path) -> None:
         pass
 
 
+async def _reiniciar_coleta(context: BrowserContext, motivo: str, limite: int) -> None:
+    """Reinicia o processo após um travamento do contexto Playwright.
+
+    Os CSVs Bronze são gravados por busca. Ao iniciar novamente, o coletor
+    identifica esses arquivos e continua somente nas buscas pendentes.
+    """
+    variavel = "WEBSCRAPPING_V3_COLETA_RESTARTS"
+    try:
+        numero = int(os.environ.get(variavel, "0"))
+    except ValueError:
+        numero = 0
+    if numero >= limite:
+        raise RuntimeError(
+            f"Playwright não se recuperou após {numero} reinícios automáticos. "
+            "Os CSVs concluídos foram preservados; verifique rede/login."
+        )
+    try:
+        await asyncio.wait_for(context.close(), timeout=10)
+    except Exception:
+        pass
+    os.environ[variavel] = str(numero + 1)
+    print(f"\n[watchdog] {motivo}. Reiniciando e retomando ({numero + 1}/{limite})...\n", flush=True)
+    os.execv(sys.executable, [sys.executable, *sys.argv])
+
+
 def _args_antibot() -> list[str]:
     return [
         "--disable-blink-features=AutomationControlled",
@@ -712,6 +764,7 @@ def _uf_completa(palavras_chave: list[str], uf: str) -> bool:
 
 
 async def main() -> None:
+    global BRONZE_DIR, SILVER_DIR, GOLD_DIR, OUTPUT_DIR
     parser = argparse.ArgumentParser(
         description="Coleta de vagas no Glassdoor — Fase 1 (Bronze)"
     )
@@ -739,7 +792,28 @@ async def main() -> None:
         "--sem-enriquecer", action="store_true",
         help="Pula o enriquecimento de descrições (recomendado na Fase 1)"
     )
+    parser.add_argument(
+        "--run-id", type=str,
+        help="Isola a rodada em data/runs/<id>/; recomendado para nova coleta"
+    )
+    parser.add_argument(
+        "--timeout-operacao", type=int, default=120,
+        help="Segundos máximos por etapa Playwright da Bronze (default: 120)"
+    )
+    parser.add_argument(
+        "--max-auto-restarts", type=int, default=8,
+        help="Máximo de reinícios automáticos após travamento (default: 8)"
+    )
     args = parser.parse_args()
+    if args.timeout_operacao < 30:
+        parser.error("--timeout-operacao deve ser pelo menos 30 segundos")
+    if args.max_auto_restarts < 0:
+        parser.error("--max-auto-restarts não pode ser negativo")
+    try:
+        BRONZE_DIR, SILVER_DIR, GOLD_DIR = diretorios_run(args.run_id)
+    except ValueError as erro:
+        parser.error(str(erro))
+    OUTPUT_DIR = BRONZE_DIR
 
     load_dotenv(BASE_DIR / ".env")
 
@@ -766,6 +840,7 @@ async def main() -> None:
     pendentes = total_buscas - ja_feitas
 
     print(f"Perfil Chrome:   {chrome_profile_dir}")
+    print(f"Rodada:          {args.run_id or 'legado (data/)'}")
     print(f"Keywords:        [{args.kw_inicio}:{args.kw_fim}] → {len(palavras_chave)} palavras")
     print(f"UFs:             {len(localizacoes)}")
     print(f"Total de buscas: {total_buscas}  |  Já feitas: {ja_feitas}  |  Pendentes: {pendentes}")
@@ -804,6 +879,18 @@ async def main() -> None:
         coletor = ColetorGlassdoor(page)
         await coletor.aguardar_login(session_marker, args.assume_logged_in)
 
+        async def operacao_vigiada(awaitable, descricao: str):
+            try:
+                return await asyncio.wait_for(awaitable, timeout=args.timeout_operacao)
+            except asyncio.TimeoutError:
+                await _reiniciar_coleta(context, f"timeout em {descricao}", args.max_auto_restarts)
+            except Exception as erro:
+                mensagem = str(erro).lower()
+                sinais_contexto = ("target page", "browser has been closed", "connection closed", "closed")
+                if any(sinal in mensagem for sinal in sinais_contexto):
+                    await _reiniciar_coleta(context, f"contexto indisponível em {descricao}", args.max_auto_restarts)
+                raise
+
         busca_atual = 0
         for uf in localizacoes:
             if _uf_completa(palavras_chave, uf):
@@ -815,7 +902,7 @@ async def main() -> None:
             print(f"UF: {uf} — {nome_estado(uf)}")
             print(f"{'=' * 60}")
 
-            await coletor.preparar_uf(uf)
+            await operacao_vigiada(coletor.preparar_uf(uf), f"preparação da UF {uf}")
 
             for palavra_chave in palavras_chave:
                 busca_atual += 1
@@ -827,15 +914,30 @@ async def main() -> None:
 
                 print(f"[{busca_atual}/{total_buscas}] {uf} → '{palavra_chave}'")
 
-                encontrou = await coletor.buscar_palavra_chave(palavra_chave, uf)
+                encontrou = await operacao_vigiada(
+                    coletor.buscar_palavra_chave(palavra_chave, uf),
+                    f"busca {palavra_chave!r}/{uf}",
+                )
                 if not encontrou:
                     print("    Nenhum resultado para esta busca.")
 
                 try:
+                    # Não aplique o timeout à extração inteira: uma busca
+                    # ampla continua saudável enquanto cada paginação/card
+                    # responde. coletar_vagas vigia essas interações uma a uma.
                     vagas = await coletor.coletar_vagas(
-                        palavra_chave, uf, sem_enriquecer=args.sem_enriquecer
+                        palavra_chave,
+                        uf,
+                        sem_enriquecer=args.sem_enriquecer,
+                        timeout_interacao=args.timeout_operacao,
                     )
                     salvar_csv(vagas, arquivo)
+                except asyncio.TimeoutError:
+                    await _reiniciar_coleta(
+                        context,
+                        f"timeout em interação da extração {palavra_chave!r}/{uf}",
+                        args.max_auto_restarts,
+                    )
                 except Exception as erro:
                     print(f"    Erro na coleta: {erro}")
                     print("    Continuando para a próxima busca...")

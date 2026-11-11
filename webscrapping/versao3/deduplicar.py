@@ -16,6 +16,7 @@ Pré-requisito:
 import re
 import unicodedata
 from pathlib import Path
+import argparse
 
 import pandas as pd
 
@@ -23,6 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent
 BRONZE_DIR = BASE_DIR / "data" / "bronze"
 SILVER_DIR = BASE_DIR / "data" / "silver"
 OUTPUT_FILE = SILVER_DIR / "vagas_unicas.csv"
+
+
+def diretorios_run(run_id: str | None) -> tuple[Path, Path, Path]:
+    if not run_id:
+        return BRONZE_DIR, SILVER_DIR, OUTPUT_FILE
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", run_id):
+        raise ValueError("run-id inválido; use letras, números, _ ou -")
+    raiz = BASE_DIR / "data" / "runs" / run_id
+    return raiz / "bronze", raiz / "silver", raiz / "silver" / "vagas_unicas.csv"
 
 
 def normalizar_texto(texto: str) -> str:
@@ -51,11 +61,18 @@ def chave_vaga(row: pd.Series) -> str:
 
 
 def main() -> None:
-    arquivos = sorted(BRONZE_DIR.glob("*.csv"))
+    parser = argparse.ArgumentParser(description="Deduplicação da Bronze para Silver")
+    parser.add_argument("--run-id", help="Rodada isolada em data/runs/<id>/")
+    args = parser.parse_args()
+    try:
+        bronze_dir, silver_dir, output_file = diretorios_run(args.run_id)
+    except ValueError as erro:
+        parser.error(str(erro))
+    arquivos = sorted(bronze_dir.glob("*.csv"))
     print(f"Arquivos bronze encontrados: {len(arquivos):,}")
 
     if not arquivos:
-        print(f"Nenhum arquivo CSV encontrado em {BRONZE_DIR}")
+        print(f"Nenhum arquivo CSV encontrado em {bronze_dir}")
         print("Certifique-se de ter copiado os dados da Máquina 2 antes de rodar.")
         return
 
@@ -102,33 +119,17 @@ def main() -> None:
     print(f"  → identificadas por hash texto:   {por_texto:,} ({por_texto/len(df_unicas)*100:.1f}%)")
     print(f"\nSem URL (não enriquecíveis): {df_unicas['URL'].str.strip().eq('').sum():,}")
 
-    SILVER_DIR.mkdir(parents=True, exist_ok=True)
-    df_unicas.to_csv(OUTPUT_FILE, index=False)
-    print(f"\nSalvo em: {OUTPUT_FILE}")
+    silver_dir.mkdir(parents=True, exist_ok=True)
+    df_unicas.to_csv(output_file, index=False)
+    print(f"\nSalvo em: {output_file}")
 
-    # Mostra divisões sugeridas para enriquecer.py (16 terminais: 8 máquinas × 2)
+    # Uma máquina usa um Chrome com várias abas; a fila limitada evita
+    # multiplicar processos e perfis Chrome.
     n = len(df_unicas)
-    q, resto = divmod(n, 16)
-    limites = []
-    start = 0
-    for i in range(16):
-        fim = start + q + (1 if i < resto else 0)
-        limites.append((start, fim))
-        start = fim
-
-    pessoas   = ["MacBook Kethlen", "MacBook Kethlen", "PC Inteli Kethlen", "PC Inteli Kethlen",
-                 "Luana", "Luana", "Tati", "Tati",
-                 "Lucas", "Lucas", "PC Inteli Marco", "PC Inteli Marco",
-                 "PC Inteli Scarpelin", "PC Inteli Scarpelin", "Leo", "Leo"]
-    maquinas  = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8]
-    terminais = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
-
     print(f"\n{'=' * 75}")
-    print("Índices para enriquecer.py  (16 terminais — 8 máquinas × 2):")
+    print("Comando sugerido para enriquecer_paralelo.py (1 Chrome × 4 abas):")
     print(f"{'=' * 75}")
-    for i, ((ini, fim), maq, term, pessoa) in enumerate(zip(limites, maquinas, terminais, pessoas)):
-        perf = f"e{i + 1}"
-        print(f"  M{maq} T{term}  {pessoa:<22}  --perfil chrome-profile-{perf:<4}  --inicio {ini:<7} --fim {fim}")
+    print(f"  --perfil chrome-profile-enrich --workers 4 --inicio 0 --fim {n}")
     print(f"{'=' * 75}")
 
 
