@@ -1,4 +1,4 @@
-Bots now make up 51% of all web traffic. Websites know this and they’re fighting back. Anti-bot systems from Cloudflare, Akamai, and DataDome now combine IP reputation, TLS fingerprinting, browser fingerprinting, and behavioral analysis to block scrapers before a single line of HTML is returned. If your scraper keeps getting blocked, this guide explains exactly why and gives you 12 specific techniques to fix it.
+Bots now make up 51% of all web traffic. Websites know this and they’re fighting back. Anti-bot systems from Cloudflare, Akamai, and DataDome now combine IP reputation, TLS fingerprinting, browser fingerprinting, and behavioral analysis to block scrapers before a single line of HTML is returned. This guide explains common causes of blocking and presents 12 techniques for mitigating them.
 
 Quick Summary: How to Scrape Without Getting Blocked
 
@@ -10,15 +10,15 @@ Handle CAPTCHAs automatically as manual solving doesn’t scale.
 Match proxy geolocation to the target site’s expected user base.
 Use a managed scraping API (like Bright Data’s Web Unlocker) to automate all of the above.
 Why Websites Block Web Scrapers
-Understanding why you get blocked is the first step to not getting blocked. Detection doesn’t happen after you’ve downloaded a page. It often happens in the first few milliseconds of the connection, before any HTML is served. The most common anti-scraping techniques work in layered combination — and bypassing them requires matching all layers simultaneously.
+Understanding the causes of blocking is the first step toward mitigation. Detection does not happen only after a page is downloaded. It often happens in the first few milliseconds of the connection, before any HTML is served. The most common anti-scraping techniques work in layers, and mitigation requires consistency across them.
 
 IP-Based Detection
-Every request you make carries a source IP address. Anti-bot systems maintain reputation databases of known datacenter IP ranges (AWS, GCP, Azure, DigitalOcean), previously flagged IPs, and IPs exhibiting high request volume. A single IP firing 500 requests per minute is trivially identified. Datacenter IPs are flagged by default on many high-security sites because no real residential user visits from an AWS data center.
+Every request carries a source IP address. Anti-bot systems maintain reputation databases of known datacenter IP ranges (AWS, GCP, Azure, DigitalOcean), previously flagged IPs, and IPs exhibiting high request volume. A single IP firing 500 requests per minute is trivially identified. Datacenter IPs are flagged by default on many high-security sites because no real residential user visits from an AWS data center.
 
 Browser and TLS Fingerprinting
-Every HTTPS connection begins with a TLS handshake. During the ClientHello phase, your client broadcasts its supported cipher suites, TLS version, extensions, and elliptic curve preferences, all in plaintext, before any content is exchanged. Anti-bot systems hash this data into a fingerprint (the JA3 or JA4 standard) and compare it against known-bot signatures. Python’s requests library has a distinctive TLS fingerprint that differs from any real browser and is trivially detected by Cloudflare and Akamai.
+Every HTTPS connection begins with a TLS handshake. During the ClientHello phase, the client broadcasts its supported cipher suites, TLS version, extensions, and elliptic curve preferences, all in plaintext, before any content is exchanged. Anti-bot systems hash this data into a fingerprint (the JA3 or JA4 standard) and compare it against known-bot signatures. Python’s requests library has a distinctive TLS fingerprint that differs from any real browser and is trivially detected by Cloudflare and Akamai.
 
-Beyond TLS, websites detect your browser type through dozens of JavaScript signals: navigator.webdriver, canvas rendering output, WebGL GPU strings, installed fonts, screen resolution, audio context behavior, and plugin lists. Headless Chrome exposes HeadlessChrome in its User-Agent string and leaves navigator.webdriver = true set, which is an immediate detection signal on most major anti-bot platforms.
+Beyond TLS, websites detect browser type through dozens of JavaScript signals: navigator.webdriver, canvas rendering output, WebGL GPU strings, installed fonts, screen resolution, audio context behavior, and plugin lists. Headless Chrome exposes HeadlessChrome in its User-Agent string and leaves navigator.webdriver = true set, which is an immediate detection signal on most major anti-bot platforms.
 
 Behavioral Analysis
 Websites don’t just look at individual requests. They watch patterns across an entire session. PerimeterX/HUMAN and similar systems measure inter-request timing, scroll patterns, mouse movement trajectories, click behavior, navigation depth, and session duration. A scraper that fires requests at exactly 1.0-second intervals, never scrolls, never moves a mouse, and jumps directly to deep product pages without visiting a homepage is immediately distinguishable from a human.
@@ -30,7 +30,7 @@ Honeypot Traps
 Some sites inject hidden links into their HTML, invisible to real users via CSS (display: none), but fully accessible to scrapers that parse raw HTML. Following these links flags you as a bot instantly. A scraper that blindly follows every <a href> tag in a document will eventually walk into one.
 
 The Top Techniques to Scrape Websites Without Getting Blocked
-1. Rotate Your IP Addresses with Proxies
+1. Rotate IP Addresses with Proxies
 IP rotation is the most fundamental anti-detection technique. Instead of sending all requests from a single IP address, a proxy pool distributes traffic across hundreds or thousands of IPs so no single IP accumulates a suspicious request volume. Learning how to rotate proxies in Python is an essential skill for anyone building a serious scraper.
 
 The basic pattern: route each request through a different proxy endpoint, and implement automatic retry logic when an IP gets blocked.
@@ -98,7 +98,7 @@ Sec-Fetch-Dest: document
 Sec-Fetch-Mode: navigate
 Sec-Fetch-Site: none
 Sec-Fetch-User: ?1
-Sites check Accept, Accept-Language, Accept-Encoding, Sec-Fetch-* headers, and header order to distinguish real browsers from scripts. Set headers that match the actual browser you’re claiming to be, including the Referer header when navigating between pages on the same domain. For a deeper dive, see our guide on HTTP headers for web scraping.
+Sites check Accept, Accept-Language, Accept-Encoding, Sec-Fetch-* headers, and header order to distinguish real browsers from scripts. Headers should match the browser profile in use, including the Referer header when navigation occurs between pages on the same domain.
 
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
@@ -114,7 +114,7 @@ headers = {
 
 response = requests.get(url, headers=headers)
 4. Rotate User-Agents
-Sending the same User-Agent string on every request is another easy flag. Real users don’t all run Chrome 121 on Windows 10. Build a pool of realistic, recently active User-Agent strings and rotate them. The critical rule: the User-Agent you rotate to must be internally consistent. If you claim to be Chrome on macOS, your Accept-Language and Sec-CH-UA headers should reflect that.
+Sending the same User-Agent string on every request is another easy flag. Real users don’t all run Chrome 121 on Windows 10. A pool of realistic, recently active User-Agent strings should be rotated. The critical rule is internal consistency: a Chrome-on-macOS profile requires compatible Accept-Language and Sec-CH-UA headers.
 
 import random
 
@@ -126,12 +126,12 @@ user_agents = [
 ]
 
 headers["User-Agent"] = random.choice(user_agents)
-Keep your User-Agent pool current. Browser versions from 2021 are themselves a detection signal, as they’re statistically unlikely to represent real traffic in 2026.
+The User-Agent pool should remain current. Browser versions from 2021 are themselves a detection signal, as they’re statistically unlikely to represent real traffic in 2026.
 
 5. Manage TLS Fingerprinting
 This is the most commonly missed technique and the one that defeats scrapers who have done everything else right.
 
-When Python’s requests library initiates an HTTPS connection, the underlying TLS stack (OpenSSL or similar) sends a ClientHello with a specific combination of cipher suites and extensions. This combination hashes to a JA3 value that is distinctly non-browser. Cloudflare, Akamai, and DataDome check this fingerprint before serving any content, so you can be blocked before your headers are even evaluated.
+When Python’s requests library initiates an HTTPS connection, the underlying TLS stack (OpenSSL or similar) sends a ClientHello with a specific combination of cipher suites and extensions. This combination hashes to a JA3 value that is distinctly non-browser. Cloudflare, Akamai, and DataDome check this fingerprint before serving any content, so blocking can occur before headers are evaluated.
 
 The fix: use an HTTP client that impersonates a real browser’s TLS stack. curl_cffi is the current standard for Python:
 
@@ -148,12 +148,12 @@ response = curl_requests.get(
 )
 
 print(response.status_code)
-curl_cffi wraps curl-impersonate, a build of libcurl that mimics real browser TLS fingerprints at the cryptographic level. The critical requirement: your User-Agent must match the browser profile you’re impersonating. Sending a Chrome 121 TLS fingerprint alongside a Firefox User-Agent creates an inconsistency that advanced systems detect.
+curl_cffi wraps curl-impersonate, a build of libcurl that mimics real browser TLS fingerprints at the cryptographic level. The critical requirement is that the User-Agent match the browser profile being impersonated. Sending a Chrome 121 TLS fingerprint alongside a Firefox User-Agent creates an inconsistency that advanced systems detect.
 
 For production-scale use, Bright Data’s Web Unlocker handles TLS fingerprint matching automatically with no library management required.
 
 6. Use a Headless Browser with Stealth Plugins
-When the target site runs JavaScript challenges, you need a real browser. Understanding what a headless browser is and how it works gives you a foundation for this technique. Playwright and Puppeteer automate Chromium, allowing full JavaScript execution, cookie handling, and dynamic content rendering.
+When the target site runs JavaScript challenges, a real browser is required. Understanding how a headless browser works provides the foundation for this technique. Playwright and Puppeteer automate Chromium, allowing full JavaScript execution, cookie handling, and dynamic content rendering.
 
 The problem: default headless Chrome is trivially detected. It exposes navigator.webdriver = true, a HeadlessChrome User-Agent string, missing browser plugins, and abnormal screen dimensions. Cloudflare’s Turnstile and similar systems run 200+ JavaScript checks and will catch a default Playwright session in milliseconds.
 
@@ -198,7 +198,7 @@ human_delay(mean=4.0, std=1.5)
 
 # Between actions on the same page (faster)
 human_delay(mean=1.2, std=0.4)
-Beyond timing, simulate realistic session behavior with Playwright: scroll the page incrementally before extracting data, move the mouse to elements before clicking, and vary the entry point of your crawl rather than always navigating directly to the target URL.
+Beyond timing, realistic session behavior can be simulated with Playwright: incremental scrolling before data extraction, mouse movement before clicks, and varied crawl entry points instead of direct navigation to the target URL.
 
 # Simulate human scroll behavior before extracting content
 page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.3)")
@@ -206,12 +206,12 @@ time.sleep(random.uniform(0.8, 2.0))
 page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.7)")
 time.sleep(random.uniform(0.5, 1.5))
 8. Handle CAPTCHAs Automatically
-CAPTCHAs are a wall, not a dead end, but manual solving does not scale. For production scraping, you need automated CAPTCHA handling. Reviewing the best CAPTCHA solvers for web scraping will help you choose the right tool for your use case.
+CAPTCHAs are a barrier, but manual solving does not scale. Production scraping requires automated CAPTCHA handling. The choice of tool depends on the operating context.
 
 The main approaches:
 
 Third-party solver services (2captcha, Anti-Captcha): send the CAPTCHA image or site key to human solvers or AI models, receive the token, inject it into the form.
-reCAPTCHA v3 score management: reCAPTCHA v3 runs silently and assigns a risk score. The higher your score, the less likely you are to see a challenge, so good session hygiene (realistic headers, timing, browsing history) keeps scores high.
+reCAPTCHA v3 score management: reCAPTCHA v3 runs silently and assigns a risk score. Higher scores make challenges less likely, so realistic headers, timing, and browsing history help preserve them.
 Managed solutions: Bright Data’s Web Unlocker includes a built-in CAPTCHA solver that handles reCAPTCHA, hCaptcha, and Cloudflare Turnstile transparently with no integration required.
 import requests
 
@@ -283,10 +283,10 @@ def fetch_with_backoff(url, headers, proxies, max_retries=5):
 11. Match Geographic Context
 Many sites serve different content or enforce stricter bot detection based on the geographic origin of requests. A product price scraper targeting a US e-commerce site should route requests through US residential IPs, not German or Singaporean ones. Mismatched geography creates an inconsistency between the request origin and the Accept-Language or locale headers, which behavioral analysis systems can flag.
 
-Bright Data’s proxy network supports targeting by country, state, city, and carrier, allowing your requests to originate from the precise geographic context that the target site expects. You can explore all available proxy IP locations before building your geo-targeting strategy.
+Bright Data’s proxy network supports targeting by country, state, city, and carrier, allowing requests to originate from the geographic context expected by the target site. Available proxy IP locations can be evaluated before a geo-targeting strategy is built.
 
 12. Tap Into Underlying APIs
-Before building a complex scraper, check whether the target site exposes an internal API that its frontend consumes. Open your browser’s developer tools, go to the Network tab, and watch the XHR/Fetch requests as you navigate the site. Many sites, including large e-commerce platforms, load their data from JSON endpoints that are far easier to call directly than parsing HTML.
+Before building a complex scraper, verify whether the target site exposes an internal API consumed by its frontend. The browser developer tools and Network tab reveal XHR/Fetch requests during navigation. Many sites, including large e-commerce platforms, load data from JSON endpoints that are easier to call directly than to parse as HTML.
 
 These internal APIs often have structured JSON responses (no HTML parsing required), lower anti-bot scrutiny than the main rendered page, and pagination parameters that are straightforward to automate.
 

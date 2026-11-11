@@ -1,19 +1,19 @@
-# Versão 3 — Pipeline de vagas Glassdoor 2026
+# Versão 3: Pipeline de vagas Glassdoor 2026
 
 Esta é a implementação de 2026 para coleta e análise de vagas de tecnologia no Brasil. Ela é a referência para o próximo time: reúne o pipeline executado, os critérios de classificação, os notebooks e o plano para uma nova rodada mais econômica.
 
-> A versão 1 é o legado de 2025 deixado por Luana e Tati e mantido sem alteração. As versões 2 e 3 são seu trabalho; esta pasta contém o pipeline de 2026.
+> A versão 1 é o legado de 2025 deixado por Luana e Tati e mantido sem alteração. As versões 2 e 3 compõem a implementação atual; esta pasta contém o pipeline de 2026.
 
 ## O que já foi concluído
 
-A rodada histórica de 2026 foi concluída em fluxo distribuído. Seus resultados consolidados são:
+A rodada histórica de 2026 foi concluída em fluxo distribuído. Os resultados consolidados são:
 
 | Etapa | Resultado |
 | --- | ---: |
-| Bronze — arquivos de coleta | 9.124 CSVs / cerca de 805 mil registros brutos |
-| Silver — vagas únicas | 123.737 vagas |
-| Enriquecimento — descrições obtidas | 123.161 vagas (99,5%) |
-| Enriquecimento — salário informado | 32.758 vagas (26,5%) |
+| Bronze: arquivos de coleta | 9.124 CSVs / cerca de 805 mil registros brutos |
+| Silver: vagas únicas | 123.737 vagas |
+| Enriquecimento: descrições obtidas | 123.161 vagas (99,5%) |
+| Enriquecimento: salário informado | 32.758 vagas (26,5%) |
 | Base tech classificada | 15.514 vagas |
 
 O detalhamento dos resultados e da metodologia está em [`analytics/relatorio_2026.md`](analytics/relatorio_2026.md).
@@ -76,7 +76,7 @@ No Windows, ative com `venv\Scripts\Activate.ps1`. Use um perfil Chrome exclusiv
 
 ### Exemplo de execução isolada
 
-Use `--run-id` para não sobrescrever a coleta histórica. O identificador cria `data/runs/<id>/` com as camadas Bronze, Silver e Gold.
+O uso de `--run-id` evita a sobrescrita da coleta histórica. O identificador cria `data/runs/<id>/` com as camadas Bronze, Silver e Gold.
 
 ```bash
 # Piloto: uma keyword em SP e RJ
@@ -97,7 +97,7 @@ python enriquecer_paralelo.py \
 python mesclar.py --run-id 2026-nova
 ```
 
-Comece com duas abas (`--workers 2`); o máximo aceito pelo script é quatro. Não compartilhe o mesmo perfil Chrome entre processos e não misture resultados de `enriquecer.py` e `enriquecer_paralelo.py` para a mesma fatia.
+A operação deve iniciar com duas abas (`--workers 2`); o máximo aceito pelo script é quatro. O mesmo perfil Chrome não deve ser compartilhado entre processos, e os resultados de `enriquecer.py` e `enriquecer_paralelo.py` não devem ser misturados na mesma fatia.
 
 ## Análise
 
@@ -112,4 +112,4 @@ Os notebooks em `analytics/` usam `vagas_enriquecidas.csv` como base e seguem es
 | `scp_analise_softskills.ipynb` | Apoia a validação de soft skills. |
 | `scp_comparativo.ipynb` | Compara resultados de 2025 e 2026. |
 
-`criterios-2026.xlsx` é a fonte de regras. Alterações de recorte devem ser feitas e versionadas nessa planilha, depois validadas por amostra; a triagem grava os termos encontrados e o hash do arquivo para manter rastreabilidade.
+`criterios-2026.xlsx` é a fonte de regras. Alterações de recorte devem ser feitas e versionadas nessa planilha, depois validadas por amostra. A triagem grava os termos encontrados e o hash do arquivo para manter rastreabilidade.

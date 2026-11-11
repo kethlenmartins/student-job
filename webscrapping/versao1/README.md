@@ -1,4 +1,4 @@
-# Versão 1 — Selenium (legado de 2025)
+# Versão 1: Selenium (legado de 2025)
 
 Esta é a primeira implementação do scraper de vagas do Glassdoor. Ela usa **Selenium** conectado a um Chrome aberto com depuração remota.
 

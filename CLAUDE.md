@@ -1,11 +1,11 @@
-# Contexto técnico — Pesquisa de Carreiras em Tecnologia 2026
+# Contexto técnico: Pesquisa de Carreiras em Tecnologia 2026
 
-Use este arquivo como referência rápida ao trabalhar neste repositório. A documentação para pessoas que assumirão o projeto está nos READMEs da raiz, de `webscrapping/` e de `webscrapping/versao3/`.
+Este arquivo é a referência técnica rápida do repositório. A documentação para continuidade do projeto está nos READMEs da raiz, de `webscrapping/` e de `webscrapping/versao3/`.
 
 ## Escopo e responsabilidade
 
 - `webscrapping/versao1/` é o script histórico de **2025**, deixado por **Luana e Tati**. Está preservado e não deve ser alterado incidentalmente.
-- `webscrapping/versao2/` e `webscrapping/versao3/` são seu trabalho; a versão 3 é a referência para evolução do pipeline.
+- `webscrapping/versao2/` e `webscrapping/versao3/` compõem a implementação atual; a versão 3 é a referência para evolução do pipeline.
 - `site/` contém o relatório público estático, publicado pelo workflow de GitHub Pages em `.github/workflows/deploy-pages.yml`.
 
 ## Estado da rodada 2026
@@ -36,7 +36,7 @@ O fluxo distribuído original usou `enriquecer.py`; em uma nova rodada, prefira 
 
 ## Convenções importantes
 
-- Use `--run-id` em `coleta_glassdoor.py`, `deduplicar.py` e `mesclar.py` para isolar uma rodada em `webscrapping/versao3/data/runs/<id>/` e não sobrescrever dados históricos.
+- A execução de `coleta_glassdoor.py`, `deduplicar.py` e `mesclar.py` deve usar `--run-id` para isolar uma rodada em `webscrapping/versao3/data/runs/<id>/` e não sobrescrever dados históricos.
 - A triagem usa `criterios-2026.xlsx`; ela registra termos encontrados e o hash da planilha, portanto mudanças de regra devem ocorrer ali e ser validadas por amostra.
 - Não compartilhe um diretório `chrome-profile-*` entre processos. Na primeira abertura de um perfil, permita o login manual; somente depois use `--assume-logged-in`.
 - Não misture saídas de `enriquecer.py` e `enriquecer_paralelo.py` na mesma fatia de entrada.

@@ -615,7 +615,7 @@ Carga paralela dos dois pipelines com as mesmas 134 skills comparáveis.
 | Infraestrutura e Suporte | 2,0% | 15,2% | +13,2 |
 | Testes e CQ | 3,4% | 12,9% | +9,5 |
 
-> IA triplicou sua presença em um ano (7,9% → 24,7%). O crescimento é transversal a todas as áreas, com destaque para áreas antes distantes do tema (Projetos +19,1 pp, Infra +13,2 pp).
+> A presença de IA triplicou em um ano (7,9% → 24,7%). O crescimento é transversal a todas as áreas, com destaque para áreas antes distantes do tema (Projetos +19,1 pp, Infra +13,2 pp).
 
 ### 3.12 Investigação: Queda de Machine Learning
 

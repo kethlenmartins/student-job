@@ -1,4 +1,4 @@
-# Plano de evolução — coleta 2026 em máquina única
+# Plano de evolução: coleta 2026 em máquina única
 
 ## Objetivo
 
@@ -81,8 +81,8 @@ Cada CSV deve manter as colunas originais e acrescentar:
 - `classe_triagem`
 - `termos_tech_encontrados`
 - `termos_blacklist_encontrados`
-- `versao_criterios` — hash SHA-256 da planilha usada
-- `source_index` — índice estável da linha no Silver de origem
+- `versao_criterios`: hash SHA-256 da planilha usada
+- `source_index`: índice estável da linha no Silver de origem
 
 Esses campos tornam a decisão reproduzível, auditável e reversível sem uma
 nova coleta Bronze.
@@ -153,7 +153,7 @@ python mesclar.py --run-id 2026-10
 
 - A fila `tech` reproduz o conjunto do `scp_01` para uma base histórica fixa,
   salvo exclusões deliberadas e documentadas pela blacklist.
-- Cada linha possui classe e termos que justificam sua classificação.
+- Cada linha possui classe e termos que justificam a classificação.
 - Uma interrupção não perde resultados já enriquecidos nem repete páginas
   concluídas.
 - O processo opera com um Chrome e concorrência limitada, sem locks de perfil

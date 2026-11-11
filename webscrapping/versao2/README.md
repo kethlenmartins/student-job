@@ -1,10 +1,10 @@
-# Versão 2 — Playwright
+# Versão 2: Playwright
 
 Esta pasta registra a evolução do scraper para **Playwright**. Ela introduz perfil persistente do Chrome e coleta de cards por palavra-chave e UF, em uma implementação síncrona anterior à versão 3.
 
 ## Estado e autoria
 
-Esta versão é de sua autoria. Ela registra uma etapa importante da evolução técnica antes do pipeline assíncrono da [versão 3](../versao3/README.md), que é a referência recomendada para novas coletas.
+Esta versão registra uma etapa importante da evolução técnica antes do pipeline assíncrono da [versão 3](../versao3/README.md), referência recomendada para novas coletas.
 
 ## Arquivos
 
