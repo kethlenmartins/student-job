@@ -44,7 +44,8 @@ GOLD_DIR = BASE_DIR / "data" / "gold"
 OUTPUT_DIR = BRONZE_DIR
 GLASSDOOR_VAGAS_URL = "https://www.glassdoor.com.br/Job/index.htm"
 
-MAX_VAGAS_POR_BUSCA = 5000
+DEFAULT_MAX_VAGAS_POR_BUSCA = 300
+DEFAULT_MAX_PAUSA_SEGUNDOS = 10.0
 VAGAS_POR_PAGINA = 30
 
 LOCALIZACOES_PRIORITARIAS = ["SP", "RJ", "PR", "SC", "RS", "MG"]
@@ -145,8 +146,16 @@ def salvar_csv(vagas: list[dict], caminho: Path) -> None:
     print(f"  → {len(vagas)} vagas salvas em {caminho.name}")
 
 
+MAX_PAUSA_SEGUNDOS = DEFAULT_MAX_PAUSA_SEGUNDOS
+
+
+async def pausa_limitada(segundos: float) -> None:
+    """Espera sem ultrapassar o teto de pausa da execução atual."""
+    await asyncio.sleep(min(segundos, MAX_PAUSA_SEGUNDOS))
+
+
 async def pausa_humana(media: float = 3.0, desvio: float = 1.2, minimo: float = 0.8) -> None:
-    delay = max(minimo, np.random.normal(media, desvio))
+    delay = min(MAX_PAUSA_SEGUNDOS, max(minimo, np.random.normal(media, desvio)))
     await asyncio.sleep(delay)
 
 
@@ -237,7 +246,7 @@ class ColetorGlassdoor:
     async def _digitar_lento(self, texto: str) -> None:
         for char in texto:
             await self.page.keyboard.type(char)
-            await asyncio.sleep(np.random.uniform(0.04, 0.14))
+            await pausa_limitada(np.random.uniform(0.04, 0.14))
 
     async def _primeiro_texto(self, raiz, seletores: list[str]) -> str:
         for seletor in seletores:
@@ -260,7 +269,7 @@ class ColetorGlassdoor:
     async def _scroll_suave(self) -> None:
         for _ in range(3):
             await self._scroll_mouse(400)
-            await asyncio.sleep(np.random.uniform(0.4, 0.8))
+            await pausa_limitada(np.random.uniform(0.4, 0.8))
 
     # ------------------------------------------------------------------
     # Login
@@ -338,7 +347,7 @@ class ColetorGlassdoor:
         except Exception:
             return False
 
-        await asyncio.sleep(0.5)
+        await pausa_limitada(0.5)
         opcoes = await self.page.query_selector_all(self.SELETOR_AUTOCOMPLETE)
 
         candidatos: list[tuple[int, int, str]] = []
@@ -364,10 +373,10 @@ class ColetorGlassdoor:
 
         for _ in range(melhor_pos + 1):
             await self.page.keyboard.press("ArrowDown")
-            await asyncio.sleep(0.12)
+            await pausa_limitada(0.12)
 
         await self.page.keyboard.press("Enter")
-        await asyncio.sleep(0.5)
+        await pausa_limitada(0.5)
         return True
 
     async def _preencher_localizacao(self, uf: str) -> bool:
@@ -384,13 +393,13 @@ class ColetorGlassdoor:
 
         if not selecionou:
             await self.page.keyboard.press("ArrowDown")
-            await asyncio.sleep(0.3)
+            await pausa_limitada(0.3)
             await self.page.keyboard.press("Enter")
             await pausa_rapida()
             print(f"    Local: nenhum autocomplete, usou seta+Enter")
 
         await self.page.keyboard.press("Tab")
-        await asyncio.sleep(0.5)
+        await pausa_limitada(0.5)
 
         valor = await self.page.input_value(self.SELETOR_CAMPO_LOCAL)
         print(f"    Local no formulário: '{valor}'")
@@ -411,7 +420,7 @@ class ColetorGlassdoor:
         # Enter no campo é a forma mais confiável: fecha o autocomplete e
         # submete em um passo, sem risco de reverter o valor digitado (Escape)
         await self.page.focus(self.SELETOR_CAMPO_CARGO)
-        await asyncio.sleep(0.15)
+        await pausa_limitada(0.15)
         await self.page.keyboard.press("Enter")
         await pausa_humana(media=4.0, desvio=1.0)
 
@@ -498,7 +507,7 @@ class ColetorGlassdoor:
                     "el => el.scrollIntoView({block: 'center', behavior: 'instant'})",
                     botao,
                 )
-                await asyncio.sleep(0.5)
+                await pausa_limitada(0.5)
                 await botao.click()
                 await pausa_humana(media=5.0, desvio=1.5)
                 await self._fechar_popup()
@@ -583,7 +592,7 @@ class ColetorGlassdoor:
 
     async def coletar_vagas(
         self, palavra_chave: str, uf: str, sem_enriquecer: bool = False,
-        timeout_interacao: int = 120,
+        timeout_interacao: int = 120, max_vagas: int = DEFAULT_MAX_VAGAS_POR_BUSCA,
     ) -> list[dict]:
         """
         Itera pelos cards sem clicar em cada um.
@@ -594,7 +603,7 @@ class ColetorGlassdoor:
         vistos: set[str] = set()
         rodadas_sem_novos = 0
 
-        while len(vagas) < MAX_VAGAS_POR_BUSCA:
+        while len(vagas) < max_vagas:
             # A coleta completa pode legitimamente levar muitos minutos em
             # buscas amplas. O watchdog deve vigiar cada interação com o
             # navegador, e não encerrar uma extração que segue progredindo.
@@ -615,7 +624,7 @@ class ColetorGlassdoor:
                     vistos.add(chave)
                     vagas.append(vaga)
                     novos_nesta_rodada += 1
-                    if len(vagas) >= MAX_VAGAS_POR_BUSCA:
+                    if len(vagas) >= max_vagas:
                         break
                 except asyncio.TimeoutError:
                     # O contexto possivelmente travou; o chamador vai
@@ -626,7 +635,7 @@ class ColetorGlassdoor:
 
             print(f"    {len(vagas)} vagas coletadas até agora ({novos_nesta_rodada} novas)")
 
-            if len(vagas) >= MAX_VAGAS_POR_BUSCA:
+            if len(vagas) >= max_vagas:
                 break
 
             if novos_nesta_rodada == 0:
@@ -682,15 +691,18 @@ class ColetorGlassdoor:
                     break
                 except Exception:
                     if tentativa < MAX_TENTATIVAS - 1:
-                        await asyncio.sleep(3 * (tentativa + 1))
+                        await pausa_limitada(3 * (tentativa + 1))
 
             if not sucesso:
                 falhas_consecutivas += 1
                 print(f"    [{i}/{len(com_url)}] Falhou — {vaga['Funcao'][:60]}")
 
                 if falhas_consecutivas >= FALHAS_PARA_PAUSA:
-                    print(f"    {falhas_consecutivas} falhas seguidas — pausando {PAUSA_THROTTLE}s...")
-                    await asyncio.sleep(PAUSA_THROTTLE)
+                    print(
+                        f"    {falhas_consecutivas} falhas seguidas — pausando "
+                        f"{min(PAUSA_THROTTLE, MAX_PAUSA_SEGUNDOS):g}s..."
+                    )
+                    await pausa_limitada(PAUSA_THROTTLE)
                     falhas_consecutivas = 0
 
             await pausa_humana(media=1.2, desvio=0.4)
@@ -712,7 +724,7 @@ def _fechar_chrome_com_perfil(profile_dir: Path) -> None:
         if resultado.stdout.strip():
             print("Fechando Chrome anterior com este perfil...")
             subprocess.run(["pkill", "-f", str(profile_dir)], check=False)
-            time.sleep(2)
+            time.sleep(min(2, MAX_PAUSA_SEGUNDOS))
             print("Chrome fechado.\n")
     except Exception:
         pass
@@ -764,7 +776,7 @@ def _uf_completa(palavras_chave: list[str], uf: str) -> bool:
 
 
 async def main() -> None:
-    global BRONZE_DIR, SILVER_DIR, GOLD_DIR, OUTPUT_DIR
+    global BRONZE_DIR, SILVER_DIR, GOLD_DIR, OUTPUT_DIR, MAX_PAUSA_SEGUNDOS
     parser = argparse.ArgumentParser(
         description="Coleta de vagas no Glassdoor — Fase 1 (Bronze)"
     )
@@ -801,6 +813,16 @@ async def main() -> None:
         help="Segundos máximos por etapa Playwright da Bronze (default: 120)"
     )
     parser.add_argument(
+        "--max-vagas-por-busca", type=int, default=DEFAULT_MAX_VAGAS_POR_BUSCA,
+        help=("Máximo de vagas em cada combinação palavra-chave × UF "
+              f"(default: {DEFAULT_MAX_VAGAS_POR_BUSCA})")
+    )
+    parser.add_argument(
+        "--max-pausa", type=float, default=DEFAULT_MAX_PAUSA_SEGUNDOS,
+        help=("Teto em segundos para cada pausa, inclusive throttle por falhas "
+              f"(default: {DEFAULT_MAX_PAUSA_SEGUNDOS:g})")
+    )
+    parser.add_argument(
         "--max-auto-restarts", type=int, default=8,
         help="Máximo de reinícios automáticos após travamento (default: 8)"
     )
@@ -809,6 +831,11 @@ async def main() -> None:
         parser.error("--timeout-operacao deve ser pelo menos 30 segundos")
     if args.max_auto_restarts < 0:
         parser.error("--max-auto-restarts não pode ser negativo")
+    if args.max_vagas_por_busca < 1:
+        parser.error("--max-vagas-por-busca deve ser pelo menos 1")
+    if args.max_pausa <= 0:
+        parser.error("--max-pausa deve ser maior que zero")
+    MAX_PAUSA_SEGUNDOS = args.max_pausa
     try:
         BRONZE_DIR, SILVER_DIR, GOLD_DIR = diretorios_run(args.run_id)
     except ValueError as erro:
@@ -844,6 +871,8 @@ async def main() -> None:
     print(f"Keywords:        [{args.kw_inicio}:{args.kw_fim}] → {len(palavras_chave)} palavras")
     print(f"UFs:             {len(localizacoes)}")
     print(f"Total de buscas: {total_buscas}  |  Já feitas: {ja_feitas}  |  Pendentes: {pendentes}")
+    print(f"Limite por busca: {args.max_vagas_por_busca} vagas")
+    print(f"Máximo por pausa: {MAX_PAUSA_SEGUNDOS:g}s")
     print(f"Enriquecimento:  {'desativado (--sem-enriquecer)' if args.sem_enriquecer else 'ativado'}")
     print(f"Saída:           {OUTPUT_DIR}\n")
 
@@ -930,6 +959,7 @@ async def main() -> None:
                         uf,
                         sem_enriquecer=args.sem_enriquecer,
                         timeout_interacao=args.timeout_operacao,
+                        max_vagas=args.max_vagas_por_busca,
                     )
                     salvar_csv(vagas, arquivo)
                 except asyncio.TimeoutError:

@@ -31,6 +31,7 @@ O detalhamento dos resultados e da metodologia está em [`analytics/relatorio_20
 | `analytics/` | Notebooks, relatório final e amostras de validação. |
 | `criterios-2026.xlsx` | Regras de cargo, blacklist, senioridade, localidade, salário e skills. |
 | `docs/plano-pipeline-maquina-unica.md` | Plano técnico e critérios de aceite para a próxima rodada. |
+| `docs/operacao-3-computadores-8-terminais.md` | Roteiro operacional para coleta e enriquecimento com 3 PCs e 8 terminais. |
 | `gerar_amostras.py`, `gerar_amostra_llms.py` | Geração de amostras para revisão manual. |
 | `fix_salario.py`, `fix_scp03.py`, `add_llm_cells.py` | Utilitários pontuais para notebooks e análise. |
 
@@ -81,7 +82,8 @@ O uso de `--run-id` evita a sobrescrita da coleta histórica. O identificador cr
 ```bash
 # Piloto: uma keyword em SP e RJ
 python coleta_glassdoor.py --run-id 2026-nova --kw-inicio 0 --kw-fim 1 \
-  --ufs SP,RJ --perfil chrome-profile-coleta --sem-enriquecer
+  --ufs SP,RJ --perfil chrome-profile-coleta --sem-enriquecer \
+  --max-vagas-por-busca 300 --max-pausa 10
 
 # Bronze → Silver e triagem auditável
 python deduplicar.py --run-id 2026-nova
@@ -98,6 +100,11 @@ python mesclar.py --run-id 2026-nova
 ```
 
 A operação deve iniciar com duas abas (`--workers 2`); o máximo aceito pelo script é quatro. O mesmo perfil Chrome não deve ser compartilhado entre processos, e os resultados de `enriquecer.py` e `enriquecer_paralelo.py` não devem ser misturados na mesma fatia.
+
+Na coleta Bronze, cada combinação palavra-chave × UF é limitada a 300 vagas por padrão.
+Use `--max-vagas-por-busca` para ajustar esse teto. `--max-pausa` limita cada
+espera do coletor a 10 segundos por padrão, inclusive a espera após falhas
+consecutivas; diminua-o para acelerar um piloto.
 
 ## Análise
 
