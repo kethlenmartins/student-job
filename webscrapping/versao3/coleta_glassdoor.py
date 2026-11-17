@@ -219,20 +219,30 @@ class ColetorGlassdoor:
     # ------------------------------------------------------------------
 
     async def _fechar_popup(self) -> None:
-        popups = await self.page.query_selector_all(self.SELETOR_POPUP)
-        for popup in popups:
-            if await popup.is_visible():
-                await popup.click()
-                await pausa_rapida()
-                break
-        # <dialog open> bloqueia cliques; fecha via Escape, mas só se o dialog
-        # não contém o campo de busca (evita fechar a barra de pesquisa do Glassdoor)
-        dialog = await self.page.query_selector("dialog[open]")
-        if dialog:
-            campo_dentro = await dialog.query_selector(self.SELETOR_CAMPO_CARGO)
-            if not campo_dentro:
-                await self.page.keyboard.press("Escape")
-                await pausa_rapida()
+        try:
+            popups = await self.page.query_selector_all(self.SELETOR_POPUP)
+            for popup in popups:
+                if await popup.is_visible():
+                    await popup.click()
+                    await pausa_rapida()
+                    break
+            # <dialog open> bloqueia cliques; fecha via Escape, mas só se o dialog
+            # não contém o campo de busca (evita fechar a barra de pesquisa do Glassdoor)
+            dialog = await self.page.query_selector("dialog[open]")
+            if dialog:
+                campo_dentro = await dialog.query_selector(self.SELETOR_CAMPO_CARGO)
+                if not campo_dentro:
+                    await self.page.keyboard.press("Escape")
+                    await pausa_rapida()
+        except Exception as erro:
+            # O Glassdoor pode iniciar uma navegação logo após o Enter. Nesse
+            # intervalo o contexto JavaScript anterior é destruído; fechar um
+            # popup é apenas uma melhoria de UX, portanto não deve abortar a busca.
+            mensagem = str(erro).lower()
+            if "execution context was destroyed" in mensagem or "navigation" in mensagem:
+                print("    Navegação em andamento; popup será ignorado nesta etapa.")
+                return
+            raise
 
     async def _limpar_campo(self, seletor: str) -> None:
         campo = await self.page.wait_for_selector(seletor, timeout=10_000)
