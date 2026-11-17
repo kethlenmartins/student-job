@@ -37,6 +37,10 @@ O detalhamento dos resultados e da metodologia está em [`analytics/relatorio_20
 
 Os dados completos não estão no Git: `data/`, perfis Chrome e `venv/` são artefatos locais ignorados.
 
+Para executar a próxima rodada em três computadores e oito terminais, incluindo
+a preparação de ambiente virtual no Windows, siga o
+[guia operacional distribuído](docs/operacao-3-computadores-8-terminais.md).
+
 ## Pipeline executado em 2026
 
 ```text

@@ -17,6 +17,50 @@ usar um perfil Chrome próprio; nunca reutilize o mesmo perfil em dois processos
 Neste exemplo, a rodada chama-se `2026-nova`. Substitua esse valor por um
 identificador novo e mantenha-o idêntico em todos os comandos.
 
+## Preparação no Windows
+
+Faça esta preparação **uma vez em cada computador**, no PowerShell. São
+necessários Python 3.10 ou superior, Git e Google Chrome instalados.
+
+```powershell
+cd $HOME\student-job
+git pull origin main
+cd webscrapping\versao3
+
+py -3 -m venv venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate.ps1
+
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m playwright install chrome
+```
+
+`Set-ExecutionPolicy` vale somente para aquela janela do PowerShell e permite
+ativar o ambiente virtual sem alterar a política permanente do computador.
+Se `py -3` não existir, instale o Python pelo instalador oficial e marque a
+opção para adicioná-lo ao PATH; depois, substitua `py -3` por `python`.
+
+Abra uma janela PowerShell por terminal planejado. Em **cada janela**, entre
+na pasta do projeto e ative o mesmo ambiente antes de rodar qualquer comando:
+
+```powershell
+cd $HOME\student-job\webscrapping\versao3
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate.ps1
+```
+
+Se a ativação por PowerShell não for permitida, use o Prompt de Comando (CMD):
+
+```bat
+cd %USERPROFILE%\student-job\webscrapping\versao3
+venv\Scripts\activate.bat
+```
+
+Nos comandos de coleta e enriquecimento abaixo, os argumentos são iguais no
+Windows. No PowerShell, use a crase (acento grave) no fim da linha para
+quebrar um comando em várias linhas, ou execute-o todo em uma única linha.
+
 ## 1. Coleta Bronze
 
 Há 200 palavras-chave. Divida-as em oito faixas de 25, sempre pesquisando todas
