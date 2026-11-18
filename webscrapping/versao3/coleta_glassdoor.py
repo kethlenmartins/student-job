@@ -245,7 +245,10 @@ class ColetorGlassdoor:
             raise
 
     async def _limpar_campo(self, seletor: str) -> None:
-        campo = await self.page.wait_for_selector(seletor, timeout=10_000)
+        # Locator é reavaliado pelo Playwright durante o click. Isso evita usar
+        # um ElementHandle já removido quando o Glassdoor redesenha a busca.
+        campo = self.page.locator(seletor).first
+        await campo.wait_for(state="visible", timeout=10_000)
         await campo.click()
         await pausa_rapida()
         modificador = "Meta" if platform.system() == "Darwin" else "Control"
@@ -930,6 +933,31 @@ async def main() -> None:
                     await _reiniciar_coleta(context, f"contexto indisponível em {descricao}", args.max_auto_restarts)
                 raise
 
+        async def buscar_com_retentativa(palavra_chave: str, uf: str) -> bool | None:
+            """Repete uma busca quando a interface troca elementos durante o clique.
+
+            ``None`` indica que a busca não foi concluída e não deve ganhar CSV:
+            assim ela permanece pendente para a próxima execução.
+            """
+            for tentativa in range(1, 3):
+                try:
+                    return await operacao_vigiada(
+                        coletor.buscar_palavra_chave(palavra_chave, uf),
+                        f"busca {palavra_chave!r}/{uf}",
+                    )
+                except Exception as erro:
+                    print(f"    Busca falhou na tentativa {tentativa}/2: {erro}")
+                    if tentativa == 2:
+                        print("    Busca ficará pendente para a próxima execução.")
+                        return None
+                    print("    Repreparando a UF e tentando a busca novamente...")
+                    await pausa_limitada(2)
+                    await operacao_vigiada(
+                        coletor.preparar_uf(uf),
+                        f"repreparação da UF {uf}",
+                    )
+            return None
+
         busca_atual = 0
         for uf in localizacoes:
             if _uf_completa(palavras_chave, uf):
@@ -953,10 +981,9 @@ async def main() -> None:
 
                 print(f"[{busca_atual}/{total_buscas}] {uf} → '{palavra_chave}'")
 
-                encontrou = await operacao_vigiada(
-                    coletor.buscar_palavra_chave(palavra_chave, uf),
-                    f"busca {palavra_chave!r}/{uf}",
-                )
+                encontrou = await buscar_com_retentativa(palavra_chave, uf)
+                if encontrou is None:
+                    continue
                 if not encontrou:
                     print("    Nenhum resultado para esta busca.")
 
